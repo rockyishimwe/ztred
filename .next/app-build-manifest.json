@@ -1,9 +1,19 @@
 {
   "pages": {
-    "/page": [
+    "/workspace/(workspace)/dm/[userId]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/chunks/app/workspace/(workspace)/dm/[userId]/page.js"
+    ],
+    "/workspace/(workspace)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(workspace)/layout.js"
+    ],
+    "/workspace/not-found": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/not-found.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -11,45 +21,10 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/workspace/(control)/control/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/workspace/(control)/control/page.js"
-    ],
-    "/workspace/(control)/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/workspace/(control)/layout.js"
-    ],
-    "/workspace/not-found": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/workspace/not-found.js"
-    ],
-    "/workspace/(control)/control/members/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/workspace/(control)/control/members/page.js"
-    ],
-    "/workspace/(control)/control/roles/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/workspace/(control)/control/roles/page.js"
-    ],
-    "/workspace/(control)/control/ai/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/workspace/(control)/control/ai/page.js"
-    ],
-    "/workspace/(control)/control/settings/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/workspace/(control)/control/settings/page.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/chunks/app/page.js"
     ]
   }
 }

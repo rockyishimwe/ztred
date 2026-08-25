@@ -10,6 +10,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        purple: {
+          50: '#f3f0ff',
+          100: '#e9e3ff',
+          200: '#d4c9ff',
+          300: '#b5a1ff',
+          400: '#9178ff',
+          500: '#5F3DFF',
+          600: '#5F3DFF',
+          700: '#4A2DE6',
+          800: '#3A22B3',
+          900: '#2A1A80',
+          950: '#1A104D',
+        },
         ztred: {
           dark: "#0b0f19",
           card: "#141824",
@@ -24,9 +37,9 @@ const config: Config = {
             darkBg: "#121016",
           },
           primary: {
-            DEFAULT: "#611B69",
-            dark: "#4A154B",
-            light: "#7C2487",
+            DEFAULT: "#5F3DFF",
+            dark: "#4A2DE6",
+            light: "#7B5FFF",
             accent: "#007A5A",
             blue: "#1264A3",
           },

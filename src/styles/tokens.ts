@@ -57,9 +57,9 @@ export const tokens = {
     // Primary (Eggplant Sidebar)
     'sidebar-bg': '#19171d',
     'sidebar-bg-dark': '#121016',
-    'primary': '#611B69',
-    'primary-dark': '#4A154B',
-    'primary-light': '#8A3D92',
+    'primary': '#5F3DFF',
+    'primary-dark': '#4A2DE6',
+    'primary-light': '#7B5FFF',
 
     // Accent colors
     'accent-blue': '#1264A3',

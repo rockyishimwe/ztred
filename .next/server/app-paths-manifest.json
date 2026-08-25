@@ -1,9 +1,4 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/workspace/(control)/control/ai/page": "app/workspace/(control)/control/ai/page.js",
-  "/workspace/(control)/control/members/page": "app/workspace/(control)/control/members/page.js",
-  "/workspace/(control)/control/page": "app/workspace/(control)/control/page.js",
-  "/workspace/(control)/control/roles/page": "app/workspace/(control)/control/roles/page.js",
-  "/workspace/(control)/control/settings/page": "app/workspace/(control)/control/settings/page.js"
+  "/workspace/(workspace)/dm/[userId]/page": "app/workspace/(workspace)/dm/[userId]/page.js"
 }

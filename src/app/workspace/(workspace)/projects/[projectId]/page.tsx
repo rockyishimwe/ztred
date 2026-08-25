@@ -1216,7 +1216,7 @@ export default function ProjectOverviewPage() {
                 </label>
                 <div className="flex items-center gap-3">
                   {[
-                    { id: "purple", color: "#9333ea" },
+                    { id: "purple", color: "#5F3DFF" },
                     { id: "green", color: "#22c55e" },
                     { id: "orange", color: "#f97316" },
                     { id: "pink", color: "#ec4899" },
