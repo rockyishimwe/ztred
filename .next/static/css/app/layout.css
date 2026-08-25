@@ -838,18 +838,6 @@ video {
 .mt-8 {
   margin-top: 2rem;
 }
-.line-clamp-1 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-}
-.line-clamp-2 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
 .block {
   display: block;
 }
@@ -961,6 +949,9 @@ video {
 .h-\[85vh\] {
   height: 85vh;
 }
+.h-\[calc\(100vh-52px\)\] {
+  height: calc(100vh - 52px);
+}
 .h-full {
   height: 100%;
 }
@@ -969,9 +960,6 @@ video {
 }
 .h-screen {
   height: 100vh;
-}
-.h-\[calc\(100vh-52px\)\] {
-  height: calc(100vh - 52px);
 }
 .max-h-32 {
   max-height: 8rem;
@@ -984,9 +972,6 @@ video {
 }
 .min-h-\[100px\] {
   min-height: 100px;
-}
-.min-h-\[200px\] {
-  min-height: 200px;
 }
 .min-h-\[48px\] {
   min-height: 48px;
@@ -1300,12 +1285,6 @@ video {
 }
 .grid-cols-8 {
   grid-template-columns: repeat(8, minmax(0, 1fr));
-}
-.grid-cols-\[repeat\(auto-fill\2c minmax\(100px\2c 1fr\)\)\] {
-  grid-template-columns: repeat(auto-fill,minmax(100px,1fr));
-}
-.grid-cols-\[repeat\(auto-fill\2c minmax\(280px\2c 1fr\)\)\] {
-  grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
 }
 .flex-row-reverse {
   flex-direction: row-reverse;
@@ -1621,10 +1600,6 @@ video {
 }
 .border-transparent {
   border-color: transparent;
-}
-.border-white {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
 }
 .border-white\/20 {
   border-color: rgb(255 255 255 / 0.2);
@@ -2276,10 +2251,6 @@ video {
   font-size: 1.875rem;
   line-height: 2.25rem;
 }
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1;
-}
 .text-7xl {
   font-size: 4.5rem;
   line-height: 1;
@@ -2362,10 +2333,6 @@ video {
 .text-blue-400 {
   --tw-text-opacity: 1;
   color: rgb(96 165 250 / var(--tw-text-opacity, 1));
-}
-.text-blue-500 {
-  --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity, 1));
 }
 .text-emerald-400 {
   --tw-text-opacity: 1;
@@ -2450,10 +2417,6 @@ video {
 .text-yellow-500 {
   --tw-text-opacity: 1;
   color: rgb(234 179 8 / var(--tw-text-opacity, 1));
-}
-.text-zinc-100 {
-  --tw-text-opacity: 1;
-  color: rgb(244 244 245 / var(--tw-text-opacity, 1));
 }
 .text-zinc-200 {
   --tw-text-opacity: 1;
@@ -2603,9 +2566,6 @@ video {
 .drop-shadow-lg {
   --tw-drop-shadow: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-.\!filter {
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow) !important;
 }
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -3581,10 +3541,6 @@ html {
   --tw-border-opacity: 1;
   border-color: rgb(63 63 70 / var(--tw-border-opacity, 1));
 }
-.dark\:border-zinc-900:is([data-theme="dark"] *) {
-  --tw-border-opacity: 1;
-  border-color: rgb(24 24 27 / var(--tw-border-opacity, 1));
-}
 .dark\:bg-zinc-700:is([data-theme="dark"] *) {
   --tw-bg-opacity: 1;
   background-color: rgb(63 63 70 / var(--tw-bg-opacity, 1));
@@ -3711,19 +3667,14 @@ html {
     line-height: 2.5rem;
   }
 
-  .sm\:text-6xl {
-    font-size: 3.75rem;
+  .sm\:text-5xl {
+    font-size: 3rem;
     line-height: 1;
   }
 
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
-  }
-
-  .sm\:text-5xl {
-    font-size: 3rem;
-    line-height: 1;
   }
 }
 @media (min-width: 768px) {
@@ -3740,12 +3691,12 @@ html {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .md\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .md\:flex-row {

@@ -168,40 +168,20 @@ export default function AIManagementPage() {
                         {row.role}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-2.5">
-                          <button
-                            onClick={() => toggleRole(idx)}
-                            className="relative shrink-0"
-                            style={{
-                              width: "44px",
-                              height: "24px",
-                              borderRadius: "12px",
-                              border: "none",
-                              background: row.aiAccess ? "var(--primary)" : "#d1d5db",
-                              cursor: "pointer",
-                              transition: "background 0.2s",
-                            }}
-                            role="switch"
-                            aria-checked={row.aiAccess}
-                            aria-label={`${row.aiAccess ? 'Disable' : 'Enable'} AI for ${row.role}`}
-                          >
-                            <span
-                              style={{
-                                position: "absolute",
-                                top: "2px",
-                                left: row.aiAccess ? "22px" : "2px",
-                                width: "20px",
-                                height: "20px",
-                                borderRadius: "50%",
-                                background: "#fff",
-                                boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
-                                transition: "left 0.2s",
-                              }}
-                              aria-hidden="true"
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input
+                              type="checkbox"
+                              checked={row.aiAccess}
+                              onChange={() => toggleRole(idx)}
+                              className="sr-only peer"
+                              aria-label={`Toggle AI for ${row.role}`}
                             />
-                          </button>
-                          <span className="text-sm" style={{ color: row.aiAccess ? "var(--text-primary)" : "var(--text-muted)" }}>
-                            {row.aiAccess ? row.accessLevel : "No access"}
+                            <span className="w-11 h-6 rounded-full bg-gray-300 dark:bg-zinc-700 transition-colors duration-200 peer-checked:bg-[var(--primary)]" aria-hidden="true" />
+                            <span className="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 peer-checked:translate-x-5" aria-hidden="true" />
+                          </label>
+                          <span style={{ fontSize: '13px', color: row.aiAccess ? 'var(--text-primary)' : 'var(--text-muted)' }}>
+                            {row.aiAccess ? row.accessLevel : 'No access'}
                           </span>
                         </div>
                       </td>
@@ -330,37 +310,17 @@ export default function AIManagementPage() {
                     <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
                       {feature.name}
                     </span>
-                    <button
-                      onClick={() => toggleFeature(idx)}
-                      className="relative shrink-0"
-                      style={{
-                        width: "44px",
-                        height: "24px",
-                        borderRadius: "12px",
-                        border: "none",
-                        background: feature.enabled ? "var(--primary)" : "#d1d5db",
-                        cursor: "pointer",
-                        transition: "background 0.2s",
-                      }}
-                      role="switch"
-                      aria-checked={feature.enabled}
-                      aria-label={`${feature.enabled ? 'Disable' : 'Enable'} ${feature.name}`}
-                    >
-                      <span
-                        style={{
-                          position: "absolute",
-                          top: "2px",
-                          left: feature.enabled ? "22px" : "2px",
-                          width: "20px",
-                          height: "20px",
-                          borderRadius: "50%",
-                          background: "#fff",
-                          boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
-                          transition: "left 0.2s",
-                        }}
-                        aria-hidden="true"
+                    <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                      <input
+                        type="checkbox"
+                        checked={feature.enabled}
+                        onChange={() => toggleFeature(idx)}
+                        className="sr-only peer"
+                        aria-label={`Toggle ${feature.name}`}
                       />
-                    </button>
+                      <span className="w-11 h-6 rounded-full bg-gray-300 dark:bg-zinc-700 transition-colors duration-200 peer-checked:bg-[var(--primary)]" aria-hidden="true" />
+                      <span className="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 peer-checked:translate-x-5" aria-hidden="true" />
+                    </label>
                   </div>
                 ))}
               </div>
