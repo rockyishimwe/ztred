@@ -586,3 +586,100 @@ html {
 }
 .animate-slide-in { animation: slideIn 0.25s ease-out forwards; }
 
+/* ═══════════════════════════════════════════════════════════════════
+   Responsive Utilities (HIG Layout — Adaptability)
+   Defer switching to compact view as long as possible.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Mobile-first responsive breakpoints */
+@media (max-width: 768px) {
+  /* HIG: Mobile minimum text size 11pt, default 17pt */
+  .responsive-text-display { font-size: 2rem !important; }
+  .responsive-text-h1 { font-size: 1.75rem !important; }
+  .responsive-text-h2 { font-size: 1.375rem !important; }
+  .responsive-text-h3 { font-size: 1.125rem !important; }
+  .responsive-text-body { font-size: 0.9375rem !important; }
+  .responsive-text-caption { font-size: 0.75rem !important; }
+  
+  /* HIG: Mobile padding 16px, avoid full-width buttons */
+  .responsive-padding { padding-left: 16px !important; padding-right: 16px !important; }
+  .responsive-padding-y { padding-top: 16px !important; padding-bottom: 16px !important; }
+  .responsive-gap { gap: 12px !important; }
+  
+  /* HIG: 44x44pt touch targets */
+  .responsive-touch-target { min-height: 44px !important; min-width: 44px !important; }
+  
+  /* Hide desktop-only elements */
+  .desktop-only { display: none !important; }
+  .mobile-only { display: block !important; }
+  
+  /* Stack grids */
+  .responsive-grid-2 { grid-template-columns: 1fr !important; }
+  .responsive-grid-3 { grid-template-columns: 1fr !important; }
+  .responsive-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+  
+  /* Tables scroll horizontally */
+  .responsive-table-wrapper { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+  
+  /* Sidebar overlay on mobile */
+  .responsive-sidebar {
+    position: fixed !important;
+    z-index: 100 !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease !important;
+  }
+  .responsive-sidebar.open { transform: translateX(0) !important; }
+  
+  /* Modal-like overlay */
+  .responsive-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,0.5) !important;
+    z-index: 90 !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Tablet: show more but still compact */
+  .responsive-grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
+  .responsive-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+  .mobile-only { display: none !important; }
+}
+
+@media (min-width: 1025px) {
+  .mobile-only { display: none !important; }
+  .desktop-only { display: block !important; }
+}
+
+/* HIG: Smooth transitions for layout changes */
+@media (prefers-reduced-motion: reduce) {
+  .responsive-sidebar { transition: none !important; }
+}
+
+/* HIG: Focus visible for keyboard navigation */
+.mobile-nav-item:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* Scroll snap for horizontal scrollable areas */
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.scroll-snap-x > * {
+  scroll-snap-align: start;
+}
+
+/* HIG: Safe area insets for mobile devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom) !important;
+  }
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top) !important;
+  }
+}
+
+

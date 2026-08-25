@@ -73,7 +73,7 @@ export default function AIManagementPage() {
 
   return (
     <div className="min-h-full" style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
-      <div className="max-w-[1200px] mx-auto px-8 py-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-sm mb-6" aria-label="Breadcrumb">
           <Link href="/workspace/control" className="font-medium transition-colors" style={{ color: "var(--primary)" }}>
@@ -84,16 +84,16 @@ export default function AIManagementPage() {
         </nav>
 
         {/* Title Row */}
-        <div className="flex items-start justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: "var(--text-primary)" }}>
+            <h1 className="responsive-text-h1 text-2xl sm:text-3xl font-extrabold tracking-tight" style={{ color: "var(--text-primary)" }}>
               AI management
             </h1>
             <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
               Configure AI assistant access, usage limits, and model settings
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <button
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
@@ -118,7 +118,7 @@ export default function AIManagementPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-6 mb-6" role="tablist" aria-label="AI management sections">
+        <div className="flex items-center gap-4 sm:gap-6 mb-6 overflow-x-auto" role="tablist" aria-label="AI management sections">
           {tabs.map((tab) => (
             <button
               key={tab.key}
@@ -136,7 +136,7 @@ export default function AIManagementPage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Content */}
           <div className="col-span-2 space-y-6">
             {/* AI Access by Role */}
@@ -147,7 +147,8 @@ export default function AIManagementPage() {
               <div className="px-6 py-5" style={{ borderBottom: "1px solid var(--border-color)" }}>
                 <h2 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>AI access by role</h2>
               </div>
-              <table className="w-full text-left">
+              <div className="overflow-x-auto">
+              <table className="w-full text-left" style={{ minWidth: "700px" }}>
                 <thead>
                   <tr style={{ borderBottom: "1px solid var(--border-color)" }}>
                     <th className="px-6 py-3 text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Role</th>
@@ -168,23 +169,37 @@ export default function AIManagementPage() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2.5">
-                          <label className="relative inline-flex items-center cursor-pointer shrink-0">
-                            <input
-                              type="checkbox"
-                              checked={row.aiAccess}
-                              onChange={() => toggleRole(idx)}
-                              className="sr-only peer"
-                              aria-label={`${row.aiAccess ? 'Disable' : 'Enable'} AI for ${row.role}`}
-                            />
+                          <button
+                            onClick={() => toggleRole(idx)}
+                            className="relative shrink-0"
+                            style={{
+                              width: "44px",
+                              height: "24px",
+                              borderRadius: "12px",
+                              border: "none",
+                              background: row.aiAccess ? "var(--primary)" : "#d1d5db",
+                              cursor: "pointer",
+                              transition: "background 0.2s",
+                            }}
+                            role="switch"
+                            aria-checked={row.aiAccess}
+                            aria-label={`${row.aiAccess ? 'Disable' : 'Enable'} AI for ${row.role}`}
+                          >
                             <span
-                              className="w-11 h-6 rounded-full bg-gray-300 transition-colors duration-200 peer-checked:bg-[var(--primary)]"
+                              style={{
+                                position: "absolute",
+                                top: "2px",
+                                left: row.aiAccess ? "22px" : "2px",
+                                width: "20px",
+                                height: "20px",
+                                borderRadius: "50%",
+                                background: "#fff",
+                                boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                                transition: "left 0.2s",
+                              }}
                               aria-hidden="true"
                             />
-                            <span
-                              className="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 peer-checked:translate-x-5"
-                              aria-hidden="true"
-                            />
-                          </label>
+                          </button>
                           <span className="text-sm" style={{ color: row.aiAccess ? "var(--text-primary)" : "var(--text-muted)" }}>
                             {row.aiAccess ? row.accessLevel : "No access"}
                           </span>
@@ -209,10 +224,11 @@ export default function AIManagementPage() {
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
 
             {/* Stats Bar */}
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { label: "Total queries today", value: `${usageToday}/${globalLimit}`, sub: `${usagePercent}% global usage` },
                 { label: "Active AI users", value: "28", sub: "60% of workspace members" },
@@ -314,23 +330,37 @@ export default function AIManagementPage() {
                     <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
                       {feature.name}
                     </span>
-                    <label className="relative inline-flex items-center cursor-pointer shrink-0">
-                      <input
-                        type="checkbox"
-                        checked={feature.enabled}
-                        onChange={() => toggleFeature(idx)}
-                        className="sr-only peer"
-                        aria-label={`${feature.enabled ? 'Disable' : 'Enable'} ${feature.name}`}
-                      />
+                    <button
+                      onClick={() => toggleFeature(idx)}
+                      className="relative shrink-0"
+                      style={{
+                        width: "44px",
+                        height: "24px",
+                        borderRadius: "12px",
+                        border: "none",
+                        background: feature.enabled ? "var(--primary)" : "#d1d5db",
+                        cursor: "pointer",
+                        transition: "background 0.2s",
+                      }}
+                      role="switch"
+                      aria-checked={feature.enabled}
+                      aria-label={`${feature.enabled ? 'Disable' : 'Enable'} ${feature.name}`}
+                    >
                       <span
-                        className="w-11 h-6 rounded-full bg-gray-300 transition-colors duration-200 peer-checked:bg-[var(--primary)]"
+                        style={{
+                          position: "absolute",
+                          top: "2px",
+                          left: feature.enabled ? "22px" : "2px",
+                          width: "20px",
+                          height: "20px",
+                          borderRadius: "50%",
+                          background: "#fff",
+                          boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                          transition: "left 0.2s",
+                        }}
                         aria-hidden="true"
                       />
-                      <span
-                        className="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 peer-checked:translate-x-5"
-                        aria-hidden="true"
-                      />
-                    </label>
+                    </button>
                   </div>
                 ))}
               </div>

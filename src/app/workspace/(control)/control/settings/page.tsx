@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 
 export default function SettingsPage() {
@@ -7,7 +6,14 @@ export default function SettingsPage() {
   const tabs = ["General", "Branding", "Notifications", "Integrations", "Danger zone"];
 
   return (
-    <div style={{ padding: "24px 32px" }}>
+    <div className="settings-root" style={{ width:"100%", maxWidth:"1180px", margin:"0 auto", padding:"24px", boxSizing:"border-box", overflowX:"hidden" }}>
+
+      <style>{`
+        @media (max-width: 900px) { .settings-grid { grid-template-columns:1fr !important; } }
+        @media (max-width: 640px) { .settings-root { padding:18px 14px !important; } }
+        .peer:checked ~ .toggle-track { background: var(--primary) !important; }
+        .peer:checked ~ .toggle-thumb { transform: translateX(20px) !important; }
+      `}</style>
       {/* Breadcrumb */}
       <div style={{ fontSize: "13px", color: "var(--text-muted)", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
         <span>Workspace control</span>
@@ -16,12 +22,12 @@ export default function SettingsPage() {
       </div>
 
       {/* Title */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "24px" }}>
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:"16px", flexWrap:"wrap", marginBottom:"24px" }}>
         <div>
           <h1 style={{ fontSize: "28px", fontWeight: 700, color: "var(--text-primary)", margin: 0, fontFamily: "var(--font-heading)" }}>Workspace settings</h1>
           <p style={{ fontSize: "14px", color: "var(--text-muted)", margin: "6px 0 0" }}>Configure your workspace preferences, branding, and integrations</p>
         </div>
-        <div style={{ display: "flex", gap: "10px" }}>
+        <div style={{ display:"flex", gap:"10px", flexWrap:"wrap" }}>
           <button style={{ padding: "9px 18px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-card)", color: "var(--text-primary)", fontSize: "13px", fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>Platform console</button>
           <button style={{ padding: "9px 18px", borderRadius: "10px", border: "none", background: "var(--primary)", color: "#fff", fontSize: "13px", fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>+ Invite member</button>
           <button style={{ padding: "9px 18px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-card)", color: "var(--text-primary)", fontSize: "13px", fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
@@ -32,7 +38,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: "flex", gap: "28px", borderBottom: "1px solid var(--border-color)", marginBottom: "28px" }}>
+      <div style={{ display:"flex", gap:"24px", borderBottom:"1px solid var(--border-color)", marginBottom:"24px", overflowX:"auto", whiteSpace:"nowrap" }}>
         {tabs.map(tab => (
           <button
             key={tab}
@@ -50,22 +56,22 @@ export default function SettingsPage() {
         ))}
       </div>
 
-      <div style={{ display: "flex", gap: "24px" }}>
+      <div className="settings-grid" style={{ display:"grid", gridTemplateColumns:"minmax(0,2fr) minmax(280px,1fr)", gap:"24px", alignItems:"start" }}>
         {/* Left - 2/3 */}
-        <div style={{ flex: 2, display: "flex", flexDirection: "column", gap: "24px" }}>
+        <div style={{ minWidth:0, display:"flex", flexDirection:"column", gap:"20px" }}>
           {/* General settings */}
-          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "24px" }}>
+          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "20px", boxSizing:"border-box", minWidth:0, width:"100%" }}>
             <h2 style={{ fontSize: "17px", fontWeight: 700, color: "var(--text-primary)", margin: "0 0 20px" }}>General settings</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
               {/* Workspace Name */}
               <div>
                 <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Workspace Name</label>
-                <input defaultValue="ZTRED Headquarters" style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box" }} />
+                <input defaultValue="ZTRED Headquarters" style={{ width: "100%", maxWidth:"100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box" }} />
               </div>
               {/* Workspace URL */}
               <div>
                 <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Workspace URL</label>
-                <input defaultValue="ztred-hq.ztred.com" style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box" }} />
+                <input defaultValue="ztred-hq.ztred.com" style={{ width: "100%", maxWidth:"100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box" }} />
               </div>
               {/* Workspace Description */}
               <div>
@@ -73,14 +79,14 @@ export default function SettingsPage() {
                 <textarea
                   defaultValue="ZTRED core operations hub for design system assets and audit automation."
                   rows={3}
-                  style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", resize: "vertical" }}
+                  style={{ width: "100%", maxWidth:"100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", resize: "vertical" }}
                 />
               </div>
               {/* Timezone + Language */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "14px" }}>
                 <div>
                   <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Timezone</label>
-                  <select style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", appearance: "auto" }}>
+                  <select style={{ width: "100%", maxWidth:"100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", appearance: "auto" }}>
                     <option>GMT+2 East Africa</option>
                     <option>UTC</option>
                     <option>GMT-5 EST</option>
@@ -88,7 +94,7 @@ export default function SettingsPage() {
                 </div>
                 <div>
                   <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Language</label>
-                  <select style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", appearance: "auto" }}>
+                  <select style={{ width: "100%", maxWidth:"100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", appearance: "auto" }}>
                     <option>English</option>
                     <option>French</option>
                     <option>Swahili</option>
@@ -99,13 +105,13 @@ export default function SettingsPage() {
           </div>
 
           {/* Default permissions */}
-          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "24px" }}>
+          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "20px", boxSizing:"border-box", minWidth:0, width:"100%" }}>
             <h2 style={{ fontSize: "17px", fontWeight: 700, color: "var(--text-primary)", margin: "0 0 20px" }}>Default permissions</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
               {/* Default role */}
               <div>
                 <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Default role for new members</label>
-                <select style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", appearance: "auto" }}>
+                <select style={{ width: "100%", maxWidth:"100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", appearance: "auto" }}>
                   <option>Member</option>
                   <option>Guest</option>
                   <option>Manager</option>
@@ -121,29 +127,18 @@ export default function SettingsPage() {
                 </div>
               </div>
               {/* Toggles */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "14px" }}>
                 {[
                   { label: "Guest access", on: true },
                   { label: "File sharing", on: true },
                 ].map(item => (
                   <div key={item.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 0" }}>
                     <span style={{ fontSize: "14px", color: "var(--text-primary)", fontWeight: 500 }}>{item.label}</span>
-                    <button
-                      style={{
-                        position: "relative", width: "44px", height: "24px", borderRadius: "12px", border: "none",
-                        background: item.on ? "var(--primary)" : "#999",
-                        cursor: "pointer", transition: "background 0.2s", flexShrink: 0,
-                      }}
-                      aria-label={`Toggle ${item.label}`}
-                    >
-                      <span style={{
-                        position: "absolute", top: "2px",
-                        left: item.on ? "22px" : "2px",
-                        width: "20px", height: "20px", borderRadius: "50%",
-                        background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
-                        transition: "left 0.2s",
-                      }} />
-                    </button>
+                    <label style={{ position:"relative", display:"inline-flex", width:"44px", height:"24px", flexShrink:0, cursor:"pointer" }}>
+                      <input type="checkbox" defaultChecked={item.on} className="peer sr-only" aria-label={`Toggle ${item.label}`} />
+                      <span className="toggle-track" style={{ position:"absolute", inset:0, borderRadius:"12px", background:"var(--border-color)", transition:"background 0.2s" }} />
+                      <span className="toggle-thumb" style={{ position:"absolute", top:"2px", left:"2px", width:"20px", height:"20px", borderRadius:"50%", background:"#fff", boxShadow:"0 1px 3px rgba(0,0,0,0.2)", transition:"transform 0.2s" }} />
+                    </label>
                   </div>
                 ))}
               </div>
@@ -152,9 +147,9 @@ export default function SettingsPage() {
         </div>
 
         {/* Right - 1/3 */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "24px" }}>
+        <div style={{ minWidth:0, display:"flex", flexDirection:"column", gap:"20px" }}>
           {/* Workspace plan */}
-          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "24px" }}>
+          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "20px", boxSizing:"border-box", minWidth:0, width:"100%" }}>
             <h2 style={{ fontSize: "17px", fontWeight: 700, color: "var(--text-primary)", margin: "0 0 20px" }}>Workspace plan</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -174,12 +169,12 @@ export default function SettingsPage() {
                   <div style={{ width: "24%", height: "100%", borderRadius: "4px", background: "var(--primary)" }} />
                 </div>
               </div>
-              <button style={{ width: "100%", padding: "11px", borderRadius: "10px", border: "none", background: "var(--primary)", color: "#fff", fontSize: "13px", fontWeight: 600, cursor: "pointer", marginTop: "4px" }}>Upgrade plan</button>
+              <button style={{ width: "100%", maxWidth:"100%", padding: "11px", borderRadius: "10px", border: "none", background: "var(--primary)", color: "#fff", fontSize: "13px", fontWeight: 600, cursor: "pointer", marginTop: "4px" }}>Upgrade plan</button>
             </div>
           </div>
 
           {/* Integrations */}
-          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "24px" }}>
+          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "20px", boxSizing:"border-box", minWidth:0, width:"100%" }}>
             <h2 style={{ fontSize: "17px", fontWeight: 700, color: "var(--text-primary)", margin: "0 0 16px" }}>Integrations</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
               {[

@@ -80,7 +80,7 @@ export default function RolesPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
-      <div className="max-w-[1200px] mx-auto px-8 py-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-sm mb-6" aria-label="Breadcrumb">
           <Link href="/workspace/control" className="font-medium transition-colors" style={{ color: "var(--primary)" }}>
@@ -193,7 +193,7 @@ export default function RolesPage() {
         </div>
 
         {/* Bottom Row: Workspace Roles + Role Overview */}
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Workspace Roles Table */}
           <div
             className="col-span-2 rounded-2xl overflow-hidden"

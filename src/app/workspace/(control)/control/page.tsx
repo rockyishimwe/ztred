@@ -84,7 +84,7 @@ export default function WorkspaceControlPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
-      <div className="max-w-[1200px] mx-auto px-8 py-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-sm mb-6" aria-label="Breadcrumb">
           <Link
@@ -99,11 +99,11 @@ export default function WorkspaceControlPage() {
         </nav>
 
         {/* Title Row */}
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: "var(--text-primary)" }}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <h1 className="responsive-text-h1 text-2xl sm:text-3xl font-extrabold tracking-tight" style={{ color: "var(--text-primary)" }}>
             Workspace control
           </h1>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <button
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{
@@ -136,7 +136,7 @@ export default function WorkspaceControlPage() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
@@ -166,7 +166,7 @@ export default function WorkspaceControlPage() {
         </div>
 
         {/* Quick Actions + Member Status Row */}
-        <div className="grid grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Quick Actions */}
           <div
             className="col-span-2 rounded-2xl p-6"
@@ -178,7 +178,7 @@ export default function WorkspaceControlPage() {
             <h2 className="text-lg font-bold mb-5" style={{ color: "var(--text-primary)" }}>
               Quick actions
             </h2>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {quickActions.map((action) => {
                 const Icon = action.icon;
                 return (
@@ -221,7 +221,7 @@ export default function WorkspaceControlPage() {
             <h2 className="text-lg font-bold mb-5" style={{ color: "var(--text-primary)" }}>
               Member status
             </h2>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {memberStatus.map((status) => (
                 <div
                   key={status.label}
@@ -241,7 +241,7 @@ export default function WorkspaceControlPage() {
         </div>
 
         {/* Bottom Row: Pending Invitations + Recent Activity */}
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Pending Invitations */}
           <div
             className="col-span-2 rounded-2xl p-6"
@@ -262,7 +262,7 @@ export default function WorkspaceControlPage() {
               </button>
             </div>
 
-            <div className="space-y-0">
+            <div className="space-y-0 overflow-x-auto">
               {pendingInvitations.map((inv, idx) => (
                 <div
                   key={inv.email}

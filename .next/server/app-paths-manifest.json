@@ -1,7 +1,8 @@
 {
-  "/page": "app/page.js",
-  "/workspace/(control)/control/audit/page": "app/workspace/(control)/control/audit/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/workspace/(control)/control/settings/page": "app/workspace/(control)/control/settings/page.js",
+  "/workspace/(control)/control/members/page": "app/workspace/(control)/control/members/page.js",
+  "/workspace/(workspace)/page": "app/workspace/(workspace)/page.js",
   "/workspace/(control)/control/ai/page": "app/workspace/(control)/control/ai/page.js",
-  "/workspace/(control)/control/security/page": "app/workspace/(control)/control/security/page.js",
-  "/workspace/(control)/control/settings/page": "app/workspace/(control)/control/settings/page.js"
+  "/workspace/(control)/control/page": "app/workspace/(control)/control/page.js"
 }

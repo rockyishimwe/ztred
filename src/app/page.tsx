@@ -48,7 +48,7 @@ export default function LandingPage() {
         style={{ backgroundColor: "var(--bg-primary)", opacity: 0.95 }}
         role="banner"
       >
-        <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <img src="/ztred-logo.svg" alt="" className="w-10 h-10" aria-hidden="true" />
             <span className="text-xl font-bold tracking-tight" style={{ color: "var(--text-primary)" }}>Ztred</span>
@@ -72,9 +72,9 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden flex-1">
-        <div className="max-w-7xl mx-auto px-8 h-full grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-center">
           {/* Left Content */}
-          <div className="space-y-6 relative z-10 flex flex-col justify-center">
+          <div className="space-y-4 sm:space-y-6 relative z-10 flex flex-col justify-center">
             {/* Illustration */}
             <div className="hidden lg:block">
               <img
@@ -86,7 +86,7 @@ export default function LandingPage() {
             </div>
 
             {/* Heading */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]" style={{ color: "var(--text-primary)" }}>
+            <h1 className="responsive-text-h1 text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]" style={{ color: "var(--text-primary)" }}>
               Team chat, calls,
               <br />
               files, and AI in one

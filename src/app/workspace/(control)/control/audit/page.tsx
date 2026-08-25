@@ -140,7 +140,7 @@ export default function AuditLogsPage() {
   };
 
   return (
-    <div style={{ padding: "24px 32px" }}>
+    <div className="responsive-padding" style={{ padding: "24px 32px" }}>
       {/* Breadcrumb */}
       <div
         style={{
@@ -229,6 +229,7 @@ export default function AuditLogsPage() {
 
       {/* Stat cards */}
       <div
+        className="responsive-grid-4"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
@@ -298,6 +299,7 @@ export default function AuditLogsPage() {
 
       {/* Filter bar */}
       <div
+        className="responsive-table-wrapper"
         style={{
           display: "flex",
           alignItems: "center",
@@ -307,6 +309,7 @@ export default function AuditLogsPage() {
           border: "1px solid var(--border-color)",
           borderRadius: "14px",
           padding: "14px 16px",
+          flexWrap: "wrap",
         }}
       >
         {/* Search */}

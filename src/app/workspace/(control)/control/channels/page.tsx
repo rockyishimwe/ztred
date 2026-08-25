@@ -231,7 +231,7 @@ export default function ChannelsPage() {
         </div>
 
         {/* Bottom: Directory + Details */}
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Channels Directory */}
           <div
             className="col-span-2 rounded-2xl overflow-hidden"
