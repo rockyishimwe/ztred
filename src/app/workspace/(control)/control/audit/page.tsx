@@ -11,7 +11,7 @@ const AVATARS: Record<string, string> = {
 };
 
 const CATEGORY_STYLES: Record<string, { color: string; bg: string }> = {
-  Permission: { color: "#7c3aed", bg: "#f3e8ff" },
+  Permission: { color: "#16a34a", bg: "#dcfce7" },
   Member: { color: "#2563eb", bg: "#dbeafe" },
   Security: { color: "#dc2626", bg: "#fee2e2" },
   Channel: { color: "#16a34a", bg: "#dcfce7" },

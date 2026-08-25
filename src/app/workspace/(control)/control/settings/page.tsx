@@ -4,223 +4,93 @@ import React, { useState } from "react";
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState("General");
-  const [workspaceName, setWorkspaceName] = useState("ZTRED Headquarters");
-  const [workspaceUrl, setWorkspaceUrl] = useState("ztred-hq.ztred.com");
-  const [workspaceDesc, setWorkspaceDesc] = useState("ZTRED core operations hub for design system assets and audit automation.");
-  const [timezone, setTimezone] = useState("GMT+2 East Africa");
-  const [language, setLanguage] = useState("English");
-  const [defaultRole, setDefaultRole] = useState("Member");
-  const [guestAccess, setGuestAccess] = useState(true);
-  const [fileSharing, setFileSharing] = useState(true);
-
   const tabs = ["General", "Branding", "Notifications", "Integrations", "Danger zone"];
 
-  const integrations = [
-    { name: "Slack", connected: true },
-    { name: "Google Workspace", connected: true },
-    { name: "GitHub", connected: false },
-    { name: "Jira", connected: true },
-    { name: "Notion", connected: false },
-  ];
-
-  const integrationIcons: Record<string, React.ReactNode> = {
-    Slack: (
-      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#E01E5A" d="M6 15a2 2 0 1 1-2-2h2v2zm1 0a2 2 0 0 1 4 0v5a2 2 0 0 1-4 0v-5z"/><path fill="#36C5F0" d="M9 6a2 2 0 1 1 2-2v2H9zm0 1a2 2 0 0 1 0 4H4a2 2 0 0 1 0-4h5z"/><path fill="#2EB67D" d="M18 9a2 2 0 1 1 2 2h-2V9zm-1 0a2 2 0 0 1-4 0V4a2 2 0 0 1 4 0v5z"/><path fill="#ECB22E" d="M15 18a2 2 0 1 1-2 2v-2h2zm0-1a2 2 0 0 1 0-4h5a2 2 0 0 1 0 4h-5z"/></svg>
-    ),
-    "Google Workspace": (
-      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-    ),
-    GitHub: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="#24292f"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.04.77 2.1v3.12c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
-    ),
-    Jira: (
-      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#2684FF" d="M12 2l5.66 5.66a7.4 7.4 0 0 1 0 10.46L12 23.8l-5.66-5.68a7.4 7.4 0 0 1 0-10.46L12 2zm0 5.66L9.17 10.5a3.9 3.9 0 0 0 0 5.5L12 18.83l2.83-2.83a3.9 3.9 0 0 0 0-5.5L12 7.66z"/></svg>
-    ),
-    Notion: (
-      <svg width="18" height="18" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#fff" stroke="#37352F" strokeWidth="1.5"/><path fill="#37352F" d="M8 17V7h1.8l4.6 7V7H16v10h-1.8L9.6 10v7H8z"/></svg>
-    ),
-  };
-
   return (
-    <div style={{ padding: 0 }}>
+    <div style={{ padding: "24px 32px" }}>
       {/* Breadcrumb */}
-      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", fontSize: "14px", color: "var(--text-secondary)" }}>
+      <div style={{ fontSize: "13px", color: "var(--text-muted)", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
         <span>Workspace control</span>
-        <span style={{ color: "var(--text-tertiary)" }}>›</span>
-        <span style={{ color: "#7c3aed", fontWeight: 500 }}>Workspace settings</span>
+        <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        <span style={{ color: "var(--primary)" }}>Workspace settings</span>
       </div>
 
-      {/* Title row */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "8px" }}>
+      {/* Title */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "24px" }}>
         <div>
-          <h1 style={{ fontSize: "28px", fontWeight: 700, color: "var(--text-primary)", margin: 0, lineHeight: 1.2 }}>Workspace settings</h1>
-          <p style={{ fontSize: "14px", color: "var(--text-secondary)", margin: "4px 0 0 0" }}>
-            Configure your workspace preferences, branding, and integrations
-          </p>
+          <h1 style={{ fontSize: "28px", fontWeight: 700, color: "var(--text-primary)", margin: 0, fontFamily: "var(--font-heading)" }}>Workspace settings</h1>
+          <p style={{ fontSize: "14px", color: "var(--text-muted)", margin: "6px 0 0" }}>Configure your workspace preferences, branding, and integrations</p>
         </div>
-        <div style={{ display: "flex", gap: "8px" }}>
-          <button style={{
-            padding: "8px 16px", borderRadius: "8px", border: "1px solid var(--border)",
-            background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "13px",
-            fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
-          }}>
-            Platform console
-          </button>
-          <button style={{
-            padding: "8px 16px", borderRadius: "8px", border: "none",
-            background: "#7c3aed", color: "#fff", fontSize: "13px",
-            fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
-          }}>
-            + Invite member
-          </button>
-          <button style={{
-            padding: "8px 16px", borderRadius: "8px", border: "1px solid var(--border)",
-            background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "13px",
-            fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
-          }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button style={{ padding: "9px 18px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-card)", color: "var(--text-primary)", fontSize: "13px", fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>Platform console</button>
+          <button style={{ padding: "9px 18px", borderRadius: "10px", border: "none", background: "var(--primary)", color: "#fff", fontSize: "13px", fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>+ Invite member</button>
+          <button style={{ padding: "9px 18px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-card)", color: "var(--text-primary)", fontSize: "13px", fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
+            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
             Export
           </button>
         </div>
       </div>
 
       {/* Tabs */}
-      <div style={{ display: "flex", gap: "0", borderBottom: "1px solid var(--border)", marginBottom: "24px" }}>
-        {tabs.map((tab) => (
+      <div style={{ display: "flex", gap: "28px", borderBottom: "1px solid var(--border-color)", marginBottom: "28px" }}>
+        {tabs.map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             style={{
-              padding: "10px 20px", border: "none", background: "transparent",
-              color: activeTab === tab ? "#7c3aed" : "var(--text-secondary)",
-              fontSize: "14px", fontWeight: activeTab === tab ? 600 : 400,
-              cursor: "pointer", position: "relative", whiteSpace: "nowrap",
+              background: "none", border: "none", padding: "0 0 12px",
+              fontSize: "14px", fontWeight: 500, cursor: "pointer",
+              color: activeTab === tab ? "var(--primary)" : "var(--text-muted)",
+              borderBottom: activeTab === tab ? "2px solid var(--primary)" : "2px solid transparent",
+              marginBottom: "-1px",
             }}
           >
             {tab}
-            {activeTab === tab && (
-              <div style={{
-                position: "absolute", bottom: "-1px", left: 0, right: 0,
-                height: "2px", background: "#7c3aed", borderRadius: "1px",
-              }} />
-            )}
           </button>
         ))}
       </div>
 
-      {/* Content */}
-      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "24px" }}>
-        {/* Left column - Form */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+      <div style={{ display: "flex", gap: "24px" }}>
+        {/* Left - 2/3 */}
+        <div style={{ flex: 2, display: "flex", flexDirection: "column", gap: "24px" }}>
           {/* General settings */}
-          <div style={{
-            background: "var(--bg-primary)", border: "1px solid var(--border)",
-            borderRadius: "12px", padding: "24px",
-          }}>
-            <h2 style={{ fontSize: "16px", fontWeight: 600, color: "var(--text-primary)", margin: "0 0 20px 0" }}>
-              General settings
-            </h2>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {/* Workspace name */}
+          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "24px" }}>
+            <h2 style={{ fontSize: "17px", fontWeight: 700, color: "var(--text-primary)", margin: "0 0 20px" }}>General settings</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+              {/* Workspace Name */}
               <div>
-                <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-secondary)", letterSpacing: "0.05em", display: "block", marginBottom: "6px", textTransform: "uppercase" }}>
-                  WORKSPACE NAME
-                </label>
-                <input
-                  type="text"
-                  value={workspaceName}
-                  onChange={(e) => setWorkspaceName(e.target.value)}
-                  style={{
-                    width: "100%", padding: "10px 14px", borderRadius: "8px",
-                    border: "1px solid var(--border)", background: "var(--bg-secondary)",
-                    color: "var(--text-primary)", fontSize: "14px", outline: "none",
-                    boxSizing: "border-box",
-                  }}
-                />
+                <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Workspace Name</label>
+                <input defaultValue="ZTRED Headquarters" style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box" }} />
               </div>
-
               {/* Workspace URL */}
               <div>
-                <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-secondary)", letterSpacing: "0.05em", display: "block", marginBottom: "6px", textTransform: "uppercase" }}>
-                  WORKSPACE URL
-                </label>
-                <input
-                  type="text"
-                  value={workspaceUrl}
-                  onChange={(e) => setWorkspaceUrl(e.target.value)}
-                  style={{
-                    width: "100%", padding: "10px 14px", borderRadius: "8px",
-                    border: "1px solid var(--border)", background: "var(--bg-secondary)",
-                    color: "var(--text-primary)", fontSize: "14px", outline: "none",
-                    boxSizing: "border-box",
-                  }}
-                />
+                <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Workspace URL</label>
+                <input defaultValue="ztred-hq.ztred.com" style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box" }} />
               </div>
-
-              {/* Workspace description */}
+              {/* Workspace Description */}
               <div>
-                <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-secondary)", letterSpacing: "0.05em", display: "block", marginBottom: "6px", textTransform: "uppercase" }}>
-                  WORKSPACE DESCRIPTION
-                </label>
+                <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Workspace Description</label>
                 <textarea
-                  value={workspaceDesc}
-                  onChange={(e) => setWorkspaceDesc(e.target.value)}
+                  defaultValue="ZTRED core operations hub for design system assets and audit automation."
                   rows={3}
-                  style={{
-                    width: "100%", padding: "10px 14px", borderRadius: "8px",
-                    border: "1px solid var(--border)", background: "var(--bg-secondary)",
-                    color: "var(--text-primary)", fontSize: "14px", outline: "none",
-                    resize: "vertical", fontFamily: "inherit", boxSizing: "border-box",
-                  }}
+                  style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", resize: "vertical" }}
                 />
               </div>
-
-              {/* Timezone and Language */}
+              {/* Timezone + Language */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                 <div>
-                  <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-secondary)", letterSpacing: "0.05em", display: "block", marginBottom: "6px", textTransform: "uppercase" }}>
-                    TIMEZONE
-                  </label>
-                  <select
-                    value={timezone}
-                    onChange={(e) => setTimezone(e.target.value)}
-                    style={{
-                      width: "100%", padding: "10px 14px", borderRadius: "8px",
-                      border: "1px solid var(--border)", background: "var(--bg-secondary)",
-                      color: "var(--text-primary)", fontSize: "14px", cursor: "pointer",
-                      outline: "none", boxSizing: "border-box",
-                    }}
-                  >
+                  <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Timezone</label>
+                  <select style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", appearance: "auto" }}>
                     <option>GMT+2 East Africa</option>
-                    <option>GMT+0 London</option>
-                    <option>GMT-5 New York</option>
-                    <option>GMT-8 Los Angeles</option>
-                    <option>GMT+1 Central Europe</option>
-                    <option>GMT+5:30 India</option>
-                    <option>GMT+8 Singapore</option>
-                    <option>GMT+9 Japan</option>
+                    <option>UTC</option>
+                    <option>GMT-5 EST</option>
                   </select>
                 </div>
                 <div>
-                  <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-secondary)", letterSpacing: "0.05em", display: "block", marginBottom: "6px", textTransform: "uppercase" }}>
-                    LANGUAGE
-                  </label>
-                  <select
-                    value={language}
-                    onChange={(e) => setLanguage(e.target.value)}
-                    style={{
-                      width: "100%", padding: "10px 14px", borderRadius: "8px",
-                      border: "1px solid var(--border)", background: "var(--bg-secondary)",
-                      color: "var(--text-primary)", fontSize: "14px", cursor: "pointer",
-                      outline: "none", boxSizing: "border-box",
-                    }}
-                  >
+                  <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Language</label>
+                  <select style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", appearance: "auto" }}>
                     <option>English</option>
                     <option>French</option>
-                    <option>German</option>
-                    <option>Spanish</option>
-                    <option>Portuguese</option>
                     <option>Swahili</option>
                   </select>
                 </div>
@@ -229,198 +99,117 @@ export default function SettingsPage() {
           </div>
 
           {/* Default permissions */}
-          <div style={{
-            background: "var(--bg-primary)", border: "1px solid var(--border)",
-            borderRadius: "12px", padding: "24px",
-          }}>
-            <h2 style={{ fontSize: "16px", fontWeight: 600, color: "var(--text-primary)", margin: "0 0 20px 0" }}>
-              Default permissions
-            </h2>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "24px" }}>
+            <h2 style={{ fontSize: "17px", fontWeight: 700, color: "var(--text-primary)", margin: "0 0 20px" }}>Default permissions</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
               {/* Default role */}
               <div>
-                <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-secondary)", letterSpacing: "0.05em", display: "block", marginBottom: "6px", textTransform: "uppercase" }}>
-                  DEFAULT ROLE FOR NEW MEMBERS
-                </label>
-                <select
-                  value={defaultRole}
-                  onChange={(e) => setDefaultRole(e.target.value)}
-                  style={{
-                    width: "100%", padding: "10px 14px", borderRadius: "8px",
-                    border: "1px solid var(--border)", background: "var(--bg-secondary)",
-                    color: "var(--text-primary)", fontSize: "14px", cursor: "pointer",
-                    outline: "none", boxSizing: "border-box",
-                  }}
-                >
-                  <option>Guest</option>
+                <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Default role for new members</label>
+                <select style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", appearance: "auto" }}>
                   <option>Member</option>
+                  <option>Guest</option>
                   <option>Manager</option>
-                  <option>Admin</option>
                 </select>
               </div>
-
               {/* Auto-join channels */}
               <div>
-                <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-secondary)", letterSpacing: "0.05em", display: "block", marginBottom: "6px", textTransform: "uppercase" }}>
-                  AUTO-JOIN CHANNELS
-                </label>
+                <label style={{ fontSize: "11px", fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "7px" }}>Auto-join channels</label>
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                  {["#general", "#announcements"].map((ch) => (
-                    <span key={ch} style={{
-                      padding: "4px 12px", borderRadius: "16px",
-                      background: "color-mix(in srgb, var(--primary) 12%, transparent)",
-                      color: "#7c3aed", fontSize: "13px", fontWeight: 500,
-                    }}>
-                      {ch}
-                    </span>
+                  {["#general", "#announcements"].map(ch => (
+                    <span key={ch} style={{ padding: "6px 14px", borderRadius: "8px", border: "1px solid var(--border-color)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: "13px", fontWeight: 500 }}>{ch}</span>
                   ))}
                 </div>
               </div>
-
-              {/* Toggle switches */}
+              {/* Toggles */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-                {/* Guest access */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "14px", color: "var(--text-primary)" }}>Guest access</span>
-                  <button
-                    onClick={() => setGuestAccess(!guestAccess)}
-                    style={{
-                      width: "44px", height: "24px", borderRadius: "12px", border: "none",
-                      background: guestAccess ? "#7c3aed" : "#999",
-                      cursor: "pointer", position: "relative", transition: "background 0.2s",
-                    }}
-                    aria-label={`Guest access ${guestAccess ? "on" : "off"}`}
-                  >
-                    <div style={{
-                      width: "20px", height: "20px", borderRadius: "50%", background: "#fff",
-                      position: "absolute", top: "2px",
-                      left: guestAccess ? "22px" : "2px",
-                      transition: "left 0.2s", boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
-                    }} />
-                  </button>
-                </div>
-
-                {/* File sharing */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "14px", color: "var(--text-primary)" }}>File sharing</span>
-                  <button
-                    onClick={() => setFileSharing(!fileSharing)}
-                    style={{
-                      width: "44px", height: "24px", borderRadius: "12px", border: "none",
-                      background: fileSharing ? "#7c3aed" : "#999",
-                      cursor: "pointer", position: "relative", transition: "background 0.2s",
-                    }}
-                    aria-label={`File sharing ${fileSharing ? "on" : "off"}`}
-                  >
-                    <div style={{
-                      width: "20px", height: "20px", borderRadius: "50%", background: "#fff",
-                      position: "absolute", top: "2px",
-                      left: fileSharing ? "22px" : "2px",
-                      transition: "left 0.2s", boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
-                    }} />
-                  </button>
-                </div>
+                {[
+                  { label: "Guest access", on: true },
+                  { label: "File sharing", on: true },
+                ].map(item => (
+                  <div key={item.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 0" }}>
+                    <span style={{ fontSize: "14px", color: "var(--text-primary)", fontWeight: 500 }}>{item.label}</span>
+                    <button
+                      style={{
+                        position: "relative", width: "44px", height: "24px", borderRadius: "12px", border: "none",
+                        background: item.on ? "var(--primary)" : "#999",
+                        cursor: "pointer", transition: "background 0.2s", flexShrink: 0,
+                      }}
+                      aria-label={`Toggle ${item.label}`}
+                    >
+                      <span style={{
+                        position: "absolute", top: "2px",
+                        left: item.on ? "22px" : "2px",
+                        width: "20px", height: "20px", borderRadius: "50%",
+                        background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                        transition: "left 0.2s",
+                      }} />
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right column - Sidebar */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+        {/* Right - 1/3 */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "24px" }}>
           {/* Workspace plan */}
-          <div style={{
-            background: "var(--bg-primary)", border: "1px solid var(--border)",
-            borderRadius: "12px", padding: "20px",
-          }}>
-            <h3 style={{ fontSize: "16px", fontWeight: 600, color: "var(--text-primary)", margin: "0 0 16px 0" }}>
-              Workspace plan
-            </h3>
-
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-              <span style={{ fontSize: "13px", color: "var(--text-secondary)" }}>Current Plan</span>
-              <span style={{
-                padding: "3px 10px", borderRadius: "12px", fontSize: "12px", fontWeight: 600,
-                background: "color-mix(in srgb, #7c3aed 12%, transparent)",
-                color: "#7c3aed",
-              }}>
-                PRO
-              </span>
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-              <span style={{ fontSize: "13px", color: "var(--text-secondary)" }}>Members</span>
-              <span style={{ fontSize: "13px", fontWeight: 600, color: "var(--text-primary)" }}>47 / 100</span>
-            </div>
-
-            <div style={{ marginBottom: "4px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
-                <span style={{ fontSize: "13px", color: "var(--text-secondary)" }}>Storage used</span>
-                <span style={{ fontSize: "13px", color: "var(--text-secondary)" }}>12.4 GB / 50 GB (24%)</span>
+          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "24px" }}>
+            <h2 style={{ fontSize: "17px", fontWeight: 700, color: "var(--text-primary)", margin: "0 0 20px" }}>Workspace plan</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontSize: "13px", color: "var(--text-muted)" }}>Current Plan</span>
+                <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--primary)", background: "color-mix(in srgb, var(--primary) 12%, transparent)", padding: "3px 10px", borderRadius: "6px" }}>PRO</span>
               </div>
-              <div style={{
-                width: "100%", height: "6px", borderRadius: "3px",
-                background: "var(--border)", overflow: "hidden",
-              }}>
-                <div style={{
-                  width: "24%", height: "100%", borderRadius: "3px",
-                  background: "#7c3aed",
-                }} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontSize: "13px", color: "var(--text-muted)" }}>Members</span>
+                <span style={{ fontSize: "13px", fontWeight: 600, color: "var(--text-primary)" }}>47 / 100</span>
               </div>
+              <div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
+                  <span style={{ fontSize: "13px", color: "var(--text-muted)" }}>Storage used</span>
+                  <span style={{ fontSize: "13px", fontWeight: 500, color: "var(--text-primary)" }}>12.4 GB / 50 GB (24%)</span>
+                </div>
+                <div style={{ width: "100%", height: "8px", borderRadius: "4px", background: "var(--border-color)", overflow: "hidden" }}>
+                  <div style={{ width: "24%", height: "100%", borderRadius: "4px", background: "var(--primary)" }} />
+                </div>
+              </div>
+              <button style={{ width: "100%", padding: "11px", borderRadius: "10px", border: "none", background: "var(--primary)", color: "#fff", fontSize: "13px", fontWeight: 600, cursor: "pointer", marginTop: "4px" }}>Upgrade plan</button>
             </div>
-
-            <button style={{
-              width: "100%", padding: "10px 16px", borderRadius: "8px", border: "none",
-              background: "#7c3aed", color: "#fff", fontSize: "14px",
-              fontWeight: 500, cursor: "pointer", marginTop: "16px",
-            }}>
-              Upgrade plan
-            </button>
           </div>
 
           {/* Integrations */}
-          <div style={{
-            background: "var(--bg-primary)", border: "1px solid var(--border)",
-            borderRadius: "12px", padding: "20px",
-          }}>
-            <h3 style={{ fontSize: "16px", fontWeight: 600, color: "var(--text-primary)", margin: "0 0 16px 0" }}>
-              Integrations
-            </h3>
-
+          <div style={{ background: "var(--bg-card)", borderRadius: "14px", border: "1px solid var(--border-color)", padding: "24px" }}>
+            <h2 style={{ fontSize: "17px", fontWeight: 700, color: "var(--text-primary)", margin: "0 0 16px" }}>Integrations</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-              {integrations.map((integration, idx) => (
-                <div key={idx} style={{
-                  display: "flex", justifyContent: "space-between", alignItems: "center",
-                  padding: "12px 0",
-                  borderBottom: idx < integrations.length - 1 ? "1px solid var(--border)" : "none",
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <div style={{
-                      width: "32px", height: "32px", borderRadius: "8px",
-                      background: "var(--bg-secondary)", display: "flex",
-                      alignItems: "center", justifyContent: "center",
-                    }}>
-                      {integrationIcons[integration.name]}
+              {[
+                { name: "Slack", icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14.5 2a2.5 2.5 0 0 0 0 5h2.5V4.5A2.5 2.5 0 0 0 14.5 2z" fill="#E01E5A"/><path d="M2 14.5a2.5 2.5 0 0 0 5 0V12H4.5A2.5 2.5 0 0 0 2 14.5z" fill="#36C5F0"/><path d="M9.5 22a2.5 2.5 0 0 0 0-5H7v2.5A2.5 2.5 0 0 0 9.5 22z" fill="#2EB67D"/><path d="M22 9.5a2.5 2.5 0 0 0-5 0V12h2.5A2.5 2.5 0 0 0 22 9.5z" fill="#ECB22E"/><path d="M9.5 2A2.5 2.5 0 0 0 7 4.5V7h2.5a2.5 2.5 0 0 0 0-5z" fill="#36C5F0"/><path d="M2 9.5A2.5 2.5 0 0 0 4.5 12H7V9.5a2.5 2.5 0 0 0-5 0z" fill="#2EB67D"/><path d="M14.5 22a2.5 2.5 0 0 0 2.5-2.5V17h-2.5a2.5 2.5 0 0 0 0 5z" fill="#ECB22E"/><path d="M22 14.5a2.5 2.5 0 0 0-2.5-2.5H17v2.5a2.5 2.5 0 0 0 5 0z" fill="#E01E5A"/></svg>
+                ), connected: true },
+                { name: "Google Workspace", icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                ), connected: true },
+                { name: "GitHub", icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                ), connected: false },
+                { name: "Jira", icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M11.5 2L1 12l3.5 3.5 7-7L11.5 2z" fill="#2684FF"/><path d="M12.5 2L23 12l-3.5 3.5-7-7L12.5 2z" fill="#0052CC"/><path d="M5 16.5L1 20l4 4 4-4-4-3.5z" fill="#2684FF"/><path d="M19 16.5L23 20l-4 4-4-4 4-3.5z" fill="#0052CC"/></svg>
+                ), connected: true },
+                { name: "Notion", icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4.459 4.208c-.73.498-1.077.842-1.077 1.469v13.032c0 .629.346.973 1.077.474l11.005-6.515c.63-.269.63-1.047 0-1.316L4.459 4.208z" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M7.8 2.1l9.2 5.4c.8.5.8 1.3 0 1.8L7.8 14.7c-.8.5-1.6.1-1.6-.9V3c0-1 .8-1.4 1.6-.9z" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                ), connected: false },
+              ].map(item => (
+                <div key={item.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 0", borderBottom: "1px solid var(--border-color)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <div style={{ width: "36px", height: "36px", borderRadius: "8px", border: "1px solid var(--border-color)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      {item.icon}
                     </div>
                     <div>
-                      <div style={{ fontSize: "13px", fontWeight: 500, color: "var(--text-primary)" }}>
-                        {integration.name}
-                      </div>
-                      <div style={{
-                        fontSize: "11px", color: integration.connected ? "#22c55e" : "var(--text-tertiary)",
-                      }}>
-                        {integration.connected ? "Connected" : "Not connected"}
-                      </div>
+                      <div style={{ fontSize: "14px", fontWeight: 500, color: "var(--text-primary)" }}>{item.name}</div>
+                      <div style={{ fontSize: "12px", color: item.connected ? "var(--success)" : "var(--text-muted)" }}>{item.connected ? "Connected" : "Not connected"}</div>
                     </div>
                   </div>
-                  <button style={{
-                    padding: "4px 12px", borderRadius: "6px",
-                    border: "1px solid var(--border)", background: "var(--bg-primary)",
-                    color: "var(--text-secondary)", fontSize: "12px",
-                    fontWeight: 500, cursor: "pointer",
-                  }}>
-                    Configure
-                  </button>
+                  <button style={{ padding: "7px 14px", borderRadius: "8px", border: "1px solid var(--border-color)", background: "var(--bg-card)", color: "var(--text-primary)", fontSize: "13px", cursor: "pointer" }}>Configure</button>
                 </div>
               ))}
             </div>
