@@ -1,0 +1,21 @@
+# Dependency folders (never push these)
+node_modules/
+jspm_packages/
+web_modules/
+
+# Local environment / Secret keys (CRITICAL for security)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Operating System junk files
+.DS_Store
+Thumbs.db
+
+# Build outputs and logs
+dist/
+build/
+npm-debug.log*
+yarn-error.log*

@@ -1,0 +1,105 @@
+{
+  "pages": {
+    "/workspace/(control)/control/ai/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(control)/control/ai/page.js"
+    ],
+    "/workspace/(control)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(control)/layout.js"
+    ],
+    "/workspace/not-found": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/not-found.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/workspace/(control)/control/security/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(control)/control/security/page.js"
+    ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
+    ],
+    "/workspace/(workspace)/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(workspace)/page.js"
+    ],
+    "/workspace/(workspace)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(workspace)/layout.js"
+    ],
+    "/workspace/(control)/control/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(control)/control/page.js"
+    ],
+    "/workspace/(control)/control/members/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(control)/control/members/page.js"
+    ],
+    "/workspace/(control)/control/roles/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(control)/control/roles/page.js"
+    ],
+    "/workspace/(control)/control/channels/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(control)/control/channels/page.js"
+    ],
+    "/workspace/(workspace)/ai/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(workspace)/ai/page.js"
+    ],
+    "/workspace/(workspace)/analytics/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(workspace)/analytics/page.js"
+    ],
+    "/workspace/(workspace)/meetings/[meetingId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(workspace)/meetings/[meetingId]/page.js"
+    ],
+    "/workspace/(workspace)/channels/[cslug]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(workspace)/channels/[cslug]/page.js"
+    ],
+    "/workspace/(workspace)/dm/[userId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(workspace)/dm/[userId]/page.js"
+    ],
+    "/workspace/(workspace)/create-post/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(workspace)/create-post/page.js"
+    ],
+    "/workspace/(control)/control/audit/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(control)/control/audit/page.js"
+    ],
+    "/workspace/(control)/control/settings/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/workspace/(control)/control/settings/page.js"
+    ]
+  }
+}
