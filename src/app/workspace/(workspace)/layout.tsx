@@ -49,6 +49,10 @@ export default function WorkspaceLayout({
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  if (pathname?.startsWith("/workspace/channels")) {
+    return <>{children}</>;
+  }
+
   const navItems = [
     { icon: Home, href: "/workspace", label: "Home" },
     { icon: MessageSquare, href: "/workspace/dm/user_1", label: "DMs" },
