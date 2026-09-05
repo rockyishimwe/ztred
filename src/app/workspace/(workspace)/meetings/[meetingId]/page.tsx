@@ -128,7 +128,7 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Project kickoff"
-            className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+            className="w-full input-theme rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
           />
         </div>
 
@@ -142,7 +142,7 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
               type="text"
               value={starts}
               onChange={(e) => setStarts(e.target.value)}
-              className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+              className="w-full input-theme rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
             />
           </div>
           <div>
@@ -153,13 +153,13 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
               type="text"
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
-              className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+              className="w-full input-theme rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
             />
           </div>
         </div>
 
         {/* Meeting Link */}
-        <div className="flex items-center gap-3 p-3 bgCard borderCard rounded-xl mb-6">
+        <div className="flex items-center gap-3 p-3 input-theme rounded-xl mb-6">
           <Link2 className="w-4 h-4 shrink-0" style={{ color: 'var(--text-muted)' }} />
           <span className="flex-1 text-sm truncate" style={{ color: 'var(--text-muted)' }}>
             {meetingLink}
@@ -343,7 +343,7 @@ export default function MeetingsPage() {
             {scheduleItems.map((item, idx) => (
               <div
                 key={idx}
-                className="bgCard borderCard rounded-xl p-4"
+                className="card rounded-xl p-4"
               >
                 {/* Status + Time */}
                 <div className="flex items-center justify-between mb-2">
@@ -374,7 +374,7 @@ export default function MeetingsPage() {
                         key={i}
                         src={av}
                         alt=""
-                        className="w-7 h-7 rounded-full border-2 border-[#141824] object-cover"
+                        className="w-7 h-7 rounded-full border-2 border-theme-card object-cover"
                       />
                     ))}
                   </div>

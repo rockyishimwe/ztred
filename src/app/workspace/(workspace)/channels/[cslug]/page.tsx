@@ -77,7 +77,7 @@ export default function ChannelPage() {
         <div className="px-5 pt-5 pb-3">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-xl font-bold">Channels</h1>
-            <button className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white hover:bg-blue-700 shadow-lg shadow-blue-600/25 transition-colors">
+            <button className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white hover:bg-blue-700 shadow-lg shadow-blue-600/25 transition-all spring-bounce">
               <Plus className="w-4 h-4" />
             </button>
           </div>
@@ -219,7 +219,7 @@ export default function ChannelPage() {
                 <Paperclip className="w-4 h-4" />
               </button>
             </div>
-            <button className="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center text-white hover:bg-purple-700 transition-colors shrink-0">
+            <button className="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center text-white hover:bg-purple-700 transition-all spring-bounce shrink-0">
               <Send className="w-4 h-4" />
             </button>
           </div>

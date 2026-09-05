@@ -19,16 +19,16 @@ export const Sidebar: React.FC = () => {
           ⚡
         </div>
         <div className="w-8 h-px divider-theme" />
-        <Link href="/workspace/tasks/proj_1/board" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-colors">
+        <Link href="/workspace/tasks/proj_1/board" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-all spring-bounce">
           <CheckSquare className="w-5 h-5" />
         </Link>
-        <Link href="/workspace/docs/doc_1" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-colors">
+        <Link href="/workspace/docs/doc_1" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-all spring-bounce">
           <FileText className="w-5 h-5" />
         </Link>
-        <Link href="/workspace/whiteboard/wb_1" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-colors">
+        <Link href="/workspace/whiteboard/wb_1" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-all spring-bounce">
           <Layout className="w-5 h-5" />
         </Link>
-        <Link href="/workspace/meetings/meet_1" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-colors">
+        <Link href="/workspace/meetings/meet_1" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-all spring-bounce">
           <Video className="w-5 h-5" />
         </Link>
       </aside>
@@ -58,7 +58,7 @@ export const Sidebar: React.FC = () => {
           <div className="space-y-0.5 mt-1">
             <Link
               href="/workspace/tasks/proj_1/board"
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-colors"
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-all spring-bounce"
             >
               <CheckSquare className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Kanban & Tasks</span>
@@ -66,7 +66,7 @@ export const Sidebar: React.FC = () => {
 
             <Link
               href="/workspace/docs/doc_1"
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-colors"
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-all spring-bounce"
             >
               <FileText className="w-4 h-4 text-sky-400 shrink-0" />
               <span>Collaborative Docs</span>
@@ -74,7 +74,7 @@ export const Sidebar: React.FC = () => {
 
             <Link
               href="/workspace/whiteboard/wb_1"
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-colors"
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-all spring-bounce"
             >
               <Layout className="w-4 h-4 text-amber-400 shrink-0" />
               <span>Whiteboards</span>
@@ -82,7 +82,7 @@ export const Sidebar: React.FC = () => {
 
             <Link
               href="/workspace/meetings/meet_1"
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-colors"
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-all spring-bounce"
             >
               <Video className="w-4 h-4 text-purple-400 shrink-0" />
               <span>Huddle / Meetings</span>
@@ -90,7 +90,7 @@ export const Sidebar: React.FC = () => {
 
             <Link
               href="/settings/account"
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-colors"
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-all spring-bounce"
             >
               <Settings className="w-4 h-4 text-theme-sidebar-muted shrink-0" />
               <span>Workspace Settings</span>

@@ -39,7 +39,7 @@ export default function LandingPage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col font-sans selection:bg-purple-500 selection:text-white"
+      className="min-h-screen flex flex-col font-sans"
       style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
     >
       {/* Top Header */}
@@ -57,7 +57,7 @@ export default function LandingPage() {
           <div className="flex items-center space-x-2">
             <button
               onClick={() => toggleTheme()}
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:scale-105 active:scale-95"
               style={{
                 backgroundColor: theme === "dark" ? "var(--bg-card)" : "var(--bg-secondary)",
                 color: theme === "dark" ? "var(--text-primary)" : "var(--text-muted)",
@@ -74,7 +74,7 @@ export default function LandingPage() {
       <section className="relative overflow-hidden flex-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-center">
           {/* Left Content */}
-          <div className="space-y-4 sm:space-y-6 relative z-10 flex flex-col justify-center">
+          <div className="space-y-6 relative z-10 flex flex-col justify-center">
             {/* Illustration */}
             <div className="hidden lg:block">
               <img
@@ -85,23 +85,27 @@ export default function LandingPage() {
               />
             </div>
 
-            {/* Heading */}
-            <h1 className="responsive-text-h1 text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]" style={{ color: "var(--text-primary)" }}>
-              Team chat, calls,
-              <br />
-              files, and AI in one
-              <br />
-              <span className="text-purple-500">
-                <TypewriterText
-                  phrases={["workspace.", "platform.", "app.", "tool."]}
-                  typingSpeed={90}
-                  deletingSpeed={50}
-                  pauseAfterType={2200}
-                  pauseAfterDelete={400}
-                />
-              </span>
-            </h1>
-
+            {/* Heading - Hero discipline: max 15ch wide, clear hierarchy */}
+            <div className="space-y-3">
+              <h1 className="hero-headline text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]" style={{ color: "var(--text-primary)" }}>
+                Team chat, calls,
+                <br />
+                files, and AI in one
+                <br />
+                <span style={{ color: "var(--primary)" }}>
+                  <TypewriterText
+                    phrases={["workspace.", "platform.", "app.", "tool."]}
+                    typingSpeed={90}
+                    deletingSpeed={50}
+                    pauseAfterType={2200}
+                    pauseAfterDelete={400}
+                  />
+                </span>
+              </h1>
+              <p className="hero-subtext text-base sm:text-lg" style={{ color: "var(--text-secondary)" }}>
+                One place for messaging, meetings, tasks, and AI. Built for teams that move fast.
+              </p>
+            </div>
           </div>
 
           {/* Right Content - Auth Card */}
@@ -126,10 +130,7 @@ export default function LandingPage() {
                   /* ═══ Sign In Form ═══ */
                   <div className="space-y-4">
                     <div>
-                      <span className="text-xs font-bold text-purple-400 uppercase tracking-widest">
-                        Welcome back
-                      </span>
-                      <h2 className="text-2xl font-bold mt-2" style={{ color: "var(--text-primary)" }}>Sign in to Ztred</h2>
+                      <h2 className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>Sign in to Ztred</h2>
                       <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
                         Pick up exactly where your team left off.
                       </p>
@@ -181,7 +182,8 @@ export default function LandingPage() {
                       <div className="text-right">
                         <button
                           onClick={() => switchForm("forgot")}
-                          className="text-xs text-purple-400 hover:text-purple-300 transition-colors"
+                          className="text-xs font-medium transition-colors"
+                          style={{ color: "var(--primary)" }}
                         >
                           Forgot password?
                         </button>
@@ -191,7 +193,7 @@ export default function LandingPage() {
                     {/* Sign In Button */}
                     <button
                       onClick={handleGetStarted}
-                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2"
+                      className="w-full btn-primary font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
                     >
                       <span>Sign in</span>
                       <ArrowRight className="w-4 h-4" />
@@ -211,7 +213,7 @@ export default function LandingPage() {
 
                     {/* Social Logins */}
                     <div className="grid grid-cols-2 gap-3" role="group" aria-label="Social sign in">
-                      <button className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium transition-colors" style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} aria-label="Sign in with Google">
+                      <button className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium transition-colors hover:scale-[1.02] active:scale-[0.98]" style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} aria-label="Sign in with Google">
                         <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
                           <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
@@ -220,7 +222,7 @@ export default function LandingPage() {
                         </svg>
                         Google
                       </button>
-                      <button className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium transition-colors" style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} aria-label="Sign in with GitHub">
+                      <button className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium transition-colors hover:scale-[1.02] active:scale-[0.98]" style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} aria-label="Sign in with GitHub">
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                         </svg>
@@ -233,7 +235,8 @@ export default function LandingPage() {
                       New to Ztred?{" "}
                       <button
                         onClick={() => switchForm("signup")}
-                        className="text-purple-400 hover:text-purple-300 font-medium transition-colors"
+                        className="font-medium transition-colors"
+                        style={{ color: "var(--primary)" }}
                       >
                         Create an account
                       </button>
@@ -243,10 +246,7 @@ export default function LandingPage() {
                   /* ═══ Sign Up Form ═══ */
                   <div className="space-y-4">
                     <div>
-                      <span className="text-xs font-bold text-purple-400 uppercase tracking-widest">
-                        Get started
-                      </span>
-                      <h2 className="text-2xl font-bold mt-2" style={{ color: "var(--text-primary)" }}>Create your account</h2>
+                      <h2 className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>Create your account</h2>
                       <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
                         Start collaborating with your team today.
                       </p>
@@ -318,7 +318,7 @@ export default function LandingPage() {
                     {/* Sign Up Button */}
                     <button
                       onClick={handleGetStarted}
-                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2"
+                      className="w-full btn-primary font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
                     >
                       <span>Create account</span>
                       <ArrowRight className="w-4 h-4" />
@@ -338,7 +338,7 @@ export default function LandingPage() {
 
                     {/* Social Logins */}
                     <div className="grid grid-cols-2 gap-3" role="group" aria-label="Social sign up">
-                      <button className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium transition-colors" style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} aria-label="Sign up with Google">
+                      <button className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium transition-colors hover:scale-[1.02] active:scale-[0.98]" style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} aria-label="Sign up with Google">
                         <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
                           <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
@@ -347,7 +347,7 @@ export default function LandingPage() {
                         </svg>
                         Google
                       </button>
-                      <button className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium transition-colors" style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} aria-label="Sign up with GitHub">
+                      <button className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium transition-colors hover:scale-[1.02] active:scale-[0.98]" style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} aria-label="Sign up with GitHub">
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                         </svg>
@@ -360,7 +360,8 @@ export default function LandingPage() {
                       Already have an account?{" "}
                       <button
                         onClick={() => switchForm("signin")}
-                        className="text-purple-400 hover:text-purple-300 font-medium transition-colors"
+                        className="font-medium transition-colors"
+                        style={{ color: "var(--primary)" }}
                       >
                         Sign in
                       </button>
@@ -370,10 +371,7 @@ export default function LandingPage() {
                   /* ═══ Forgot Password Form ═══ */
                   <div className="space-y-4">
                     <div>
-                      <span className="text-xs font-bold text-purple-400 uppercase tracking-widest">
-                        Reset password
-                      </span>
-                      <h2 className="text-2xl font-bold mt-2" style={{ color: "var(--text-primary)" }}>Forgot your password?</h2>
+                      <h2 className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>Forgot your password?</h2>
                       <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
                         Enter your email and we&apos;ll send you a reset link.
                       </p>
@@ -400,7 +398,7 @@ export default function LandingPage() {
                     {/* Send Reset Link Button */}
                     <button
                       onClick={handleGetStarted}
-                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2"
+                      className="w-full btn-primary font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
                     >
                       <Send className="w-4 h-4" />
                       <span>Send reset link</span>
@@ -410,7 +408,8 @@ export default function LandingPage() {
                     <div className="text-center text-sm" style={{ color: "var(--text-secondary)" }}>
                       <button
                         onClick={() => switchForm("signin")}
-                        className="inline-flex items-center gap-1.5 text-purple-400 hover:text-purple-300 font-medium transition-colors"
+                        className="inline-flex items-center gap-1.5 font-medium transition-colors"
+                        style={{ color: "var(--primary)" }}
                       >
                         <ArrowLeft className="w-3.5 h-3.5" />
                         Back to sign in
@@ -423,8 +422,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
-
     </div>
   );
 }

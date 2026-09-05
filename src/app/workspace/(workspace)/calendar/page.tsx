@@ -165,7 +165,7 @@ function AddEventModal({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Design critique"
-            className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+            className="w-full input-theme rounded-xl px-4 py-3 text-sm text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
           />
         </div>
 
@@ -180,7 +180,7 @@ function AddEventModal({
               value={day}
               onChange={(e) => setDay(e.target.value)}
               placeholder=""
-              className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+              className="w-full input-theme rounded-xl px-4 py-3 text-sm text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
             />
           </div>
           <div>
@@ -192,7 +192,7 @@ function AddEventModal({
               value={time}
               onChange={(e) => setTime(e.target.value)}
               placeholder=""
-              className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+              className="w-full input-theme rounded-xl px-4 py-3 text-sm text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
             />
           </div>
         </div>
@@ -208,7 +208,7 @@ function AddEventModal({
             value={guests}
             onChange={(e) => setGuests(e.target.value)}
             placeholder=""
-            className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+            className="w-full input-theme rounded-xl px-4 py-3 text-sm text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
           />
         </div>
 
@@ -245,7 +245,7 @@ function AddEventModal({
           </button>
           <button
             onClick={handleAdd}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-primary text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-primary text-sm font-semibold shadow-lg shadow-purple-600/25 transition-all spring-bounce"
           >
             <Clock className="w-4 h-4" />
             Add event
@@ -328,7 +328,7 @@ export default function CalendarPage() {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-theme-primary font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
+          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-theme-primary font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all spring-bounce"
         >
           + Event
         </button>
@@ -355,7 +355,7 @@ export default function CalendarPage() {
             </button>
           </div>
         </div>
-        <div className="flex items-center bgCard borderCard rounded-xl p-1">
+        <div className="flex items-center card rounded-xl p-1">
           {(["Month", "Week", "Day"] as const).map((v) => (
             <button
               key={v}
