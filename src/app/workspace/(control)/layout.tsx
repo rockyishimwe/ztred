@@ -297,21 +297,7 @@ export default function WorkspaceControlLayout({
             </nav>
           </div>
 
-          <div className="flex flex-col items-center gap-3 px-3 pb-5">
-            <Link href="/workspace" className="relative group cursor-pointer" aria-label="Jordan Lee's profile">
-              <div className="w-10 h-10 rounded-full overflow-hidden" style={{ border: "1px solid var(--border-color)" }}>
-                <img
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80"
-                  alt="Jordan Lee"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div
-                className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-500 border-2"
-                style={{ borderColor: "var(--bg-card)" }}
-              />
-            </Link>
-          </div>
+
         </aside>
 
         {/* Main Content Area */}

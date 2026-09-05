@@ -119,10 +119,10 @@ export default function WorkspaceHomePage() {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold">Home</h1>
-              <p className="text-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>Latest from your workspace</p>
+              <h1 className="type-h1">Home</h1>
+              <p className="type-body-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>Latest from your workspace</p>
             </div>
-            <Link href="/workspace/create-post" className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 flex items-center gap-2 transition-all">
+            <Link href="/workspace/create-post" className="btn btn-primary btn-md">
               <Plus className="w-4 h-4" />
               <span>New Post</span>
             </Link>
@@ -186,8 +186,8 @@ export default function WorkspaceHomePage() {
                     className="w-10 h-10 rounded-full object-cover"
                   />
                   <div>
-                    <h3 className="font-semibold text-sm">Sam Rivera</h3>
-                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Senior Engineer · 2h ago</p>
+                    <h3 className="type-h3" style={{ fontSize: 'var(--text-body-sm)' }}>Sam Rivera</h3>
+                    <p className="type-caption">Senior Engineer · 2h ago</p>
                   </div>
                 </div>
                 <button className="p-1 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
@@ -217,12 +217,12 @@ export default function WorkspaceHomePage() {
         <div className="rounded-2xl p-5 space-y-3" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-purple-400" />
-            <span className="font-bold text-sm">AI Assistant</span>
+            <span className="type-body-sm" style={{ fontWeight: 'var(--weight-bold)' }}>AI Assistant</span>
           </div>
-          <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+          <p className="type-caption" style={{ lineHeight: 'var(--leading-relaxed)' }}>
             Summarize threads, draft posts, or find anything across your workspace.
           </p>           <a href="/workspace/ai" className="inline-block text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors pt-1">
-            Ask Zenith AI →
+            Ask Zenith AI
            </a>
         </div>
 
@@ -230,7 +230,7 @@ export default function WorkspaceHomePage() {
         <div className="rounded-2xl p-5" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="w-5 h-5 text-purple-400" />
-            <span className="font-bold text-sm">Trending</span>
+            <span className="type-body-sm" style={{ fontWeight: 'var(--weight-bold)' }}>Trending</span>
           </div>
           <div className="space-y-3">
             {trendingTags.map((item, idx) => (
@@ -247,7 +247,7 @@ export default function WorkspaceHomePage() {
         {/* Today's Meetings */}
         <div className="rounded-2xl p-5" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
           <div className="flex items-center justify-between mb-4">
-            <span className="font-bold text-sm">Today&apos;s Meetings</span>
+            <span className="type-body-sm" style={{ fontWeight: 'var(--weight-bold)' }}>Today&apos;s Meetings</span>
             <a href="#" className="text-xs text-purple-400 hover:text-purple-300 font-medium transition-colors">
               View all
             </a>
@@ -277,7 +277,7 @@ export default function WorkspaceHomePage() {
 
         {/* Suggested People */}
         <div className="rounded-2xl p-5" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-          <span className="font-bold text-sm block mb-4">Suggested people</span>
+          <span className="type-body-sm block mb-4" style={{ fontWeight: 'var(--weight-bold)' }}>Suggested people</span>
           <div className="space-y-4">
             {suggestedPeople.map((person, idx) => (
               <div key={idx} className="flex items-center justify-between">
