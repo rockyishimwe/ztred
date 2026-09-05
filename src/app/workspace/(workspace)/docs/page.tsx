@@ -132,7 +132,7 @@ function CreateDocModal({
               className={`rounded-xl p-4 flex flex-col items-start gap-3 transition-all ${
                 selectedTemplate === tpl.id
                   ? "border-purple-500/50 ring-1 ring-purple-500/30"
-                  : "border-zinc-700 hover:border-zinc-600"
+                  : "border-theme hover:border-theme-hover"
               }`}
             >
               {/* Template icon */}
@@ -153,7 +153,7 @@ function CreateDocModal({
 
         {/* Title */}
         <div className="mb-4">
-          <label className="text-sm font-medium text-zinc-300 mb-2 block">
+          <label className="text-sm font-medium text-theme-secondary mb-2 block">
             Title
           </label>
           <input
@@ -188,7 +188,7 @@ function CreateDocModal({
           </button>
           <button
             onClick={handleCreate}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-primary text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
           >
             <FileText className="w-4 h-4" />
             Create doc
@@ -237,7 +237,7 @@ export default function DocsListingPage() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
+          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-theme-primary font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
         >
           <Plus className="w-4 h-4" />
           New Doc
@@ -261,7 +261,7 @@ export default function DocsListingPage() {
       {/* ═══ Document List ═══ */}
       <div className="flex-1 px-6 pb-6 overflow-y-auto space-y-3">
         {filteredDocs.map((doc) => (
-          <div key={doc.id} className="bgCard borderCard rounded-xl hover:border-zinc-700 transition-colors">
+          <div key={doc.id} className="bgCard borderCard rounded-xl hover:border-theme transition-colors">
             {/* Doc Header */}
             <div className="p-5">
               <div className="flex items-start justify-between mb-3">

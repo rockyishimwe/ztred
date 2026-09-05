@@ -182,7 +182,7 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
           </button>
           <button
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
+            className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-primary text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
           >
             Create meeting
           </button>
@@ -218,7 +218,7 @@ export default function MeetingsPage() {
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
+            className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-theme-primary font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
           >
             <Plus className="w-4 h-4" />
             New Meeting
@@ -252,7 +252,7 @@ export default function MeetingsPage() {
                 className={`relative rounded-2xl overflow-hidden border ${
                   p.isSpeaking
                     ? "border-purple-500 ring-2 ring-purple-500/30"
-                    : "border-zinc-800"
+                    : "border-theme"
                 }`}
               >
                 <img
@@ -262,7 +262,7 @@ export default function MeetingsPage() {
                 />
                 {/* Name label */}
                 <div className="absolute bottom-3 left-3 flex items-center gap-2 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-1.5">
-                  <span className="text-xs font-medium text-white">
+                  <span className="text-xs font-medium text-theme-primary">
                     {p.name}
                   </span>
                 </div>
@@ -270,11 +270,11 @@ export default function MeetingsPage() {
                 <div className="absolute bottom-3 right-3">
                   {p.isMuted ? (
                     <div className="w-7 h-7 rounded-full bg-red-500/80 flex items-center justify-center">
-                      <MicOff className="w-3.5 h-3.5 text-white" />
+                      <MicOff className="w-3.5 h-3.5 text-theme-primary" />
                     </div>
                   ) : (
-                    <div className="w-7 h-7 rounded-full bg-zinc-700/80 flex items-center justify-center">
-                      <Mic className="w-3.5 h-3.5 text-white" />
+                    <div className="w-7 h-7 rounded-full bg-theme-secondary/80 flex items-center justify-center">
+                      <Mic className="w-3.5 h-3.5 text-theme-primary" />
                     </div>
                   )}
                 </div>
@@ -289,7 +289,7 @@ export default function MeetingsPage() {
               className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
                 isMuted
                   ? "bg-red-500/20 text-red-400 border border-red-500/30"
-                  : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700 border border-zinc-700"
+                  : "bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme"
               }`}
             >
               {isMuted ? (
@@ -303,7 +303,7 @@ export default function MeetingsPage() {
               className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
                 !isVideoOn
                   ? "bg-red-500/20 text-red-400 border border-red-500/30"
-                  : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700 border border-zinc-700"
+                  : "bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme"
               }`}
             >
               {isVideoOn ? (
@@ -312,16 +312,16 @@ export default function MeetingsPage() {
                 <VideoOff className="w-5 h-5" />
               )}
             </button>
-            <button className="w-12 h-12 rounded-full bg-zinc-800 text-zinc-300 hover:bg-zinc-700 border border-zinc-700 flex items-center justify-center transition-colors">
+            <button className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
               <MonitorUp className="w-5 h-5" />
             </button>
-            <button className="w-12 h-12 rounded-full bg-zinc-800 text-zinc-300 hover:bg-zinc-700 border border-zinc-700 flex items-center justify-center transition-colors">
+            <button className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
               <Users className="w-5 h-5" />
             </button>
-            <button className="w-12 h-12 rounded-full bg-zinc-800 text-zinc-300 hover:bg-zinc-700 border border-zinc-700 flex items-center justify-center transition-colors">
+            <button className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
               <MessageSquare className="w-5 h-5" />
             </button>
-            <button className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-lg shadow-red-500/25 transition-all ml-2">
+            <button className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-theme-primary font-semibold text-sm px-6 py-3 rounded-xl shadow-lg shadow-red-500/25 transition-all ml-2">
               <PhoneOff className="w-4 h-4" />
               Leave
             </button>
@@ -353,7 +353,7 @@ export default function MeetingsPage() {
                         ? "bg-red-500/20 text-red-400"
                         : item.status === "upcoming"
                         ? "bg-blue-500/20 text-blue-400"
-                        : "bg-zinc-700/50 text-zinc-500"
+                        : "bg-theme-secondary/50 text-theme-muted"
                     }`}
                   >
                     {item.status}
@@ -380,7 +380,7 @@ export default function MeetingsPage() {
                   </div>
 
                   {item.status === "live" && (
-                    <button className="bg-red-500 hover:bg-red-600 text-white text-xs font-semibold px-4 py-1.5 rounded-lg transition-colors">
+                    <button className="bg-red-500 hover:bg-red-600 text-theme-primary text-xs font-semibold px-4 py-1.5 rounded-lg transition-colors">
                       Join live
                     </button>
                   )}

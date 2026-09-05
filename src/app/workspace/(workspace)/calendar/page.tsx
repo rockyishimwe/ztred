@@ -245,7 +245,7 @@ function AddEventModal({
           </button>
           <button
             onClick={handleAdd}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-primary text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
           >
             <Clock className="w-4 h-4" />
             Add event
@@ -328,7 +328,7 @@ export default function CalendarPage() {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
+          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-theme-primary font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
         >
           + Event
         </button>
@@ -343,13 +343,13 @@ export default function CalendarPage() {
           <div className="flex items-center gap-1">
             <button
               onClick={prevMonth}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={nextMonth}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -362,8 +362,8 @@ export default function CalendarPage() {
               onClick={() => setView(v)}
               className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 view === v
-                  ? "bg-purple-600 text-white shadow"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-purple-600 text-theme-primary shadow"
+                  : "text-theme-muted hover:text-theme-primary"
               }`}
             >
               {v}
@@ -411,7 +411,7 @@ export default function CalendarPage() {
                           <span
                             className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold ${
                               isToday
-                                ? "bg-purple-600 text-white"
+                                ? "bg-purple-600 text-theme-primary"
                                 : "text-theme-muted"
                             }`}
                           >

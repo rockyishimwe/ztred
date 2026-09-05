@@ -134,7 +134,7 @@ function getFileIcon(name: string) {
     case "xls":
       return { icon: <FileText className="w-5 h-5" />, bg: "bg-green-500/15 text-green-400" };
     default:
-      return { icon: <File className="w-5 h-5" />, bg: "bg-zinc-500/15 text-zinc-400" };
+      return { icon: <File className="w-5 h-5" />, bg: "bg-zinc-500/15 text-theme-muted" };
   }
 }
 
@@ -219,7 +219,7 @@ function UploadModal({
           className={`border-2 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center cursor-pointer transition-all mb-4 ${
             isDragging
               ? "border-purple-500 bg-purple-500/10"
-              : "border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800/30"
+              : "border-theme hover:border-theme-hover hover:bg-theme-secondary/30"
           }`}
         >
           <input
@@ -237,7 +237,7 @@ function UploadModal({
           <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
             Choose a file or drag it here
           </p>
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-theme-muted">
             PDF, DOCX, PNG, FIG, JSON, XLSX
           </p>
         </div>
@@ -246,7 +246,7 @@ function UploadModal({
         {selectedFile && (
           <div className="bg-green-500/10 border border-green-500/20 rounded-xl px-4 py-3 flex items-center gap-3 mb-6">
             <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center shrink-0">
-              <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+              <svg className="w-3.5 h-3.5 text-theme-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
@@ -272,7 +272,7 @@ function UploadModal({
           <button
             onClick={handleUpload}
             disabled={!selectedFile}
-            className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-primary text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Upload file
           </button>
@@ -315,7 +315,7 @@ export default function FilesPage() {
         </div>
         <button
           onClick={() => setShowUpload(true)}
-          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
+          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-theme-primary font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
         >
           <Upload className="w-4 h-4" />
           Upload
@@ -339,8 +339,8 @@ export default function FilesPage() {
             onClick={() => setView("grid")}
             className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
               view === "grid"
-                ? "bg-purple-600 text-white shadow"
-                : "text-zinc-500 hover:text-white"
+                ? "bg-purple-600 text-theme-primary shadow"
+                : "text-theme-muted hover:text-theme-primary"
             }`}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -349,8 +349,8 @@ export default function FilesPage() {
             onClick={() => setView("list")}
             className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
               view === "list"
-                ? "bg-purple-600 text-white shadow"
-                : "text-zinc-500 hover:text-white"
+                ? "bg-purple-600 text-theme-primary shadow"
+                : "text-theme-muted hover:text-theme-primary"
             }`}
           >
             <List className="w-4 h-4" />
@@ -367,7 +367,7 @@ export default function FilesPage() {
             {folders.map((folder) => (
               <div
                 key={folder.name}
-                className="bgCard borderCard rounded-xl p-4 flex items-center justify-between hover:border-zinc-700 transition-colors cursor-pointer"
+                className="bgCard borderCard rounded-xl p-4 flex items-center justify-between hover:border-theme transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-3">
                   <div
@@ -384,7 +384,7 @@ export default function FilesPage() {
                     </p>
                   </div>
                 </div>
-                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-zinc-500 hover:text-white hover:bg-zinc-800 transition-colors">
+                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-card transition-colors">
                   <MoreHorizontal className="w-4 h-4" />
                 </button>
               </div>
@@ -402,7 +402,7 @@ export default function FilesPage() {
             {filteredFiles.map((file) => (
               <div
                 key={file.id}
-                className="bgCard borderCard rounded-xl p-4 hover:border-zinc-700 transition-colors cursor-pointer"
+                className="bgCard borderCard rounded-xl p-4 hover:border-theme transition-colors cursor-pointer"
               >
                 {/* File Icon + Menu */}
                 <div className="flex items-start justify-between mb-4">
@@ -411,7 +411,7 @@ export default function FilesPage() {
                   >
                     {file.icon}
                   </div>
-                  <button className="w-7 h-7 rounded-lg flex items-center justify-center text-zinc-500 hover:text-white hover:bg-zinc-800 transition-colors">
+                  <button className="w-7 h-7 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-card transition-colors">
                     <MoreHorizontal className="w-4 h-4" />
                   </button>
                 </div>

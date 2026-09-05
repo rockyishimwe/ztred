@@ -35,7 +35,7 @@ export default function VerifyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-white flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
+    <div className="min-h-screen bg-[#0b0f19] text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-theme-primary">
       {/* Left Column - Form */}
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-12 max-w-xl mx-auto lg:mx-0 w-full">
         <div className="space-y-8">
@@ -43,7 +43,7 @@ export default function VerifyPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <img src="/ztred-logo.svg" alt="Ztred" className="w-10 h-10" />
-              <span className="text-xl font-bold tracking-tight text-white">
+              <span className="text-xl font-bold tracking-tight text-theme-primary">
                 Ztred
               </span>
             </div>
@@ -59,11 +59,11 @@ export default function VerifyPage() {
             <div className="w-12 h-12 rounded-2xl bg-purple-950/60 border border-purple-800/50 flex items-center justify-center text-purple-400">
               <Mail className="w-6 h-6" />
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-theme-primary">
               Check your inbox
             </h1>
             <p className="text-sm text-zinc-400">
-              We sent a six-digit verification code to <span className="text-white font-medium">you@company.com</span>.
+              We sent a six-digit verification code to <span className="text-theme-primary font-medium">you@company.com</span>.
             </p>
           </div>
 
@@ -79,14 +79,14 @@ export default function VerifyPage() {
                   value={digit}
                   onChange={(e) => handleChange(e.target.value, idx)}
                   onKeyDown={(e) => handleKeyDown(e, idx)}
-                  className="w-12 h-14 sm:w-14 sm:h-16 text-center text-xl font-bold bg-[#141824] border border-zinc-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-12 h-14 sm:w-14 sm:h-16 text-center text-xl font-bold bg-theme-card border border-theme rounded-xl text-theme-primary focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 />
               ))}
             </div>
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group"
+              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-theme-primary font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group"
             >
               <span>Verify email</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -94,7 +94,7 @@ export default function VerifyPage() {
           </form>
 
           {/* Resend box card */}
-          <div className="bg-[#141824] border border-zinc-800 rounded-2xl p-5 text-center space-y-2">
+          <div className="bg-theme-card border border-theme rounded-2xl p-5 text-center space-y-2">
             <p className="text-xs text-zinc-400">Didn't receive the email?</p>
             <button
               type="button"
@@ -106,7 +106,7 @@ export default function VerifyPage() {
             </button>
           </div>
 
-          <div className="text-center text-xs text-zinc-500">
+          <div className="text-center text-xs text-theme-muted">
             Need help?{' '}
             <a href="#" className="text-purple-400 hover:underline">
               Contact support
@@ -116,7 +116,7 @@ export default function VerifyPage() {
       </div>
 
       {/* Right Column - Testimonial / Graphic Panel */}
-      <div className="hidden lg:flex flex-1 bg-[#0e121d] border-l border-zinc-800/80 p-16 flex-col justify-between relative overflow-hidden">
+      <div className="hidden lg:flex flex-1 bg-theme-surface border-l border-theme/80 p-16 flex-col justify-between relative overflow-hidden">
         {/* Background Geometric Circles */}
         <div className="absolute top-12 right-12 w-96 h-96 rounded-full border border-purple-900/30 pointer-events-none"></div>
         <div className="absolute top-24 right-24 w-64 h-64 rounded-full border border-indigo-900/40 pointer-events-none"></div>
@@ -127,7 +127,7 @@ export default function VerifyPage() {
         </div>
 
         <div className="space-y-8 max-w-lg z-10">
-          <blockquote className="text-2xl sm:text-3xl font-medium text-white leading-relaxed">
+          <blockquote className="text-2xl sm:text-3xl font-medium text-theme-primary leading-relaxed">
             “Ztred gave our team a shared rhythm without adding another layer of busywork.”
           </blockquote>
 
@@ -136,7 +136,7 @@ export default function VerifyPage() {
               MC
             </div>
             <div>
-              <div className="font-semibold text-sm text-white">Maya Chen</div>
+              <div className="font-semibold text-sm text-theme-primary">Maya Chen</div>
               <div className="text-xs text-zinc-400">Growth Lead, Northstar</div>
             </div>
           </div>

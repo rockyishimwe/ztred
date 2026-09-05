@@ -17,21 +17,21 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-white flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
+    <div className="min-h-screen bg-[#0b0f19] text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-theme-primary">
       {/* Left Column - Form */}
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-12 max-w-xl mx-auto lg:mx-0 w-full">
         <div className="space-y-8">
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <img src="/ztred-logo.svg" alt="Ztred" className="w-10 h-10" />
-            <span className="text-xl font-bold tracking-tight text-white">
+            <span className="text-xl font-bold tracking-tight text-theme-primary">
               Ztred
             </span>
           </div>
 
           <div className="space-y-2">
             <span className="text-xs font-bold text-purple-400 uppercase tracking-wider">WELCOME BACK</span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-theme-primary">
               Sign in to Ztred
             </h1>
             <p className="text-sm text-zinc-400">
@@ -41,7 +41,7 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-zinc-300">
+              <label className="block text-xs font-semibold text-theme-secondary">
                 Work email
               </label>
               <input
@@ -50,13 +50,13 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@company.com"
-                className="w-full bg-[#141824] border border-zinc-800 rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-sm text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
               />
             </div>
 
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="block text-xs font-semibold text-zinc-300">
+                <label className="block text-xs font-semibold text-theme-secondary">
                   Password
                 </label>
                 <a href="#" className="text-xs text-purple-400 hover:underline">
@@ -70,12 +70,12 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Your password"
-                  className="w-full bg-[#141824] border border-zinc-800 rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all pr-10"
+                  className="w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-sm text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-theme-muted hover:text-theme-secondary"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -84,7 +84,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group mt-2"
+              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-theme-primary font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group mt-2"
             >
               <span>Sign in</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -92,21 +92,21 @@ export default function LoginPage() {
           </form>
 
           <div className="relative flex py-2 items-center">
-            <div className="flex-grow border-t border-zinc-800"></div>
-            <span className="flex-shrink mx-4 text-xs text-zinc-500">or continue with</span>
-            <div className="flex-grow border-t border-zinc-800"></div>
+            <div className="flex-grow border-t border-theme"></div>
+            <span className="flex-shrink mx-4 text-xs text-theme-muted">or continue with</span>
+            <div className="flex-grow border-t border-theme"></div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => router.push('/workspace/channels/general')}
-              className="bg-[#141824] hover:bg-[#1a2030] border border-zinc-800 font-medium text-xs py-3 rounded-xl transition-colors text-center text-zinc-200"
+              className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-zinc-200"
             >
               Google
             </button>
             <button
               onClick={() => router.push('/workspace/channels/general')}
-              className="bg-[#141824] hover:bg-[#1a2030] border border-zinc-800 font-medium text-xs py-3 rounded-xl transition-colors text-center text-zinc-200"
+              className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-zinc-200"
             >
               GitHub
             </button>
@@ -122,7 +122,7 @@ export default function LoginPage() {
       </div>
 
       {/* Right Column - Testimonial / Graphic Panel */}
-      <div className="hidden lg:flex flex-1 bg-[#0e121d] border-l border-zinc-800/80 p-16 flex-col justify-between relative overflow-hidden">
+      <div className="hidden lg:flex flex-1 bg-theme-surface border-l border-theme/80 p-16 flex-col justify-between relative overflow-hidden">
         {/* Background Geometric Circles */}
         <div className="absolute top-12 right-12 w-96 h-96 rounded-full border border-purple-900/30 pointer-events-none"></div>
         <div className="absolute top-24 right-24 w-64 h-64 rounded-full border border-indigo-900/40 pointer-events-none"></div>
@@ -133,7 +133,7 @@ export default function LoginPage() {
         </div>
 
         <div className="space-y-8 max-w-lg z-10">
-          <blockquote className="text-2xl sm:text-3xl font-medium text-white leading-relaxed">
+          <blockquote className="text-2xl sm:text-3xl font-medium text-theme-primary leading-relaxed">
             “Ztred gave our team a shared rhythm without adding another layer of busywork.”
           </blockquote>
 
@@ -142,7 +142,7 @@ export default function LoginPage() {
               MC
             </div>
             <div>
-              <div className="font-semibold text-sm text-white">Maya Chen</div>
+              <div className="font-semibold text-sm text-theme-primary">Maya Chen</div>
               <div className="text-xs text-zinc-400">Growth Lead, Northstar</div>
             </div>
           </div>
