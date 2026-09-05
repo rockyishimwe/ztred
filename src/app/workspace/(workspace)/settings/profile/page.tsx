@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Camera, User } from "lucide-react";
+import Link from "next/link";
+import { ChevronLeft, Camera, User } from "lucide-react";
 
 export default function ProfileSettingsPage() {
   const [fullName, setFullName] = useState("Jordan Lee");
@@ -16,7 +17,6 @@ export default function ProfileSettingsPage() {
   );
 
   const handleAvatarChange = () => {
-    // In a real app, this would open a file picker
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
@@ -34,13 +34,22 @@ export default function ProfileSettingsPage() {
   };
 
   const handleSave = () => {
-    // In a real app, this would save to API
     alert("Profile saved successfully!");
   };
 
   return (
     <div className="max-w-2xl">
-      {/* ═══ Profile Header ═══ */}
+      {/* Back path */}
+      <Link
+        href="/workspace/control/control/settings"
+        className="inline-flex items-center gap-1.5 text-sm font-medium mb-6 transition-colors"
+        style={{ color: "var(--text-secondary)" }}
+      >
+        <ChevronLeft className="w-4 h-4" />
+        Back to workspace settings
+      </Link>
+
+      {/* Profile header */}
       <div className="flex items-center gap-5 mb-8">
         <div className="relative group cursor-pointer" onClick={handleAvatarChange}>
           <img
@@ -68,19 +77,15 @@ export default function ProfileSettingsPage() {
         </div>
       </div>
 
-      {/* ═══ Form ═══ */}
+      {/* Form */}
       <div
         className="rounded-2xl p-6"
         style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)" }}
       >
         <div className="space-y-5">
-          {/* Row 1: Full Name + Role */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label
-                className="block text-xs font-medium mb-1.5"
-                style={{ color: "var(--text-secondary)" }}
-              >
+              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
                 Full Name
               </label>
               <input
@@ -96,10 +101,7 @@ export default function ProfileSettingsPage() {
               />
             </div>
             <div>
-              <label
-                className="block text-xs font-medium mb-1.5"
-                style={{ color: "var(--text-secondary)" }}
-              >
+              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
                 Role
               </label>
               <input
@@ -116,13 +118,9 @@ export default function ProfileSettingsPage() {
             </div>
           </div>
 
-          {/* Row 2: Email + Location */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label
-                className="block text-xs font-medium mb-1.5"
-                style={{ color: "var(--text-secondary)" }}
-              >
+              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
                 Email
               </label>
               <input
@@ -138,10 +136,7 @@ export default function ProfileSettingsPage() {
               />
             </div>
             <div>
-              <label
-                className="block text-xs font-medium mb-1.5"
-                style={{ color: "var(--text-secondary)" }}
-              >
+              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
                 Location
               </label>
               <input
@@ -158,12 +153,8 @@ export default function ProfileSettingsPage() {
             </div>
           </div>
 
-          {/* Row 3: Bio */}
           <div>
-            <label
-              className="block text-xs font-medium mb-1.5"
-              style={{ color: "var(--text-secondary)" }}
-            >
+            <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
               Bio
             </label>
             <textarea
@@ -180,9 +171,9 @@ export default function ProfileSettingsPage() {
           </div>
         </div>
 
-        {/* ═══ Actions ═══ */}
         <div className="flex items-center justify-end gap-3 mt-6 pt-5" style={{ borderTop: "1px solid var(--border-color)" }}>
-          <button
+          <Link
+            href="/workspace/control/control/settings"
             className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all"
             style={{
               backgroundColor: "transparent",
@@ -191,7 +182,7 @@ export default function ProfileSettingsPage() {
             }}
           >
             Cancel
-          </button>
+          </Link>
           <button
             onClick={handleSave}
             className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"

@@ -80,6 +80,11 @@ export default function WorkspaceControlLayout({
     setMobileSidebarOpen(false);
   }, [pathname]);
 
+  const profileImage =
+    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80";
+
+  const profileHref = "/workspace/control/settings";
+
   return (
     <div
       className="h-screen w-screen flex flex-col md:flex-row overflow-hidden font-sans selection:bg-purple-500 selection:text-white"
@@ -234,10 +239,10 @@ export default function WorkspaceControlLayout({
           </div>
 
           <div className="flex flex-col items-center space-y-3">
-            <Link href="/settings/profile" className="relative group cursor-pointer" aria-label="Jordan Lee's profile">
+            <Link href={profileHref} className="relative group cursor-pointer" aria-label="Jordan Lee's profile">
               <div className="w-10 h-10 rounded-full overflow-hidden" style={{ border: "1px solid var(--border-color)" }}>
                 <img
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80"
+                  src={profileImage}
                   alt="Jordan Lee"
                   className="w-full h-full object-cover"
                 />
@@ -297,7 +302,37 @@ export default function WorkspaceControlLayout({
             </nav>
           </div>
 
-
+          <div className="flex flex-col px-5 pb-5">
+            <div className="mx-2 mb-3" style={{ borderBottom: "1px solid var(--border-color)" }} />
+            <Link
+              href={profileHref}
+              className="flex items-center gap-3 rounded-lg p-2 transition-colors"
+              style={{ backgroundColor: "var(--bg-secondary)" }}
+              aria-label="Jordan Lee's profile"
+            >
+              <div className="relative shrink-0">
+                <div className="w-9 h-9 rounded-full overflow-hidden" style={{ border: "1px solid var(--border-color)" }}>
+                  <img
+                    src={profileImage}
+                    alt="Jordan Lee"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div
+                  className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-500 border-2"
+                  style={{ borderColor: "var(--bg-card)" }}
+                />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <span className="text-sm font-medium truncate" style={{ color: "var(--text-primary)" }}>
+                  Jordan Lee
+                </span>
+                <span className="text-xs truncate" style={{ color: "var(--text-muted)" }}>
+                  Workspace owner
+                </span>
+              </div>
+            </Link>
+          </div>
         </aside>
 
         {/* Main Content Area */}
