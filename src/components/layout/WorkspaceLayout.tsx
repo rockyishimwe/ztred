@@ -17,7 +17,7 @@ export default function WorkspaceLayout({
   useWebSocket();
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-white dark:bg-ztred-surface-dark text-zinc-900 dark:text-zinc-100">
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-theme-primary text-theme-primary">
       {/* Top Global Navigation Bar */}
       <HeaderBar />
 
@@ -27,7 +27,7 @@ export default function WorkspaceLayout({
         <Sidebar />
 
         {/* Center Content Outlet */}
-        <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-white dark:bg-ztred-surface-dark">
+        <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-theme-primary">
           {children}
         </main>
 

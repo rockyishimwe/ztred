@@ -14,21 +14,21 @@ export const Sidebar: React.FC = () => {
 
   if (isSidebarCollapsed) {
     return (
-      <aside className="w-14 bg-ztred-sidebar-bg dark:bg-ztred-sidebar-darkBg border-r border-zinc-800 flex flex-col items-center py-3 gap-4 shrink-0 z-20 text-white">
-        <div className="w-8 h-8 rounded-lg bg-ztred-primary flex items-center justify-center font-bold text-sm shadow">
+      <aside className="w-14 bg-theme-sidebar border-r border-theme flex flex-col items-center py-3 gap-4 shrink-0 z-20">
+        <div className="w-8 h-8 rounded-lg bg-ztred-primary flex items-center justify-center font-bold text-sm shadow text-white">
           ⚡
         </div>
-        <div className="w-8 h-px bg-zinc-800" />
-        <Link href="/workspace/tasks/proj_1/board" className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-md">
+        <div className="w-8 h-px divider-theme" />
+        <Link href="/workspace/tasks/proj_1/board" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-colors">
           <CheckSquare className="w-5 h-5" />
         </Link>
-        <Link href="/workspace/docs/doc_1" className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-md">
+        <Link href="/workspace/docs/doc_1" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-colors">
           <FileText className="w-5 h-5" />
         </Link>
-        <Link href="/workspace/whiteboard/wb_1" className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-md">
+        <Link href="/workspace/whiteboard/wb_1" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-colors">
           <Layout className="w-5 h-5" />
         </Link>
-        <Link href="/workspace/meetings/meet_1" className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-md">
+        <Link href="/workspace/meetings/meet_1" className="p-2 text-theme-sidebar-muted hover:text-theme-sidebar hover:bg-theme-sidebar-hover rounded-md transition-colors">
           <Video className="w-5 h-5" />
         </Link>
       </aside>
@@ -36,9 +36,9 @@ export const Sidebar: React.FC = () => {
   }
 
   return (
-    <aside className="w-64 bg-ztred-sidebar-bg dark:bg-ztred-sidebar-darkBg border-r border-zinc-800 flex flex-col h-full shrink-0 z-20 select-none text-white">
+    <aside className="w-64 bg-theme-sidebar border-r border-theme flex flex-col h-full shrink-0 z-20 select-none">
       {/* Workspace Dropdown Header */}
-      <div className="p-3 border-b border-zinc-800/80">
+      <div className="p-3 border-b divider-theme">
         <WorkspaceSwitcher />
       </div>
 
@@ -52,13 +52,13 @@ export const Sidebar: React.FC = () => {
 
         {/* Apps & Integrated Pillars */}
         <div>
-          <div className="px-3 py-1 text-xs font-semibold text-ztred-sidebar-muted uppercase tracking-wider">
+          <div className="px-3 py-1 text-xs font-semibold text-theme-sidebar-muted uppercase tracking-wider">
             Apps & Pillars
           </div>
           <div className="space-y-0.5 mt-1">
             <Link
               href="/workspace/tasks/proj_1/board"
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-ztred-sidebar-text hover:bg-ztred-sidebar-hover hover:text-white transition-colors"
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-colors"
             >
               <CheckSquare className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Kanban & Tasks</span>
@@ -66,7 +66,7 @@ export const Sidebar: React.FC = () => {
 
             <Link
               href="/workspace/docs/doc_1"
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-ztred-sidebar-text hover:bg-ztred-sidebar-hover hover:text-white transition-colors"
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-colors"
             >
               <FileText className="w-4 h-4 text-sky-400 shrink-0" />
               <span>Collaborative Docs</span>
@@ -74,7 +74,7 @@ export const Sidebar: React.FC = () => {
 
             <Link
               href="/workspace/whiteboard/wb_1"
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-ztred-sidebar-text hover:bg-ztred-sidebar-hover hover:text-white transition-colors"
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-colors"
             >
               <Layout className="w-4 h-4 text-amber-400 shrink-0" />
               <span>Whiteboards</span>
@@ -82,7 +82,7 @@ export const Sidebar: React.FC = () => {
 
             <Link
               href="/workspace/meetings/meet_1"
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-ztred-sidebar-text hover:bg-ztred-sidebar-hover hover:text-white transition-colors"
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-colors"
             >
               <Video className="w-4 h-4 text-purple-400 shrink-0" />
               <span>Huddle / Meetings</span>
@@ -90,9 +90,9 @@ export const Sidebar: React.FC = () => {
 
             <Link
               href="/settings/account"
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-ztred-sidebar-text hover:bg-ztred-sidebar-hover hover:text-white transition-colors"
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-xs font-medium text-theme-sidebar hover:bg-theme-sidebar-hover hover:text-theme-sidebar transition-colors"
             >
-              <Settings className="w-4 h-4 text-zinc-400 shrink-0" />
+              <Settings className="w-4 h-4 text-theme-sidebar-muted shrink-0" />
               <span>Workspace Settings</span>
             </Link>
           </div>

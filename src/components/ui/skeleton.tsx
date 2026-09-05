@@ -1,8 +1,13 @@
-"use client";
-import React from 'react';
+import { cn } from "@/lib/utils";
 
-export const Skeleton: React.FC<{ className?: string }> = ({ className = '' }) => {
+export function Skeleton({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={`animate-pulse bg-zinc-200 dark:bg-zinc-700 rounded ${className}`} />
+    <div
+      className={cn("animate-pulse bg-theme-secondary rounded", className ?? "")}
+      {...props}
+    />
   );
-};
+}

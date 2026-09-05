@@ -116,7 +116,7 @@
 }
 
 .ProseMirror p.is-editor-empty:first-child::before {
-  color: #9a9b9e;
+  color: var(--text-muted);
   content: attr(data-placeholder);
   float: left;
   height: 0;
@@ -133,7 +133,7 @@
 
 .ProseMirror table td,
 .ProseMirror table th {
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--border-color);
   box-sizing: border-box;
   min-width: 1em;
   padding: 6px 10px;
@@ -141,14 +141,9 @@
   vertical-align: top;
 }
 
-[data-theme="dark"] .ProseMirror table td,
-[data-theme="dark"] .ProseMirror table th {
-  border-color: #3f4248;
-}
-
 .ProseMirror pre {
-  background: #0d1117;
-  color: #e6edf3;
+  background: var(--bg-surface);
+  color: var(--text-primary);
   font-family: 'JetBrains Mono', monospace;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
@@ -174,281 +169,127 @@
   color: #38bdf8;
 }
 
-/* Custom utility classes for design system */
-.bg-ztred-primary {
+/* ═══════════════════════════════════════════════════════════════════
+   THEME-AWARE UTILITY CLASSES
+   Use these instead of hardcoded Tailwind dark colors.
+   They resolve to the correct values in both light and dark themes.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* --- Text colors --- */
+.text-theme-primary { color: var(--text-primary); }
+.text-theme-secondary { color: var(--text-secondary); }
+.text-theme-muted { color: var(--text-muted); }
+.text-theme-on-primary { color: var(--primary); }
+.text-theme-on-card { color: var(--text-primary); }
+
+/* --- Background colors --- */
+.bg-theme-primary { background-color: var(--bg-primary); }
+.bg-theme-card { background-color: var(--bg-card); }
+.bg-theme-secondary { background-color: var(--bg-secondary); }
+.bg-theme-surface { background-color: var(--bg-surface); }
+.bg-theme-input { background-color: var(--bg-input); }
+.bg-theme-primary-subtle {
+  background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+/* --- Border colors --- */
+.border-theme { border-color: var(--border-color); }
+.border-theme-hover { border-color: var(--border-hover); }
+.border-theme-accent { border-color: var(--primary); }
+
+/* --- Hover states --- */
+.hover-theme-card:hover { background-color: var(--bg-card); }
+.hover-theme-secondary:hover { background-color: var(--bg-secondary); }
+.hover-theme-primary:hover { background-color: var(--primary); }
+.hover-theme-primary-subtle:hover {
+  background-color: color-mix(in srgb, var(--primary) 15%, transparent);
+}
+
+/* --- Focus states --- */
+.focus-theme-ring:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* --- Placeholders --- */
+.placeholder-theme::placeholder { color: var(--text-muted); }
+
+/* --- Sidebar-specific --- */
+.bg-theme-sidebar { background-color: var(--sidebar-bg); }
+.bg-theme-sidebar-hover { background-color: var(--sidebar-hover); }
+.text-theme-sidebar { color: var(--sidebar-text); }
+.text-theme-sidebar-muted { color: var(--sidebar-muted); }
+.border-theme-sidebar { border-color: var(--border-color); }
+
+/* --- Status colors (theme-aware) --- */
+.bg-theme-success { background-color: var(--success); }
+.bg-theme-warning { background-color: var(--warning); }
+.bg-theme-danger { background-color: var(--danger); }
+.text-theme-success { color: var(--success); }
+.text-theme-warning { color: var(--warning); }
+.text-theme-danger { color: var(--danger); }
+
+/* --- Component tokens --- */
+/* Buttons */
+.btn-primary {
   background-color: var(--primary);
+  color: #ffffff;
 }
-
-.bg-ztred-primary-dark {
+.btn-primary:hover {
   background-color: var(--primary-hover);
 }
-
-.bg-ztred-accent-blue {
-  background-color: var(--accent-blue);
+.btn-primary:active {
+  transform: scale(0.98);
+}
+.btn-primary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
-.bg-ztred-success {
-  background-color: var(--success);
+/* Cards */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+}
+.card:hover {
+  border-color: var(--border-hover);
 }
 
-.bg-ztred-warning {
-  background-color: var(--warning);
-}
-
-.bg-ztred-danger {
-  background-color: var(--danger);
-}
-
-.bg-ztred-sidebar-bg {
-  background-color: var(--sidebar-bg);
-}
-
-.bg-ztred-sidebar-darkBg {
-  background-color: var(--bg-surface);
-}
-
-.text-ztred-primary {
-  color: var(--primary);
-}
-
-.text-ztred-accent-blue {
-  color: var(--accent-blue);
-}
-
-.text-ztred-success {
-  color: var(--success);
-}
-
-.text-ztred-warning {
-  color: var(--warning);
-}
-
-.text-ztred-danger {
-  color: var(--danger);
-}
-
-.text-ztred-sidebar-text {
-  color: var(--sidebar-text);
-}
-
-.text-ztred-sidebar-muted {
-  color: var(--sidebar-muted);
-}
-
-.hover-bg-ztred-primary:hover {
-  background-color: var(--primary-hover);
-}
-
-.hover-bg-ztred-accent-blue:hover {
-  background-color: #0F5288;
-}
-
-.hover-bg-ztred-sidebar-hover:hover {
-  background-color: var(--sidebar-hover);
-}
-
-.border-ztred-primary {
-  border-color: var(--primary);
-}
-
-.border-ztred-accent-blue {
-  border-color: var(--accent-blue);
-}
-
-/* Theme-aware text colors */
-.text-theme-primary {
+/* Input */
+.input-theme {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
   color: var(--text-primary);
 }
-
-.text-theme-secondary {
-  color: var(--text-secondary);
-}
-
-.text-theme-muted {
+.input-theme::placeholder {
   color: var(--text-muted);
 }
-
-/* Theme-aware backgrounds */
-.bg-theme-primary {
-  background-color: var(--bg-primary);
+.input-theme:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 15%, transparent);
 }
 
-.bg-theme-card {
-  background-color: var(--bg-card);
-}
-
-.bg-theme-secondary {
-  background-color: var(--bg-secondary);
-}
-
-.bg-theme-input {
-  background-color: var(--bg-input);
-}
-
-/* Theme-aware borders */
-.border-theme {
+/* Divider */
+.divider-theme {
   border-color: var(--border-color);
-}
-
-/* Theme-aware hover states */
-.hover-theme-card:hover {
-  background-color: var(--bg-card);
-}
-
-.hover-theme-secondary:hover {
-  background-color: var(--bg-secondary);
-}
-
-/* Theme-aware placeholders */
-.placeholder-theme::placeholder {
-  color: var(--text-muted);
-}
-
-/* ─────────────────────────────────────────────────────────────────
-   Light-mode overrides for hardcoded dark-only Tailwind colors.
-   These sit outside @layer so they beat Tailwind utilities.
-   ───────────────────────────────────────────────────────────────── */
-
-/* TEXT color overrides — cover all zinc shades */
-[data-theme="light"] .text-zinc-200 { color: var(--text-secondary) !important; }
-[data-theme="light"] .text-zinc-300 { color: var(--text-secondary) !important; }
-[data-theme="light"] .text-zinc-400 { color: var(--text-muted) !important; }
-[data-theme="light"] .text-zinc-500 { color: var(--text-muted) !important; }
-[data-theme="light"] .text-zinc-600 { color: var(--text-muted) !important; }
-[data-theme="light"] .text-zinc-700 { color: var(--text-muted) !important; }
-
-/* Override text-white: on dark-bg containers AND on bare text */
-/* Dark-bg containers: text should become theme text */
-[data-theme="light"] .bg-\[\#1a1d2e\] .text-white,
-[data-theme="light"] .bg-\[\#1a1d2e\].text-white,
-[data-theme="light"] .bg-\[\#0e121d\] .text-white,
-[data-theme="light"] .bg-\[\#0e121d\].text-white,
-[data-theme="light"] .bg-\[\#121016\] .text-white,
-[data-theme="light"] .bg-\[\#121016\].text-white,
-[data-theme="light"] .bg-\[\#141824\] .text-white,
-[data-theme="light"] .bg-\[\#141824\].text-white,
-[data-theme="light"] .bg-zinc-800 .text-white,
-[data-theme="light"] .bg-zinc-800.text-white,
-[data-theme="light"] .bg-zinc-900 .text-white,
-[data-theme="light"] .bg-zinc-900.text-white,
-[data-theme="light"] .bg-zinc-900\/30 .text-white,
-[data-theme="light"] .bg-zinc-900\/30.text-white {
-  color: var(--text-primary) !important;
-}
-
-/* Bare text-white on non-dark-bg elements (not on colored buttons like bg-purple-600) */
-[data-theme="light"] .text-white:not([class*="bg-purple"]):not([class*="bg-blue"]):not([class*="bg-green"]):not([class*="bg-red"]):not([class*="bg-orange"]):not([class*="bg-yellow"]):not([class*="bg-gradient"]):not([class*="bg-black"]) {
-  color: var(--text-primary) !important;
-}
-
-/* CHILDREN text-white inside containers that have no dark bg class but use inline dark bg */
-[data-theme="light"] [style*="#0b0f19"] .text-white,
-[data-theme="light"] [style*="#141824"] .text-white,
-[data-theme="light"] [style*="#1a1d2e"] .text-white,
-[data-theme="light"] [style*="#0e121d"] .text-white,
-[data-theme="light"] [style*="#121016"] .text-white,
-[data-theme="light"] [style*="bg-surface"] .text-white,
-[data-theme="light"] [style*="bg-card"] .text-white {
-  color: var(--text-primary) !important;
-}
-
-/* BACKGROUND color overrides */
-[data-theme="light"] .bg-zinc-700,
-[data-theme="light"] .bg-zinc-700\/50 { background-color: var(--bg-card) !important; }
-[data-theme="light"] .bg-zinc-800,
-[data-theme="light"] .bg-zinc-800\/50,
-[data-theme="light"] .bg-zinc-800\/80,
-[data-theme="light"] .bg-zinc-800\/30 { background-color: var(--bg-secondary) !important; }
-[data-theme="light"] .bg-zinc-900,
-[data-theme="light"] .bg-zinc-900\/30 { background-color: var(--bg-secondary) !important; }
-[data-theme="light"] .bg-\[\#1a1d2e\],
-[data-theme="light"] .bg-\[\#0e121d\],
-[data-theme="light"] .bg-\[\#121016\],
-[data-theme="light"] .bg-\[\#141824\],
-[data-theme="light"] .bg-\[\#0a0d16\],
-[data-theme="light"] .bg-\[\#0b0f19\] { background-color: var(--bg-card) !important; }
-
-/* Inline style dark backgrounds */
-[data-theme="light"] [style*="#0b0f19"],
-[data-theme="light"] [style*="#141824"],
-[data-theme="light"] [style*="#1a1d2e"],
-[data-theme="light"] [style*="#0e121d"],
-[data-theme="light"] [style*="#121016"] { background-color: var(--bg-card) !important; }
-
-/* BORDER color overrides */
-[data-theme="light"] .border-zinc-700,
-[data-theme="light"] .border-zinc-800,
-[data-theme="light"] .border-zinc-800\/50,
-[data-theme="light"] .border-zinc-800\/80 { border-color: var(--border-color) !important; }
-[data-theme="light"] .border-\[\#1a1d2e\],
-[data-theme="light"] .border-\[\#0e121d\],
-[data-theme="light"] .border-\[\#0b0f19\],
-[data-theme="light"] .border-\[\#121016\],
-[data-theme="light"] .border-\[\#141824\] { border-color: var(--border-color) !important; }
-
-/* Inline border overrides */
-[data-theme="light"] [style*="border-color: #0b0f19"],
-[data-theme="light"] [style*="border-color: #1e293b"],
-[data-theme="light"] [style*="borderRight: 1px solid #0b0f19"] { border-color: var(--border-color) !important; }
-
-/* Hover state overrides */
-[data-theme="light"] .hover\:text-white:hover { color: var(--text-primary) !important; }
-[data-theme="light"] .hover\:text-zinc-200:hover,
-[data-theme="light"] .hover\:text-zinc-300:hover { color: var(--text-secondary) !important; }
-[data-theme="light"] .hover\:bg-zinc-600:hover,
-[data-theme="light"] .hover\:bg-zinc-700:hover,
-[data-theme="light"] .hover\:bg-zinc-800:hover,
-[data-theme="light"] .hover\:bg-zinc-900\/30:hover { background-color: var(--bg-card) !important; }
-[data-theme="light"] .hover\:border-zinc-600:hover,
-[data-theme="light"] .hover\:border-zinc-700:hover,
-[data-theme="light"] .hover\:border-zinc-800:hover { border-color: var(--border-hover) !important; }
-
-/* Focus ring overrides */
-[data-theme="light"] .focus\:ring-zinc-800:focus { --tw-ring-color: var(--ring); }
-
-/* Placeholder overrides */
-[data-theme="light"] .placeholder-zinc-300::placeholder,
-[data-theme="light"] .placeholder-zinc-400::placeholder,
-[data-theme="light"] .placeholder-zinc-500::placeholder,
-[data-theme="light"] .placeholder-zinc-600::placeholder { color: var(--text-muted) !important; }
-
-/* Ring-offset overrides */
-[data-theme="light"] .ring-offset-\[\#1a1d2e\] { --tw-ring-offset-color: var(--bg-card); }
-.ring-offset-theme { --tw-ring-offset-color: var(--bg-card); }
-
-/* Dividers */
-[data-theme="light"] .divide-y.divide-zinc-800\/60 > :not([hidden]) ~ :not([hidden]) {
-  border-color: var(--border-color) !important;
-}
-
-/* Table row hover */
-[data-theme="light"] .hover\:bg-zinc-900\/30:hover {
-  background-color: var(--bg-secondary) !important;
-}
-
-/* Direct text-white in select/input elements on dark backgrounds */
-[data-theme="light"] select.text-white,
-[data-theme="light"] input.text-white,
-[data-theme="light"] textarea.text-white {
-  color: var(--text-primary) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
    Apple HIG Design Guidelines Applied
    ═══════════════════════════════════════════════════════════════════ */
 
-/* ─── Typographic Scale (HIG Typography) ────────────────────────────
-   Clear hierarchy: Display > H1 > H2 > H3 > Body > Caption > Micro
-   Minimum sizes: 11pt mobile, 10pt desktop per HIG */
+/* --- Typographic Scale --- */
 :root {
-  --text-display: 3.5rem;    /* 56px */
-  --text-h1: 2.25rem;        /* 36px */
-  --text-h2: 1.75rem;        /* 28px */
-  --text-h3: 1.25rem;        /* 20px */
-  --text-body: 1rem;         /* 16px — default */
-  --text-body-sm: 0.9375rem; /* 15px */
-  --text-caption: 0.8125rem; /* 13px */
-  --text-micro: 0.6875rem;   /* 11px — HIG minimum for mobile */
+  --text-display: 3.5rem;
+  --text-h1: 2.25rem;
+  --text-h2: 1.75rem;
+  --text-h3: 1.25rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.9375rem;
+  --text-caption: 0.8125rem;
+  --text-micro: 0.6875rem;
   --leading-tight: 1.15;
   --leading-snug: 1.3;
   --leading-normal: 1.5;
@@ -458,9 +299,7 @@
   --tracking-wide: 0.025em;
 }
 
-/* ─── Focus Visible States (HIG Accessibility) ───────────────────────
-   Keyboard navigation focus rings — visible, consistent, accessible.
-   Never use outline:none without a visible replacement. */
+/* --- Focus Visible States --- */
 :focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
@@ -476,9 +315,7 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
-/* ─── Minimum Touch/Click Targets (HIG Accessibility) ────────────────
-   Mobile: 44x44pt recommended, 28x28pt minimum
-   Desktop: 28x28pt recommended, 20x20pt minimum */
+/* --- Minimum Touch Targets --- */
 button,
 a[role="button"],
 [role="button"] {
@@ -486,9 +323,7 @@ a[role="button"],
   min-width: 44px;
 }
 
-/* ─── Reduced Motion (HIG Motion + Accessibility) ────────────────────
-   Respect user preference for reduced motion.
-   Replace transitions with instant state changes. */
+/* --- Reduced Motion --- */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -500,8 +335,7 @@ a[role="button"],
   }
 }
 
-/* ─── System Color Scheme (HIG Dark Mode) ────────────────────────────
-   Respect OS-level light/dark preference as a fallback */
+/* --- System Color Scheme Fallback --- */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg-primary: #0b0f19;
@@ -531,9 +365,7 @@ a[role="button"],
   }
 }
 
-/* ─── Interactive Element States (HIG Feedback) ───────────────────────
-   Hover, active, disabled states for all interactive elements.
-   Clear visual feedback matches action significance. */
+/* --- Interactive Element States --- */
 button:active {
   transform: scale(0.98);
 }
@@ -546,7 +378,6 @@ a:hover {
   opacity: 0.85;
 }
 
-/* Disabled state — clear visual indication */
 button:disabled,
 [aria-disabled="true"] {
   opacity: 0.5;
@@ -554,20 +385,18 @@ button:disabled,
   pointer-events: none;
 }
 
-/* ─── Selection Color (HIG Color) ────────────────────────────────────
-   Use brand color for text selection */
+/* --- Selection Color --- */
 ::selection {
   background-color: var(--primary);
   color: #ffffff;
 }
 
-/* ─── Smooth Scrolling (HIG Layout) ──────────────────────────────────
-   Smooth scroll for anchor navigation, respect reduced motion */
+/* --- Smooth Scrolling --- */
 html {
   scroll-behavior: smooth;
 }
 
-/* Animation utilities */
+/* --- Animations --- */
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
@@ -578,59 +407,48 @@ html {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+.animate-fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
 @keyframes slideIn {
   from { opacity: 0; transform: translateX(-12px); }
   to { opacity: 1; transform: translateX(0); }
 }
-.animate-slide-in { animation: slideIn 0.25s ease-out forwards; }
+.animate-slide-in { animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up { animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   Responsive Utilities (HIG Layout — Adaptability)
-   Defer switching to compact view as long as possible.
+   Responsive Utilities
    ═══════════════════════════════════════════════════════════════════ */
 
-/* Mobile-first responsive breakpoints */
 @media (max-width: 768px) {
-  /* HIG: Mobile minimum text size 11pt, default 17pt */
   .responsive-text-display { font-size: 2rem !important; }
   .responsive-text-h1 { font-size: 1.75rem !important; }
   .responsive-text-h2 { font-size: 1.375rem !important; }
   .responsive-text-h3 { font-size: 1.125rem !important; }
   .responsive-text-body { font-size: 0.9375rem !important; }
   .responsive-text-caption { font-size: 0.75rem !important; }
-  
-  /* HIG: Mobile padding 16px, avoid full-width buttons */
   .responsive-padding { padding-left: 16px !important; padding-right: 16px !important; }
   .responsive-padding-y { padding-top: 16px !important; padding-bottom: 16px !important; }
   .responsive-gap { gap: 12px !important; }
-  
-  /* HIG: 44x44pt touch targets */
   .responsive-touch-target { min-height: 44px !important; min-width: 44px !important; }
-  
-  /* Hide desktop-only elements */
   .desktop-only { display: none !important; }
   .mobile-only { display: block !important; }
-  
-  /* Stack grids */
   .responsive-grid-2 { grid-template-columns: 1fr !important; }
   .responsive-grid-3 { grid-template-columns: 1fr !important; }
   .responsive-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
-  
-  /* Tables scroll horizontally */
   .responsive-table-wrapper { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
-  
-  /* Sidebar overlay on mobile */
   .responsive-sidebar {
     position: fixed !important;
     z-index: 100 !important;
     transform: translateX(-100%) !important;
-    transition: transform 0.3s ease !important;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
   .responsive-sidebar.open { transform: translateX(0) !important; }
-  
-  /* Modal-like overlay */
   .responsive-overlay {
     position: fixed !important;
     inset: 0 !important;
@@ -640,7 +458,6 @@ html {
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  /* Tablet: show more but still compact */
   .responsive-grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
   .responsive-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
   .mobile-only { display: none !important; }
@@ -651,19 +468,16 @@ html {
   .desktop-only { display: block !important; }
 }
 
-/* HIG: Smooth transitions for layout changes */
 @media (prefers-reduced-motion: reduce) {
   .responsive-sidebar { transition: none !important; }
 }
 
-/* HIG: Focus visible for keyboard navigation */
 .mobile-nav-item:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
   border-radius: 12px;
 }
 
-/* Scroll snap for horizontal scrollable areas */
 .scroll-snap-x {
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -672,7 +486,6 @@ html {
   scroll-snap-align: start;
 }
 
-/* HIG: Safe area insets for mobile devices */
 @supports (padding: env(safe-area-inset-bottom)) {
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom) !important;
@@ -681,5 +494,3 @@ html {
     padding-top: env(safe-area-inset-top) !important;
   }
 }
-
-

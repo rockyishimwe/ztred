@@ -1,65 +1,92 @@
 "use client";
-import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
 
-interface DropdownMenuProps {
-  children: React.ReactNode;
+import React, { createContext, useContext, useState, useRef, useEffect } from "react";
+
+interface DropdownContextType {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
 }
 
-interface DropdownMenuTriggerProps {
-  children: React.ReactNode;
-  className?: string;
-}
+const DropdownContext = createContext<DropdownContextType>({
+  isOpen: false,
+  setIsOpen: () => {},
+});
 
-interface DropdownMenuContentProps {
-  children: React.ReactNode;
-  className?: string;
-}
+export const DropdownMenu: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
-interface DropdownMenuItemProps {
-  children: React.ReactNode;
-  className?: string;
-  onClick?: () => void;
-}
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-export const DropdownMenu: React.FC<DropdownMenuProps> = ({ children }) => {
-  return <div className="relative">{children}</div>;
-};
-
-export const DropdownMenuTrigger: React.FC<DropdownMenuTriggerProps> = ({ children, className = '' }) => {
-  const [open, setOpen] = useState(false);
   return (
-    <>
-      <button
-        onClick={() => setOpen(!open)}
-        className={`relative ${className}`}
-      >
+    <DropdownContext.Provider value={{ isOpen, setIsOpen }}>
+      <div ref={ref} className="relative inline-block">
         {children}
-      </button>
-      {open && (
-        <div className="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white dark:bg-zinc-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20">
-          {/* Content will be provided by DropdownMenuContent */}
-        </div>
-      )}
-    </>
+      </div>
+    </DropdownContext.Provider>
   );
 };
 
-export const DropdownMenuContent: React.FC<DropdownMenuContentProps> = ({ children, className = '' }) => {
+export const DropdownMenuTrigger: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+}> = ({ children, className }) => {
+  const { isOpen, setIsOpen } = useContext(DropdownContext);
+
   return (
-    <div className={`absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white dark:bg-zinc-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20 ${className}`}>
+    <button
+      type="button"
+      className={`relative ${className || ""}`}
+      onClick={() => setIsOpen(!isOpen)}
+      aria-expanded={isOpen}
+    >
       {children}
-    </div>
+    </button>
   );
 };
 
-export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({ children, className = '', onClick }) => {
+export const DropdownMenuContent: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+}> = ({ children, className }) => {
+  const { isOpen } = useContext(DropdownContext);
+
+  if (!isOpen) return null;
+
   return (
     <div
-      onClick={onClick}
-      className={`px-4 py-2 text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 cursor-pointer ${className}`}
+      className={`absolute right-0 mt-2 w-56 origin-top-right rounded-xl bg-theme-card border border-theme py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20 animate-slide-up ${className || ""}`}
     >
       {children}
     </div>
+  );
+};
+
+export const DropdownMenuItem: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+}> = ({ children, className, onClick }) => {
+  const { setIsOpen } = useContext(DropdownContext);
+
+  return (
+    <button
+      type="button"
+      className={`w-full px-4 py-2 text-sm text-theme-primary hover:bg-theme-secondary cursor-pointer text-left ${className || ""}`}
+      onClick={() => {
+        onClick?.();
+        setIsOpen(false);
+      }}
+    >
+      {children}
+    </button>
   );
 };

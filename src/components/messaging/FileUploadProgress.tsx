@@ -1,124 +1,63 @@
 "use client";
-import { X, CheckCircle, Loader2 } from 'lucide-react';
+import React from 'react';
+import { File, X, CheckCircle, AlertCircle } from 'lucide-react';
 
 interface FileUploadProgressProps {
   files: Array<{
-    id: string;
     name: string;
-    url: string;
+    progress: number;
+    status: 'uploading' | 'complete' | 'error';
     size: number;
-    mimeType: string;
-    thumbnailUrl?: string;
-    duration?: number;
-    progress?: number;
   }>;
-  onRemove: (id: string) => void;
+  onRemove: (index: number) => void;
 }
 
 export const FileUploadProgress: React.FC<FileUploadProgressProps> = ({
   files,
-  onRemove
+  onRemove,
 }) => {
   return (
-    <div className="flex flex-col space-y-2">
-      {files.map((file) => (
+    <div className="space-y-2 p-3 bg-theme-secondary rounded-xl border border-theme">
+      {files.map((file, index) => (
         <div
-          key={file.id}
-          className="flex items-center space-x-3 p-2 bg-zinc-50 dark:bg-zinc-900 rounded-lg"
+          key={index}
+          className="flex items-center space-x-3 p-2 bg-theme-card rounded-lg border border-theme"
         >
-          {/* File preview */}
-          <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center bg-gray-200 rounded">
-            {file.thumbnailUrl && (
-              <img
-                src={file.thumbnailUrl}
-                alt={`${file.name} preview`}
-                className="h-10 w-10 object-cover rounded"
-              />
-            )}
-            {!file.thumbnailUrl && (
-              <div className="text-xs font-medium">
-                {file.mimeType.startsWith('image/') && (
-                  <img
-                    src="https://via.placeholder.com/40"
-                    alt="image preview"
-                    className="h-8 w-8 rounded"
-                  />
-                )}
-                {file.mimeType === 'application/pdf' && (
-                  <div className="flex h-full w-full items-center justify-center text-xs">
-                    📄
-                  </div>
-                )}
-                {file.mimeType.startsWith('video/') && (
-                  <div className="flex h-full w-full items-center justify-center text-xs">
-                    🎥
-                  </div>
-                )}
-                {file.mimeType.startsWith('audio/') && (
-                  <div className="flex h-full w-full items-center justify-center text-xs">
-                    🎵
-                  </div>
-                )}
-                {!file.mimeType.startsWith('image/') && !file.mimeType.startsWith('video/') && !file.mimeType.startsWith('audio/') && file.mimeType !== 'application/pdf' && (
-                  <div className="flex h-full w-full items-center justify-center text-xs">
-                    📎
-                  </div>
-                )}
-              </div>
-            )}
+          <div className="flex-shrink-0 h-10 w-10 bg-theme-primary-subtle rounded-lg flex items-center justify-center">
+            <File className="w-5 h-5 text-theme-on-primary" />
           </div>
-
-          {/* File info */}
-          <div className="flex-1 min-w-0 space-y-1">
-            <div className="flex justify-between">
-              <p className="font-medium text-zinc-900 dark:text-zinc-100 truncate max-w-xs">{file.name}</p>
-              {file.duration && (
-                <span className="text-xs text-zinc-500">
-                  {Math.floor(file.duration / 60)}:{String(file.duration % 60).padStart(2, '0')}
-                </span>
-              )}
-            </div>
-            <p className="text-xs text-zinc-500">
-              {Math.round(file.size / 1024)} KB{(file.size > 1024 * 1024) && ` (${(file.size / (1024 * 1024)).toFixed(1)} MB)`}
-            </p>
-          </div>
-
-          {/* Progress bar for uploads */}
-          {file.progress !== undefined && (
-            <div className="w-24">
-              <div className="bg-zinc-200 dark:bg-zinc-700 h-1.5 rounded overflow-hidden">
+          <div className="flex-1 min-w-0">
+            <p className="font-medium text-theme-primary truncate max-w-xs">{file.name}</p>
+            <div className="flex items-center space-x-2 mt-1">
+              <div className="flex-1 bg-theme-secondary h-1.5 rounded overflow-hidden">
                 <div
-                  className="bg-primary-600 h-1.5"
+                  className={`h-full rounded transition-all duration-300 ${
+                    file.status === 'complete'
+                      ? 'bg-theme-success'
+                      : file.status === 'error'
+                      ? 'bg-theme-danger'
+                      : 'bg-theme-primary'
+                  }`}
                   style={{ width: `${file.progress}%` }}
-                ></div>
+                />
               </div>
+              <span className="text-xs text-theme-muted">
+                {file.status === 'complete' ? (
+                  <CheckCircle className="w-4 h-4 text-theme-success" />
+                ) : file.status === 'error' ? (
+                  <AlertCircle className="w-4 h-4 text-theme-danger" />
+                ) : (
+                  `${file.progress}%`
+                )}
+              </span>
             </div>
-          )}
-
-          {/* Action buttons */}
-          <div className="flex-shrink-0 flex items-center space-x-2">
-            {file.progress === undefined && (
-              <button
-                onClick={() => onRemove(file.id)}
-                className="p-1 rounded-hover hover:bg-zinc-100 text-zinc-500 hover:text-zinc-700"
-              >
-                <X className="h-3 w-3"/>
-              </button>
-            )}
-            {file.progress !== undefined && file.progress < 100 && (
-              <div className="h-3 w-3 flex items-center justify-center text-xs">
-                <Loader2 className="h-3 w-3 text-primary-600 animate-spin"/>
-              </div>
-            )}
-            {file.progress === 100 && (
-              <button
-                onClick={() => onRemove(file.id)}
-                className="p-1 rounded-hover hover:bg-zinc-100 text-zinc-500 hover:text-zinc-700"
-              >
-                <CheckCircle className="h-3 w-3 text-green-500"/>
-              </button>
-            )}
           </div>
+          <button
+            onClick={() => onRemove(index)}
+            className="p-1 text-theme-muted hover:text-theme-danger hover:bg-theme-secondary rounded-lg transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
       ))}
     </div>

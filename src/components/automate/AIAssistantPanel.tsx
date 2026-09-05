@@ -71,17 +71,17 @@ export const AIAssistantPanel: React.FC = () => {
   };
 
   return (
-    <div className="w-72 bg-white dark:bg-ztred-surface-dark border-l border-zinc-200 dark:border-zinc-700 flex flex-col">
-      <div className="flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700">
-        <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+    <div className="w-72 bg-theme-card border-l border-theme flex flex-col">
+      <div className="flex items-center justify-between p-4 border-b border-theme">
+        <h2 className="text-xl font-bold text-theme-primary">
           ZTRED-AI
         </h2>
         <div className="flex items-center space-x-2">
-          <button className="p-1 rounded-hover hover:bg-zinc-100">
-            <RefreshCw className="h-4 w-4 text-zinc-600 hover:text-zinc-800"/>
+          <button className="p-1 rounded-lg hover:bg-theme-secondary transition-colors">
+            <RefreshCw className="h-4 w-4 text-theme-muted hover:text-theme-primary"/>
           </button>
-          <button className="p-1 rounded-hover hover:bg-zinc-100">
-            <ChevronDown className="h-4 w-4 text-zinc-600 hover:text-zinc-800"/>
+          <button className="p-1 rounded-lg hover:bg-theme-secondary transition-colors">
+            <ChevronDown className="h-4 w-4 text-theme-muted hover:text-theme-primary"/>
           </button>
         </div>
       </div>
@@ -93,15 +93,19 @@ export const AIAssistantPanel: React.FC = () => {
           >
             <div className={`flex items-start space-x-2 max-w-[200px] ${message.isUser ? 'ml-auto' : ''}`}>
               {!message.isUser && (
-                <div className="h-8 w-8 bg-primary-500 text-white flex items-center justify-center rounded-lg text-xs font-bold">
+                <div className="h-8 w-8 bg-theme-primary text-white flex items-center justify-center rounded-lg text-xs font-bold">
                   AI
                 </div>
               )}
-              <div className={`bg-zinc-100 dark:bg-zinc-700 rounded-lg p-3 max-w-xs ${message.isUser ? 'bg-primary-600 text-white' : ''}`}>
+              <div className={`rounded-lg p-3 max-w-xs ${
+                message.isUser
+                  ? 'bg-theme-primary text-white'
+                  : 'bg-theme-secondary text-theme-primary'
+              }`}>
                 <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                 {message.isLoading && (
-                  <div className="h-2 w-full bg-primary-200 rounded mt-1">
-                    <div className="h-2 w-1/3 bg-primary-500 rounded"></div>
+                  <div className="h-2 w-full bg-theme-primary/20 rounded mt-1">
+                    <div className="h-2 w-1/3 bg-theme-primary rounded"></div>
                   </div>
                 )}
                 {message.actions && message.actions.length > 0 && (
@@ -110,7 +114,7 @@ export const AIAssistantPanel: React.FC = () => {
                       <button
                         key={index}
                         onClick={action.onClick}
-                        className="text-xs bg-transparent hover:text-primary-600 dark:hover:text-primary-400 px-2 py-1 rounded"
+                        className="text-xs bg-transparent hover:text-theme-on-primary px-2 py-1 rounded transition-colors"
                       >
                         {action.label}
                       </button>
@@ -122,29 +126,29 @@ export const AIAssistantPanel: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="border-t border-zinc-200 dark:border-zinc-700 flex items-center p-4">
+      <div className="border-t border-theme flex items-center p-4">
         <div className="flex-1">
           <div className="relative">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask ZTRED-AI..."
-              className="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full px-4 py-2 border border-theme rounded-xl text-theme-primary placeholder-theme focus:outline-none focus:border-theme-accent focus:ring-2 focus:ring-theme-primary/20 transition-all bg-theme-input"
             />
             <button
               onClick={sendMessage}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-hover hover:bg-zinc-100"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-lg hover:bg-theme-secondary transition-colors"
               disabled={!input.trim()}
             >
-              <Send className="h-4 w-4 text-zinc-500 hover:text-zinc-600"/>
+              <Send className="h-4 w-4 text-theme-muted hover:text-theme-primary"/>
             </button>
           </div>
         </div>
         <button
           onClick={() => setInput('')}
-          className="ml-2 p-1 rounded-hover hover:bg-zinc-100"
+          className="ml-2 p-1 rounded-lg hover:bg-theme-secondary transition-colors"
         >
-          <Mic className="h-4 w-4 text-zinc-500 hover:text-zinc-600"/>
+          <Mic className="h-4 w-4 text-theme-muted hover:text-theme-primary"/>
         </button>
       </div>
     </div>
