@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import { Download, Upload } from 'lucide-react';
 
 export const GanttChart: React.FC = () => {
   return (
@@ -41,11 +42,19 @@ export const GanttChart: React.FC = () => {
       <div className="px-4 py-3 border-t border-theme flex items-center justify-between text-sm">
         <span className="text-theme-secondary">Zoom: Day Week Month Year</span>
         <div className="flex items-center space-x-2">
-          <button className="p-1 rounded-lg hover:bg-theme-secondary transition-colors">
-            <span className="material-icons text-theme-muted">file_download</span>
+          <button
+            type="button"
+            aria-label="Download timeline"
+            className="p-1 rounded-lg text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors"
+          >
+            <Download className="w-4 h-4" aria-hidden="true" />
           </button>
-          <button className="p-1 rounded-lg hover:bg-theme-secondary transition-colors">
-            <span className="material-icons text-theme-muted">upload_file</span>
+          <button
+            type="button"
+            aria-label="Upload timeline"
+            className="p-1 rounded-lg text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors"
+>
+            <Upload className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
       </div>

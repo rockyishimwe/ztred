@@ -41,7 +41,7 @@ export default function ProfileSettingsPage() {
     <div className="max-w-2xl">
       {/* Back path */}
       <Link
-        href="/workspace/control/control/settings"
+        href="/workspace/control/settings"
         className="inline-flex items-center gap-1.5 text-sm font-medium mb-6 transition-colors"
         style={{ color: "var(--text-secondary)" }}
       >
@@ -173,7 +173,7 @@ export default function ProfileSettingsPage() {
 
         <div className="flex items-center justify-end gap-3 mt-6 pt-5" style={{ borderTop: "1px solid var(--border-color)" }}>
           <Link
-            href="/workspace/control/control/settings"
+            href="/workspace/control/settings"
             className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all"
             style={{
               backgroundColor: "transparent",

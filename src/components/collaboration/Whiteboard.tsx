@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useEffect } from 'react';
+import { Image as ImageIcon, PencilLine, Save, Upload } from 'lucide-react';
 
 export const Whiteboard: React.FC = () => {
   const whiteboardRef = useRef<null | HTMLDivElement>(null);
@@ -34,17 +35,33 @@ export const Whiteboard: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center space-x-2">
-          <button className="p-2 rounded-hover hover:bg-zinc-100">
-            <span className="material-icons">upload_file</span>
+          <button
+            type="button"
+            aria-label="Upload file"
+            className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+          >
+            <Upload className="w-5 h-5 text-zinc-600 dark:text-zinc-300" aria-hidden="true" />
           </button>
-          <button className="p-2 rounded-hover hover:bg-zinc-100">
-            <span className="material-icons"> image</span>
+          <button
+            type="button"
+            aria-label="Insert image"
+            className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+          >
+            <ImageIcon className="w-5 h-5 text-zinc-600 dark:text-zinc-300" aria-hidden="true" />
           </button>
-          <button className="p-2 rounded-hover hover:bg-zinc-100">
-            <span className="material-icons">edit_note</span>
+          <button
+            type="button"
+            aria-label="Edit note"
+            className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+          >
+            <PencilLine className="w-5 h-5 text-zinc-600 dark:text-zinc-300" aria-hidden="true" />
           </button>
-          <button className="p-2 rounded-hover hover:bg-zinc-100">
-            <span className="material-icons">save_alt</span>
+          <button
+            type="button"
+            aria-label="Save"
+            className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+          >
+            <Save className="w-5 h-5 text-zinc-600 dark:text-zinc-300" aria-hidden="true" />
           </button>
         </div>
       </div>

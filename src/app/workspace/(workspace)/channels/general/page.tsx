@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -24,6 +24,7 @@ import {
   Users,
   Video,
 } from "lucide-react";
+import { format } from "date-fns";
 
 interface Channel {
   id: string;
@@ -33,6 +34,7 @@ interface Channel {
 }
 
 interface Message {
+  id: string;
   author: string;
   time: string;
   avatar: string;
@@ -48,8 +50,15 @@ const channels: Channel[] = [
   { id: "product", name: "product", topic: "Roadmap, specs, and customer feedback", unread: 1 },
 ];
 
-const messages: Message[] = [
+const CURRENT_USER = {
+  author: "Jordan Lee",
+  avatar:
+    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&auto=format&fit=crop&q=80",
+};
+
+const initialMessages: Message[] = [
   {
+    id: "m1",
     author: "Priya Nair",
     time: "9:32 AM",
     avatar:
@@ -57,6 +66,7 @@ const messages: Message[] = [
     body: "Morning team! I just pushed the updated icon set to the shared library.",
   },
   {
+    id: "m2",
     author: "Sam Rivera",
     time: "9:40 AM",
     avatar:
@@ -64,13 +74,14 @@ const messages: Message[] = [
     body: "Nice! These look super crisp. Are we using them in the mobile nav too?",
   },
   {
+    id: "m3",
     author: "Jordan Lee",
     time: "9:48 AM",
-    avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&auto=format&fit=crop&q=80",
+    avatar: CURRENT_USER.avatar,
     body: "Yes - I'll swap them in this afternoon. Also updated the spacing tokens to match the 4pt grid.",
   },
   {
+    id: "m4",
     author: "Daniel Kim",
     time: "10:05 AM",
     avatar:
@@ -99,11 +110,36 @@ export default function GeneralChannelPage() {
   const pathname = usePathname();
   const [message, setMessage] = useState("");
   const [activeChannelId, setActiveChannelId] = useState("general");
+  // Local optimistic messages — replace with a store/API call when the
+  // messaging backend is wired up.
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [messages.length]);
 
   const activeChannel = useMemo(
     () => channels.find((channel) => channel.id === activeChannelId) ?? channels[0],
     [activeChannelId]
   );
+
+  const handleSend = (event: React.FormEvent) => {
+    event.preventDefault();
+    const trimmed = message.trim();
+    if (!trimmed) return;
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `local-${Date.now()}`,
+        author: CURRENT_USER.author,
+        time: format(new Date(), "h:mm a"),
+        avatar: CURRENT_USER.avatar,
+        body: trimmed,
+      },
+    ]);
+    setMessage("");
+  };
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-white font-sans text-[#171719] selection:bg-[#7a5cff] selection:text-white dark:bg-[#06070b] dark:text-[#f6f4fb]">
@@ -278,7 +314,7 @@ export default function GeneralChannelPage() {
 
             <div className="space-y-5">
               {messages.map((messageItem) => (
-                <article key={`${messageItem.author}-${messageItem.time}`} className="flex gap-3">
+                <article key={messageItem.id} className="flex gap-3">
                   <img
                     src={messageItem.avatar}
                     alt=""
@@ -299,13 +335,14 @@ export default function GeneralChannelPage() {
                   </div>
                 </article>
               ))}
+              <div ref={messagesEndRef} aria-hidden="true" />
             </div>
           </div>
 
           <div className="shrink-0 px-6 pb-6">
             <form
               className="flex h-[62px] items-center gap-2 rounded-2xl border border-[#e6e6eb] bg-white px-3 shadow-[0_1px_0_rgba(20,20,30,0.02)] dark:border-[#252535] dark:bg-[#171720]"
-              onSubmit={(event) => event.preventDefault()}
+              onSubmit={handleSend}
             >
               <button
                 type="button"

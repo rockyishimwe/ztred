@@ -3,7 +3,6 @@ import React, { useRef, useEffect } from 'react';
 import { Message } from '@/types/api';
 import { MessageBubble } from './MessageBubble';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { Skeleton } from '@/components/ui/skeleton';
 
 interface MessageListProps {
   messages: Message[];
@@ -15,7 +14,10 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   const rowVirtualizer = useVirtualizer({
     count: messages.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 90,
+    // Initial estimate only — rows are measured for real via measureElement,
+    // so long messages expand and short ones don't leave dead space.
+    estimateSize: () => 72,
+    getItemKey: (index) => messages[index]?.id ?? index,
     overscan: 5,
   });
 
@@ -26,10 +28,22 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
     }
   }, [messages.length]);
 
+  // Must render BEFORE the virtualizer: with zero messages getVirtualItems()
+  // returns no rows, so an empty state placed inside the row map is unreachable.
+  if (messages.length === 0) {
+    return (
+      <div className="flex-1 flex items-center justify-center w-full p-8">
+        <div className="text-center text-zinc-500">
+          No messages yet. Start the conversation!
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       ref={parentRef}
-      className="flex-1 overflow-y-auto w-full p-2 space-y-1 scroll-smooth"
+      className="flex-1 overflow-y-auto w-full p-2 scroll-smooth"
     >
       <div
         style={{
@@ -43,6 +57,8 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
           return (
             <div
               key={virtualRow.key}
+              data-index={virtualRow.index}
+              ref={rowVirtualizer.measureElement}
               style={{
                 position: 'absolute',
                 top: 0,
@@ -51,13 +67,7 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
                 transform: `translateY(${virtualRow.start}px)`,
               }}
             >
-              {messages.length === 0 ? (
-                <div className="text-center py-8 text-zinc-500">
-                  No messages yet. Start the conversation!
-                </div>
-              ) : (
-                <MessageBubble message={message} />
-              )}
+              <MessageBubble message={message} />
             </div>
           );
         })}

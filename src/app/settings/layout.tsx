@@ -8,18 +8,17 @@ import {
   User,
   Bell,
   Palette,
-  Shield,
-  Users,
-  CreditCard,
+  IdCard,
 } from "lucide-react";
 
+// NOTE: only routes that actually exist under /settings —
+// the removed Security/Members/Billing entries pointed at pages
+// that were never built (workspace-level settings cover those).
 const SETTINGS_NAV = [
   { icon: User, href: "/settings/profile", label: "Profile" },
+  { icon: IdCard, href: "/settings/account", label: "Account" },
   { icon: Bell, href: "/settings/notifications", label: "Notifications" },
   { icon: Palette, href: "/settings/appearance", label: "Appearance" },
-  { icon: Shield, href: "/settings/security", label: "Security" },
-  { icon: Users, href: "/settings/members", label: "Members" },
-  { icon: CreditCard, href: "/settings/billing", label: "Billing" },
 ];
 
 export default function SettingsLayout({
