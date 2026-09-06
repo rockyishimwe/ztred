@@ -95,7 +95,7 @@ export default function VerifyPage() {
 
           {/* Resend box card */}
           <div className="bg-theme-card border border-theme rounded-2xl p-5 text-center space-y-2">
-            <p className="text-xs text-zinc-400">Didn't receive the email?</p>
+            <p className="text-xs text-zinc-400">Didn&apos;t receive the email?</p>
             <button
               type="button"
               onClick={() => alert('Verification code resent!')}

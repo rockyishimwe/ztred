@@ -331,10 +331,10 @@ export default function FilesPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search files..."
-            className="w-full bgCard borderCard rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+            className="w-full bg-theme-card border border-theme rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
           />
         </div>
-        <div className="flex items-center bgCard borderCard rounded-xl p-1">
+        <div className="flex items-center bg-theme-card border border-theme rounded-xl p-1">
           <button
             onClick={() => setView("grid")}
             className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
@@ -367,7 +367,7 @@ export default function FilesPage() {
             {folders.map((folder) => (
               <div
                 key={folder.name}
-                className="bgCard borderCard rounded-xl p-4 flex items-center justify-between hover:border-theme transition-colors cursor-pointer"
+                className="bg-theme-card border border-theme rounded-xl p-4 flex items-center justify-between hover:border-theme transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-3">
                   <div
@@ -402,7 +402,7 @@ export default function FilesPage() {
             {filteredFiles.map((file) => (
               <div
                 key={file.id}
-                className="bgCard borderCard rounded-xl p-4 hover:border-theme transition-colors cursor-pointer"
+                className="bg-theme-card border border-theme rounded-xl p-4 hover:border-theme transition-colors cursor-pointer"
               >
                 {/* File Icon + Menu */}
                 <div className="flex items-start justify-between mb-4">

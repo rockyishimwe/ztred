@@ -160,7 +160,7 @@ function CreateDocModal({
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+            className="w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
           />
         </div>
 
@@ -174,7 +174,7 @@ function CreateDocModal({
             onChange={(e) => setSummary(e.target.value)}
             placeholder="What will this document cover?"
             rows={3}
-            className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all resize-none"
+            className="w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all resize-none"
           />
         </div>
 
@@ -253,7 +253,7 @@ export default function DocsListingPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search docs..."
-            className="w-full bgCard borderCard rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+            className="w-full bg-theme-card border border-theme rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
           />
         </div>
       </div>
@@ -261,12 +261,12 @@ export default function DocsListingPage() {
       {/* ═══ Document List ═══ */}
       <div className="flex-1 px-6 pb-6 overflow-y-auto space-y-3">
         {filteredDocs.map((doc) => (
-          <div key={doc.id} className="bgCard borderCard rounded-xl hover:border-theme transition-colors">
+          <div key={doc.id} className="bg-theme-card border border-theme rounded-xl hover:border-theme transition-colors">
             {/* Doc Header */}
             <div className="p-5">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bgCard borderCard flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-theme-card border border-theme flex items-center justify-center">
                     <FileText className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
                   </div>
                   <div>

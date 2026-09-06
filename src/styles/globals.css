@@ -167,8 +167,9 @@
     line-height: var(--leading-relaxed);
   }
 
-  /* Remove default transitions on all elements, apply selectively */
-  * {
+  /* Transition theme colors on elements that opt in; a universal `*` selector
+     made every node animate and janked theme switches. */
+  .themed-transition {
     transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
 }
@@ -349,6 +350,15 @@ input, textarea, [contenteditable] {
 
 /* ═══════════════════════════════════════════════════════════════════
    THEME-AWARE UTILITY CLASSES
+
+   Most theme colors live in the Tailwind palette (see tailwind.config.ts,
+   `theme-*` entries) so hover:/focus:/dark: variants and /opacity modifiers
+   work out of the box.
+
+   The classes below are hand-authored because their CSS variable depends on
+   the property they are applied to (text vs background), which a single
+   palette entry cannot express. Variant support for these names is provided
+   explicitly here.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* --- Text colors --- */
@@ -389,6 +399,22 @@ input, textarea, [contenteditable] {
 
 /* --- Placeholders --- */
 .placeholder-theme::placeholder { color: var(--text-muted); }
+
+/* --- Variant support for property-dependent names ---
+   (bg-theme-primary, bg-theme-secondary, text-theme-primary and
+   text-theme-secondary are property-dependent; see comment above.) */
+.hover\\:bg-theme-secondary:hover { background-color: var(--bg-secondary); }
+.hover\\:bg-theme-card:hover { background-color: var(--bg-card); }
+.hover\\:bg-theme-input:hover { background-color: var(--bg-input); }
+.hover\\:bg-theme-primary:hover { background-color: var(--primary); }
+.hover\\:bg-theme-primary-hover:hover { background-color: var(--primary-hover); }
+.hover\\:border-theme:hover { border-color: var(--border-hover); }
+.hover\\:border-theme-hover:hover { border-color: var(--border-hover); }
+.hover\\:text-theme-primary:hover { color: var(--text-primary); }
+.hover\\:text-theme-secondary:hover { color: var(--text-secondary); }
+.hover\\:text-theme-sidebar:hover { color: var(--sidebar-text); }
+.hover\\:text-theme-on-primary:hover { color: var(--primary); }
+.hover\\:text-theme-danger:hover { color: var(--danger); }
 
 /* --- Sidebar-specific --- */
 .bg-theme-sidebar { background-color: var(--sidebar-bg); }
@@ -903,11 +929,12 @@ input, textarea, [contenteditable] {
    Apple HIG Design Guidelines Applied
    ═══════════════════════════════════════════════════════════════════ */
 
-/* --- Focus Visible States --- */
+/* --- Focus Visible States ---
+   Outline only: no border-radius override (it changed the shape of any
+   focused element, visibly distorting pills, circles and avatars). */
 :focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
-  border-radius: var(--radius-sm);
 }
 
 button:focus-visible,
@@ -919,10 +946,12 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
-/* --- Minimum Touch Targets --- */
-button,
-a[role="button"],
-[role="button"] {
+/* --- Minimum Touch Targets ---
+   Opt-in utility instead of a blanket button rule: a global 44px minimum on
+   every <button> broke all compact icon buttons across the app (which had to
+   patch it back with min-h-0/min-w-0). Apply .touch-target to primary mobile
+   controls that genuinely need the 44pt target. */
+.touch-target {
   min-height: 44px;
   min-width: 44px;
 }

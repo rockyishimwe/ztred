@@ -93,19 +93,19 @@ export const AIAssistantPanel: React.FC = () => {
           >
             <div className={`flex items-start space-x-2 max-w-[200px] ${message.isUser ? 'ml-auto' : ''}`}>
               {!message.isUser && (
-                <div className="h-8 w-8 bg-theme-primary text-white flex items-center justify-center rounded-lg text-xs font-bold">
+                <div className="h-8 w-8 bg-theme-brand text-white flex items-center justify-center rounded-lg text-xs font-bold">
                   AI
                 </div>
               )}
               <div className={`rounded-lg p-3 max-w-xs ${
                 message.isUser
-                  ? 'bg-theme-primary text-white'
+                  ? 'bg-theme-brand text-white'
                   : 'bg-theme-secondary text-theme-primary'
               }`}>
                 <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                 {message.isLoading && (
-                  <div className="h-2 w-full bg-theme-primary/20 rounded mt-1">
-                    <div className="h-2 w-1/3 bg-theme-primary rounded"></div>
+                  <div className="h-2 w-full bg-theme-brand/20 rounded mt-1">
+                    <div className="h-2 w-1/3 bg-theme-brand rounded"></div>
                   </div>
                 )}
                 {message.actions && message.actions.length > 0 && (

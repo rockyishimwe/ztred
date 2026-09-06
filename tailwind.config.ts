@@ -10,6 +10,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        /* ── Theme-aware palette ────────────────────────────────────────
+           Maps to the CSS variables defined in src/styles/globals.css so that
+           hover:/focus:/dark: variants and /opacity modifiers work, e.g.
+           `bg-theme-card/50`, `hover:bg-theme-sidebar-hover`.
+
+           NOTE: `bg-theme-primary`, `bg-theme-secondary`, `text-theme-primary`
+           and `text-theme-secondary` intentionally remain plain CSS classes
+           (see globals.css): the same name maps to a different variable
+           depending on whether it is used as text or background color, which a
+           single palette entry cannot express. Variant support for those few
+           names is hand-authored in globals.css.
+           ─────────────────────────────────────────────────────────────── */
+        theme: 'var(--border-color)',
+        'theme-card': 'var(--bg-card)',
+        'theme-surface': 'var(--bg-surface)',
+        'theme-input': 'var(--bg-input)',
+        'theme-elevated': 'var(--surface-elevated)',
+        'theme-tinted': 'var(--bg-tinted)',
+        'theme-brand': 'var(--primary)',
+        'theme-brand-hover': 'var(--primary-hover)',
+        'theme-on-primary': 'var(--primary)',
+        'theme-primary-hover': 'var(--primary-hover)',
+        'theme-success': 'var(--success)',
+        'theme-warning': 'var(--warning)',
+        'theme-danger': 'var(--danger)',
+        'theme-hover': 'var(--border-hover)',
+        'theme-sidebar-hover': 'var(--sidebar-hover)',
         purple: {
           50: '#f3f0ff',
           100: '#e9e3ff',

@@ -41,7 +41,7 @@ export default function CreatePostPage() {
           </div>
 
           {/* Post Composer Card */}
-          <div className="bgCard borderCard rounded-2xl p-5">
+          <div className="bg-theme-card border border-theme rounded-2xl p-5">
             {/* Author Row */}
             <div className="flex items-center gap-3 mb-4">
               <img
@@ -115,7 +115,7 @@ export default function CreatePostPage() {
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                   audience === option
                     ? 'bg-purple-600 text-white'
-                    : 'bgCard borderCard hover:border-zinc-700'
+                    : 'bg-theme-card border border-theme hover:border-zinc-700'
                 }`}
               >
                 {option}

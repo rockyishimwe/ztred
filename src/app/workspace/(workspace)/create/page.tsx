@@ -121,7 +121,7 @@ export default function CreateWorkspacePage() {
         </div>
 
         {/* Form Card */}
-        <div className="bgCard borderCard rounded-2xl p-8">
+        <div className="bg-theme-card border border-theme rounded-2xl p-8">
           {/* Step 1: Details */}
           {step === 1 && (
             <div className="space-y-6">
@@ -154,7 +154,7 @@ export default function CreateWorkspacePage() {
                     value={workspaceName}
                     onChange={(e) => setWorkspaceName(e.target.value)}
                     placeholder="Acme Inc."
-                    className="w-full bgCard borderCard rounded-xl px-4 py-3 text-theme-primary placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-sm transition-all"
+                    className="w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-theme-primary placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-sm transition-all"
                   />
                 </div>
               </div>
@@ -234,7 +234,7 @@ export default function CreateWorkspacePage() {
                   onChange={(e) => setInviteEmailInput(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addInvitee(); } }}
                   placeholder="name@company.com"
-                  className="flex-1 bgCard borderCard rounded-xl px-4 py-3 text-theme-primary placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-sm transition-all"
+                  className="flex-1 bg-theme-card border border-theme rounded-xl px-4 py-3 text-theme-primary placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-sm transition-all"
                 />
                 <button
                   onClick={addInvitee}
@@ -249,7 +249,7 @@ export default function CreateWorkspacePage() {
                 {invitees.map((invitee) => (
                   <div
                     key={invitee.email}
-                    className="flex items-center gap-3 p-3 bgCard borderCard rounded-xl"
+                    className="flex items-center gap-3 p-3 bg-theme-card border border-theme rounded-xl"
                   >
                     <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-theme-primary text-xs font-bold shrink-0">
                       {invitee.email.charAt(0).toUpperCase()}
@@ -271,7 +271,7 @@ export default function CreateWorkspacePage() {
               </div>
 
               {/* Invite Link */}
-              <div className="flex items-center gap-3 p-3 bgCard borderCard rounded-xl">
+              <div className="flex items-center gap-3 p-3 bg-theme-card border border-theme rounded-xl">
                 <Link2 className="w-4 h-4 text-theme-muted shrink-0" />
                 <span className="flex-1 text-sm text-theme-muted truncate">
                   zenith.com/invite/{workspaceName.toLowerCase().replace(/\s+/g, '-') || 'dddd'}

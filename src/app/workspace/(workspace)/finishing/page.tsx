@@ -57,7 +57,7 @@ function FinishingContent() {
 
         {/* Title */}
         <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-          You're all set! 🚀🚀
+          You&apos;re all set! 🚀🚀
         </h1>
 
         {/* Welcome message */}

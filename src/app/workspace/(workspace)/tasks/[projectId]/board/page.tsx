@@ -133,7 +133,7 @@ function CreateTaskModal({
     onClose();
   };
 
-  const selectClasses = "w-full bgCard borderCard rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all appearance-none cursor-pointer";
+  const selectClasses = "w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all appearance-none cursor-pointer";
 
   return (
     <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
@@ -162,7 +162,7 @@ function CreateTaskModal({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="What needs to be done?"
-            className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+            className="w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
           />
         </div>
 
@@ -209,7 +209,7 @@ function CreateTaskModal({
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+              className="w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
             />
           </div>
           <div>
@@ -221,7 +221,7 @@ function CreateTaskModal({
               value={tag}
               onChange={(e) => setTag(e.target.value)}
               placeholder="e.g. Design"
-              className="w-full bgCard borderCard rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+              className="w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
             />
           </div>
         </div>
@@ -289,7 +289,7 @@ function FilterTasksModal({
                 className={`px-4 py-2 rounded-xl text-sm font-semibold capitalize transition-all ${
                   priority === p
                     ? "bg-purple-600 text-white shadow"
-                    : "bgCard borderCard hover:border-zinc-600"
+                    : "bg-theme-card border border-theme hover:border-zinc-600"
                 }`}
               >
                 {p}
@@ -312,7 +312,7 @@ function FilterTasksModal({
                   (a === "Everyone" && assignee === "everyone") ||
                   (a === "Assigned to me" && assignee === "me")
                     ? "bg-purple-600 text-white shadow"
-                    : "bgCard borderCard hover:border-zinc-600"
+                    : "bg-theme-card border border-theme hover:border-zinc-600"
                 }`}
               >
                 {a}
@@ -358,7 +358,7 @@ function TaskCardView({ task }: { task: TaskCard }) {
   };
 
   return (
-    <div className="bgCard borderCard rounded-xl p-4 hover:border-zinc-700 transition-colors cursor-pointer">
+    <div className="bg-theme-card border border-theme rounded-xl p-4 hover:border-zinc-700 transition-colors cursor-pointer">
       {/* Tags */}
       <div className="flex items-center gap-2 mb-3">
         <span

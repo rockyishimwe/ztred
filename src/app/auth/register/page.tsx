@@ -37,7 +37,7 @@ export default function RegisterPage() {
               Create your Ztred account
             </h1>
             <p className="text-sm text-zinc-400">
-              Bring your team's work into one focused, shared space.
+              Bring your team&apos;s work into one focused, shared space.
             </p>
           </div>
 

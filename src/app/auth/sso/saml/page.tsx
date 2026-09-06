@@ -9,7 +9,7 @@ export default function SAMLPage() {
         </h1>
         <div className="bg-zinc-900 rounded-lg p-6">
           <p className="mb-4 text-center">
-            Redirecting to your organization's SSO portal...
+            Redirecting to your organization&apos;s SSO portal...
           </p>
           <div className="flex items-center justify-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-ztred-primary"></div>

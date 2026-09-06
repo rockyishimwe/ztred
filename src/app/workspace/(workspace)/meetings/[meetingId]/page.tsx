@@ -273,7 +273,7 @@ export default function MeetingsPage() {
                       <MicOff className="w-3.5 h-3.5 text-theme-primary" />
                     </div>
                   ) : (
-                    <div className="w-7 h-7 rounded-full bg-theme-secondary/80 flex items-center justify-center">
+                    <div className="w-7 h-7 rounded-full bg-theme-secondary-hover/80 flex items-center justify-center">
                       <Mic className="w-3.5 h-3.5 text-theme-primary" />
                     </div>
                   )}
