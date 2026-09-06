@@ -279,7 +279,9 @@ function AudioCallOverlay({
 // ─── Main Page ──────────────────────────────────────────────────
 
 export default function MessagingPage() {
-  const [activeFilter, setActiveFilter] = useState<'All' | 'Unread' | 'Mentions'>('All');
+  // NOTE: 'Mentions' tab removed — conversations carry no mention data to
+  // filter on. Reintroduce when mentions are tracked on conversations.
+  const [activeFilter, setActiveFilter] = useState<'All' | 'Unread'>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [messageInput, setMessageInput] = useState('');
   const [activeConvId, setActiveConvId] = useState('sam_rivera');
@@ -289,9 +291,10 @@ export default function MessagingPage() {
   const activeConv = conversations.find((c) => c.id === activeConvId)!;
   const activeMessages = conversationMessages[activeConvId] || [];
 
-  const filteredConversations = conversations.filter((c) =>
-    searchQuery ? c.name.toLowerCase().includes(searchQuery.toLowerCase()) : true
-  );
+  const filteredConversations = conversations.filter((c) => {
+    if (activeFilter === 'Unread' && c.unread === 0) return false;
+    return searchQuery ? c.name.toLowerCase().includes(searchQuery.toLowerCase()) : true;
+  });
 
   const handleCall = useCallback(() => {
     if (activeConv && !activeConv.isGroup) {
@@ -332,7 +335,7 @@ export default function MessagingPage() {
 
           {/* Filter Tabs */}
           <div className="flex gap-1">
-            {(['All', 'Unread', 'Mentions'] as const).map((tab) => (
+            {(['All', 'Unread'] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveFilter(tab)}
@@ -388,6 +391,11 @@ export default function MessagingPage() {
               </div>
             </button>
           ))}
+          {filteredConversations.length === 0 && (
+            <div className="px-3 py-8 text-center text-sm text-theme-muted">
+              {activeFilter === 'Unread' ? "You're all caught up!" : 'No conversations found.'}
+            </div>
+          )}
         </div>
       </div>
 

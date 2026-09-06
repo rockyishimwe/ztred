@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState("General");
-  const tabs = ["General", "Branding", "Notifications", "Integrations", "Danger zone"];
-
+  // NOTE: tab navigation was removed — every tab rendered this same single
+  // settings view; per-section content (Branding, Danger zone, etc.)
+  // was never built. Reintroduce tabs when those sections exist.
   return (
     <div className="settings-root" style={{ width:"100%", maxWidth:"1180px", margin:"0 auto", padding:"24px", boxSizing:"border-box", overflowX:"hidden" }}>
 
@@ -35,25 +35,6 @@ export default function SettingsPage() {
             Export
           </button>
         </div>
-      </div>
-
-      {/* Tabs */}
-      <div style={{ display:"flex", gap:"24px", borderBottom:"1px solid var(--border-color)", marginBottom:"24px", overflowX:"auto", whiteSpace:"nowrap" }}>
-        {tabs.map(tab => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            style={{
-              background: "none", border: "none", padding: "0 0 12px",
-              fontSize: "14px", fontWeight: 500, cursor: "pointer",
-              color: activeTab === tab ? "var(--primary)" : "var(--text-muted)",
-              borderBottom: activeTab === tab ? "2px solid var(--primary)" : "2px solid transparent",
-              marginBottom: "-1px",
-            }}
-          >
-            {tab}
-          </button>
-        ))}
       </div>
 
       <div className="settings-grid" style={{ display:"grid", gridTemplateColumns:"minmax(0,2fr) minmax(280px,1fr)", gap:"24px", alignItems:"start" }}>

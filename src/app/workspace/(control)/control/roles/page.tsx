@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import {
   ChevronRight,
@@ -14,16 +14,6 @@ import {
   MoreHorizontal,
   Settings,
 } from "lucide-react";
-
-type TabKey = "roles" | "channel-access" | "ai-access" | "user-restrictions" | "banned";
-
-const tabs: { key: TabKey; label: string }[] = [
-  { key: "roles", label: "Roles" },
-  { key: "channel-access", label: "Channel access" },
-  { key: "ai-access", label: "AI access" },
-  { key: "user-restrictions", label: "User restrictions" },
-  { key: "banned", label: "Banned & suspended" },
-];
 
 const permissionMatrix = [
   {
@@ -76,7 +66,9 @@ function getCellColor(value: string): string {
 }
 
 export default function RolesPage() {
-  const [activeTab, setActiveTab] = useState<TabKey>("roles");
+  // NOTE: tab navigation (Roles/Channel access/AI access/User restrictions/Banned)
+  // was removed — every tab rendered this same roles view; the other tab
+  // contents were never built. Reintroduce tabs when they exist.
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
@@ -122,25 +114,6 @@ export default function RolesPage() {
               Export
             </button>
           </div>
-        </div>
-
-        {/* Tabs */}
-        <div className="flex items-center gap-6 mb-8" role="tablist" aria-label="Roles sections">
-          {tabs.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              role="tab"
-              aria-selected={activeTab === tab.key}
-              className="text-sm font-semibold pb-2 transition-colors relative"
-              style={{ color: activeTab === tab.key ? "var(--primary)" : "var(--text-muted)" }}
-            >
-              {tab.label}
-              {activeTab === tab.key && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full" style={{ backgroundColor: "var(--primary)" }} />
-              )}
-            </button>
-          ))}
         </div>
 
         {/* Permission Comparison Matrix */}

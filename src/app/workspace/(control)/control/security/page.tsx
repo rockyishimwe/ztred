@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+// NOTE: tab navigation (Authentication/Sessions/IP allowlist/Compliance) was
+// removed — every tab rendered this same single security view; the other tab
+// contents were never built. Reintroduce tabs when those sections exist.
 import Link from "next/link";
 import {
   ChevronRight,
@@ -8,15 +11,6 @@ import {
   Plus,
   Lock,
 } from "lucide-react";
-
-type TabKey = "auth" | "sessions" | "ip" | "compliance";
-
-const tabs: { key: TabKey; label: string }[] = [
-  { key: "auth", label: "Authentication" },
-  { key: "sessions", label: "Session management" },
-  { key: "ip", label: "IP allowlist" },
-  { key: "compliance", label: "Compliance" },
-];
 
 interface Session {
   user: string;
@@ -61,7 +55,6 @@ const statusColors: Record<string, { bg: string; text: string }> = {
 };
 
 export default function SecurityPage() {
-  const [activeTab, setActiveTab] = useState<TabKey>("auth");
   const [twoFactor, setTwoFactor] = useState(true);
   const [sso, setSso] = useState(true);
 
@@ -96,23 +89,6 @@ export default function SecurityPage() {
               <Upload className="w-4 h-4" aria-hidden="true" /> Export
             </button>
           </div>
-        </div>
-
-        {/* Tabs */}
-        <div className="flex items-center gap-4 sm:gap-6 mb-6 overflow-x-auto" role="tablist" aria-label="Security sections">
-          {tabs.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              role="tab"
-              aria-selected={activeTab === tab.key}
-              className="text-sm font-semibold pb-2 transition-colors relative"
-              style={{ color: activeTab === tab.key ? "var(--primary)" : "var(--text-muted)" }}
-            >
-              {tab.label}
-              {activeTab === tab.key && <div className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full" style={{ backgroundColor: "var(--primary)" }} />}
-            </button>
-          ))}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">

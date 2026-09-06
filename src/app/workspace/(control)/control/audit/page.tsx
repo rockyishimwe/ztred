@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 const AVATARS: Record<string, string> = {
   "sarah.j@ztred.com": "https://randomuser.me/api/portraits/women/44.jpg",
@@ -93,12 +93,9 @@ const logs = [
   },
 ];
 
-const stats = [
-  { label: "Total Events", value: "1,247", sub: "THIS WEEK", icon: "list" },
-  { label: "Security Events", value: "23", sub: "CRITICAL ACTION", icon: "lock" },
-  { label: "Permission Changes", value: "15", sub: "ROLE ASSIGNMENTS", icon: "shield" },
-  { label: "Member Activity", value: "89", sub: "INCLUDES GUESTS", icon: "users" },
-];
+// NOTE: the date-range select was removed — the demo log set spans two days,
+// so every date window matched the same rows. Reintroduce real date filtering
+// when the log source spans a longer period.
 
 const statIcons: Record<string, React.ReactNode> = {
   list: (
@@ -115,12 +112,60 @@ const statIcons: Record<string, React.ReactNode> = {
   ),
 };
 
+const PAGE_SIZE = 5;
+
 export default function AuditLogsPage() {
   const [search, setSearch] = useState("");
-  const [dateFilter, setDateFilter] = useState("Date: Last 7 days");
   const [categoryFilter, setCategoryFilter] = useState("Category: All");
   const [userFilter, setUserFilter] = useState("User: All");
   const [page, setPage] = useState(1);
+
+  // Summary stats are derived from the actual log data, not hardcoded.
+  const stats = [
+    { label: "Total Events", value: String(logs.length), sub: "THIS WEEK", icon: "list" },
+    {
+      label: "Security Events",
+      value: String(logs.filter((l) => l.category === "Security").length),
+      sub: "CRITICAL ACTION",
+      icon: "lock",
+    },
+    {
+      label: "Permission Changes",
+      value: String(logs.filter((l) => l.category === "Permission").length),
+      sub: "ROLE ASSIGNMENTS",
+      icon: "shield",
+    },
+    {
+      label: "Member Activity",
+      value: String(logs.filter((l) => l.category === "Member").length),
+      sub: "INCLUDES GUESTS",
+      icon: "users",
+    },
+  ];
+
+  const filteredLogs = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return logs.filter((log) => {
+      if (categoryFilter !== "Category: All" && `Category: ${log.category}` !== categoryFilter) {
+        return false;
+      }
+      if (userFilter !== "User: All" && `User: ${log.user}` !== userFilter) {
+        return false;
+      }
+      if (query) {
+        const haystack = `${log.user} ${log.email} ${log.action} ${log.target} ${log.ip}`.toLowerCase();
+        if (!haystack.includes(query)) return false;
+      }
+      return true;
+    });
+  }, [search, categoryFilter, userFilter]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredLogs.length / PAGE_SIZE));
+  // Clamps the page if a filter change lands past the last page.
+  const safePage = Math.min(page, totalPages);
+  const pageLogs = filteredLogs.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+  const rangeStart = filteredLogs.length === 0 ? 0 : (safePage - 1) * PAGE_SIZE + 1;
+  const rangeEnd = Math.min(safePage * PAGE_SIZE, filteredLogs.length);
 
   const selectStyle: React.CSSProperties = {
     padding: "9px 32px 9px 14px",
@@ -333,7 +378,10 @@ export default function AuditLogsPage() {
             type="text"
             placeholder="Search logs..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
             aria-label="Search logs"
             style={{
               border: "none",
@@ -346,23 +394,13 @@ export default function AuditLogsPage() {
           />
         </div>
 
-        {/* Date filter */}
-        <select
-          value={dateFilter}
-          onChange={(e) => setDateFilter(e.target.value)}
-          aria-label="Filter by date"
-          style={selectStyle}
-        >
-          <option>Date: Last 7 days</option>
-          <option>Date: Last 30 days</option>
-          <option>Date: Last 90 days</option>
-          <option>Date: All time</option>
-        </select>
-
         {/* Category filter */}
         <select
           value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
+          onChange={(e) => {
+            setCategoryFilter(e.target.value);
+            setPage(1);
+          }}
           aria-label="Filter by category"
           style={selectStyle}
         >
@@ -377,7 +415,10 @@ export default function AuditLogsPage() {
         {/* User filter */}
         <select
           value={userFilter}
-          onChange={(e) => setUserFilter(e.target.value)}
+          onChange={(e) => {
+            setUserFilter(e.target.value);
+            setPage(1);
+          }}
           aria-label="Filter by user"
           style={selectStyle}
         >
@@ -446,100 +487,116 @@ export default function AuditLogsPage() {
               </tr>
             </thead>
             <tbody>
-              {logs.map((log, idx) => {
-                const catStyle = CATEGORY_STYLES[log.category];
-                return (
-                  <tr
-                    key={idx}
+              {pageLogs.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={6}
                     style={{
-                      borderBottom:
-                        idx < logs.length - 1 ? "1px solid var(--border-color)" : "none",
+                      padding: "28px 16px",
+                      textAlign: "center",
+                      fontSize: "13px",
+                      color: "var(--text-muted)",
                     }}
                   >
-                    <td
+                    No events match your filters.
+                  </td>
+                </tr>
+              ) : (
+                pageLogs.map((log, idx) => {
+                  const catStyle = CATEGORY_STYLES[log.category];
+                  return (
+                    <tr
+                      key={`${log.timestamp}-${log.email}-${idx}`}
                       style={{
-                        padding: "12px 16px",
-                        fontSize: "13px",
-                        color: "var(--text-secondary)",
-                        whiteSpace: "nowrap",
+                        borderBottom:
+                          idx < pageLogs.length - 1 ? "1px solid var(--border-color)" : "none",
                       }}
                     >
-                      {log.timestamp}
-                    </td>
-                    <td style={{ padding: "12px 16px", whiteSpace: "nowrap" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                        <img
-                          src={AVATARS[log.email]}
-                          alt={log.user}
-                          width={30}
-                          height={30}
-                          style={{
-                            width: "30px",
-                            height: "30px",
-                            borderRadius: "50%",
-                            objectFit: "cover",
-                            flexShrink: 0,
-                          }}
-                        />
-                        <span
-                          style={{
-                            fontSize: "13px",
-                            fontWeight: 600,
-                            color: "var(--text-primary)",
-                          }}
-                        >
-                          {log.user}
-                        </span>
-                      </div>
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        fontSize: "13px",
-                        color: "var(--text-primary)",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {log.action}
-                    </td>
-                    <td style={{ padding: "12px 16px" }}>
-                      <span
+                      <td
                         style={{
-                          padding: "3px 10px",
-                          borderRadius: "6px",
-                          fontSize: "12px",
-                          fontWeight: 500,
-                          color: catStyle.color,
-                          background: catStyle.bg,
+                          padding: "12px 16px",
+                          fontSize: "13px",
+                          color: "var(--text-secondary)",
                           whiteSpace: "nowrap",
                         }}
                       >
-                        {log.category}
-                      </span>
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        fontSize: "13px",
-                        color: "var(--text-secondary)",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {log.target}
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        fontSize: "13px",
-                        color: "var(--text-muted)",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {log.ip}
-                    </td>
-                  </tr>
-                );
-              })}
+                        {log.timestamp}
+                      </td>
+                      <td style={{ padding: "12px 16px", whiteSpace: "nowrap" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                          <img
+                            src={AVATARS[log.email]}
+                            alt={log.user}
+                            width={30}
+                            height={30}
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              borderRadius: "50%",
+                              objectFit: "cover",
+                              flexShrink: 0,
+                            }}
+                          />
+                          <span
+                            style={{
+                              fontSize: "13px",
+                              fontWeight: 600,
+                              color: "var(--text-primary)",
+                            }}
+                          >
+                            {log.user}
+                          </span>
+                        </div>
+                      </td>
+                      <td
+                        style={{
+                          padding: "12px 16px",
+                          fontSize: "13px",
+                          color: "var(--text-primary)",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {log.action}
+                      </td>
+                      <td style={{ padding: "12px 16px" }}>
+                        <span
+                          style={{
+                            padding: "3px 10px",
+                            borderRadius: "6px",
+                            fontSize: "12px",
+                            fontWeight: 500,
+                            color: catStyle.color,
+                            background: catStyle.bg,
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {log.category}
+                        </span>
+                      </td>
+                      <td
+                        style={{
+                          padding: "12px 16px",
+                          fontSize: "13px",
+                          color: "var(--text-secondary)",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {log.target}
+                      </td>
+                      <td
+                        style={{
+                          padding: "12px 16px",
+                          fontSize: "13px",
+                          color: "var(--text-muted)",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {log.ip}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
         </div>
@@ -554,39 +611,41 @@ export default function AuditLogsPage() {
           }}
         >
           <span style={{ fontSize: "13px", color: "var(--text-secondary)" }}>
-            Showing 1-10 of 1,247 events
+            Showing {rangeStart}-{rangeEnd} of {filteredLogs.length} events
           </span>
           <div style={{ display: "flex", gap: "8px" }}>
             <button
-              onClick={() => setPage(Math.max(1, page - 1))}
-              disabled={page === 1}
+              onClick={() => setPage(Math.max(1, safePage - 1))}
+              disabled={safePage === 1}
               className="transition-all hover:brightness-95 active:scale-[0.98]"
               style={{
                 padding: "7px 16px",
                 borderRadius: "8px",
                 border: "1px solid var(--border-color)",
                 background: "var(--bg-card)",
-                color: page === 1 ? "var(--text-muted)" : "var(--text-primary)",
+                color: safePage === 1 ? "var(--text-muted)" : "var(--text-primary)",
                 fontSize: "13px",
                 fontWeight: 500,
-                cursor: page === 1 ? "not-allowed" : "pointer",
-                opacity: page === 1 ? 0.5 : 1,
+                cursor: safePage === 1 ? "not-allowed" : "pointer",
+                opacity: safePage === 1 ? 0.5 : 1,
               }}
             >
               Previous
             </button>
             <button
-              onClick={() => setPage(page + 1)}
+              onClick={() => setPage(Math.min(totalPages, safePage + 1))}
+              disabled={safePage === totalPages}
               className="transition-all hover:brightness-95 active:scale-[0.98]"
               style={{
                 padding: "7px 16px",
                 borderRadius: "8px",
                 border: "1px solid var(--border-color)",
                 background: "var(--bg-card)",
-                color: "var(--text-primary)",
+                color: safePage === totalPages ? "var(--text-muted)" : "var(--text-primary)",
                 fontSize: "13px",
                 fontWeight: 500,
-                cursor: "pointer",
+                cursor: safePage === totalPages ? "not-allowed" : "pointer",
+                opacity: safePage === totalPages ? 0.5 : 1,
               }}
             >
               Next

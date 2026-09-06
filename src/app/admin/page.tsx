@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import {
   ShieldAlert,
@@ -20,8 +20,8 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 
 export default function AdminDashboardPage() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'organizations' | 'security' | 'audit'>('overview');
-
+  // NOTE: tab navigation (overview/organizations/security/audit) was removed —
+  // only the overview content exists; tabs pointed at nothing.
   const orgs = [
     { id: '1', name: 'Skyline Ventures', slug: 'skyline', members: 1240, plan: 'Enterprise Pro', status: 'Active', storage: '1.2 TB', anomalies: false },
     { id: '2', name: 'Redwood Labs', slug: 'redwood', members: 350, plan: 'Enterprise', status: 'Active', storage: '480 GB', anomalies: false },
@@ -57,23 +57,6 @@ export default function AdminDashboardPage() {
 
       {/* Main Admin Content */}
       <div className="flex-1 max-w-7xl w-full mx-auto p-6 space-y-8">
-        {/* Navigation Tabs */}
-        <div className="flex border-b border-theme gap-6 text-sm font-semibold">
-          {(['overview', 'organizations', 'security', 'audit'] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`pb-3 capitalize transition-colors ${
-                activeTab === tab
-                  ? 'border-b-2 border-purple-500 text-purple-400'
-                  : 'text-theme-muted hover:text-theme-primary'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-
         {/* System Health Overview Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="p-5 rounded-2xl bg-theme-card border border-theme">

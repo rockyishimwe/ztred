@@ -11,6 +11,14 @@ import {
 
 // ─── Task Data ──────────────────────────────────────────────────
 
+// Stand-in for the signed-in user until auth is wired up; used by the
+// "Assigned to me" board filter.
+const CURRENT_USER = {
+  name: "Jordan Lee",
+  avatar:
+    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
+};
+
 interface TaskCard {
   id: string;
   title: string;
@@ -411,6 +419,9 @@ export default function TaskBoardPage() {
     let colTasks = tasks[colId] || [];
     if (filters.priority !== "all") {
       colTasks = colTasks.filter((t) => t.priority === filters.priority);
+    }
+    if (filters.assignee === "me") {
+      colTasks = colTasks.filter((t) => t.avatar === CURRENT_USER.avatar);
     }
     return colTasks;
   };
