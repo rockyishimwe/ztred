@@ -48,7 +48,7 @@ export default function AdminDashboardPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/workspace/channels/general"
-            className="text-xs bg-purple-600 hover:bg-purple-500 text-theme-primary font-semibold px-4 py-2 rounded-md transition-colors"
+            className="text-xs bg-purple-600 hover:bg-purple-500 text-white font-semibold px-4 py-2 rounded-md transition-colors"
           >
             Open Workspace App
           </Link>

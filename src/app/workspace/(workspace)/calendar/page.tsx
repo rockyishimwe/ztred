@@ -245,7 +245,7 @@ function AddEventModal({
           </button>
           <button
             onClick={handleAdd}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-primary text-sm font-semibold shadow-lg shadow-purple-600/25 transition-all spring-bounce"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold shadow-lg shadow-purple-600/25 transition-all spring-bounce"
           >
             <Clock className="w-4 h-4" />
             Add event
@@ -259,8 +259,10 @@ function AddEventModal({
 // ─── Main Page ──────────────────────────────────────────────────
 
 export default function CalendarPage() {
-  const [currentMonth, setCurrentMonth] = useState(6); // July (0-indexed)
-  const [currentYear, setCurrentYear] = useState(2026);
+  // Initialize to the real current month/year instead of a frozen July 2026.
+  const now = new Date();
+  const [currentMonth, setCurrentMonth] = useState(now.getMonth());
+  const [currentYear, setCurrentYear] = useState(now.getFullYear());
   const [view, setView] = useState<"Month" | "Week" | "Day">("Month");
   const [events, setEvents] = useState<CalendarEvent[]>(initialEvents);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -328,7 +330,7 @@ export default function CalendarPage() {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-theme-primary font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all spring-bounce"
+          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all spring-bounce"
         >
           + Event
         </button>
@@ -362,7 +364,7 @@ export default function CalendarPage() {
               onClick={() => setView(v)}
               className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 view === v
-                  ? "bg-purple-600 text-theme-primary shadow"
+                  ? "bg-purple-600 text-white shadow"
                   : "text-theme-muted hover:text-theme-primary"
               }`}
             >
@@ -411,7 +413,7 @@ export default function CalendarPage() {
                           <span
                             className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold ${
                               isToday
-                                ? "bg-purple-600 text-theme-primary"
+                                ? "bg-purple-600 text-white"
                                 : "text-theme-muted"
                             }`}
                           >

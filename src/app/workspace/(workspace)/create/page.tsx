@@ -93,9 +93,9 @@ export default function CreateWorkspacePage() {
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                     step > s.num
-                      ? 'bg-purple-600 text-theme-primary'
+                      ? 'bg-purple-600 text-white'
                       : step === s.num
-                      ? 'bg-purple-600 text-theme-primary shadow-lg shadow-purple-600/30'
+                      ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30'
                       : 'bg-theme-card text-theme-muted border border-theme'
                   }`}
                 >
@@ -238,7 +238,7 @@ export default function CreateWorkspacePage() {
                 />
                 <button
                   onClick={addInvitee}
-                  className="w-11 h-11 rounded-xl bg-purple-600 hover:bg-purple-700 flex items-center justify-center text-theme-primary shadow-lg shadow-purple-600/25 transition-all shrink-0"
+                  className="w-11 h-11 rounded-xl bg-purple-600 hover:bg-purple-700 flex items-center justify-center text-white shadow-lg shadow-purple-600/25 transition-all shrink-0"
                 >
                   <Plus className="w-5 h-5" />
                 </button>
@@ -251,7 +251,7 @@ export default function CreateWorkspacePage() {
                     key={invitee.email}
                     className="flex items-center gap-3 p-3 bg-theme-card border border-theme rounded-xl"
                   >
-                    <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-theme-primary text-xs font-bold shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
                       {invitee.email.charAt(0).toUpperCase()}
                     </div>
                     <span className="flex-1 text-sm text-theme-primary truncate">
@@ -298,7 +298,7 @@ export default function CreateWorkspacePage() {
                 <button
                   onClick={goToFinishing}
                   disabled={isCreating}
-                  className="flex-1 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-primary font-semibold text-sm shadow-lg shadow-purple-600/25 transition-all disabled:opacity-50"
+                  className="flex-1 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm shadow-lg shadow-purple-600/25 transition-all disabled:opacity-50"
                 >
                   {isCreating ? (
                     <span className="flex items-center justify-center gap-2">
@@ -320,7 +320,7 @@ export default function CreateWorkspacePage() {
             className={`w-full mt-4 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition-all ${
               !workspaceName.trim()
                 ? 'bg-theme-card text-theme-muted cursor-not-allowed'
-                : 'bg-purple-600 hover:bg-purple-700 text-theme-primary shadow-lg shadow-purple-600/25'
+                : 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-600/25'
             }`}
           >
             Continue

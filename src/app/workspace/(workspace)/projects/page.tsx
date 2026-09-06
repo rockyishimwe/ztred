@@ -2,6 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { addDays, format } from "date-fns";
+
+// Relative deadlines keep the demo data evergreen.
+const daysFromNow = (n: number) => format(addDays(new Date(), n), "MMM d");
 import {
   Search,
   Plus,
@@ -33,7 +37,7 @@ const PROJECTS: Project[] = [
     category: "Design",
     progress: 72,
     status: "On Track",
-    dueDate: "Oct 15",
+    dueDate: daysFromNow(39),
     team: [
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
       "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
@@ -49,7 +53,7 @@ const PROJECTS: Project[] = [
     category: "Engineering",
     progress: 45,
     status: "At Risk",
-    dueDate: "Nov 02",
+    dueDate: daysFromNow(57),
     team: [
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
@@ -63,7 +67,7 @@ const PROJECTS: Project[] = [
     category: "Marketing",
     progress: 88,
     status: "On Track",
-    dueDate: "Sep 30",
+    dueDate: daysFromNow(24),
     team: [
       "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
@@ -79,7 +83,7 @@ const PROJECTS: Project[] = [
     category: "Backend",
     progress: 23,
     status: "Off Track",
-    dueDate: "Oct 10",
+    dueDate: daysFromNow(34),
     team: [
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
     ],
@@ -92,7 +96,7 @@ const PROJECTS: Project[] = [
     category: "Design",
     progress: 60,
     status: "On Track",
-    dueDate: "Oct 28",
+    dueDate: daysFromNow(52),
     team: [
       "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
@@ -107,7 +111,7 @@ const PROJECTS: Project[] = [
     category: "Research",
     progress: 35,
     status: "At Risk",
-    dueDate: "Nov 15",
+    dueDate: daysFromNow(70),
     team: [
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
       "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",

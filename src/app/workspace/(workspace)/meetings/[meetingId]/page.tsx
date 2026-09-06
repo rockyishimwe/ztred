@@ -182,7 +182,7 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
           </button>
           <button
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-primary text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
+            className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
           >
             Create meeting
           </button>
@@ -218,7 +218,7 @@ export default function MeetingsPage() {
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-theme-primary font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
+            className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
           >
             <Plus className="w-4 h-4" />
             New Meeting
@@ -321,7 +321,7 @@ export default function MeetingsPage() {
             <button className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
               <MessageSquare className="w-5 h-5" />
             </button>
-            <button className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-theme-primary font-semibold text-sm px-6 py-3 rounded-xl shadow-lg shadow-red-500/25 transition-all ml-2">
+            <button className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-lg shadow-red-500/25 transition-all ml-2">
               <PhoneOff className="w-4 h-4" />
               Leave
             </button>
@@ -380,7 +380,7 @@ export default function MeetingsPage() {
                   </div>
 
                   {item.status === "live" && (
-                    <button className="bg-red-500 hover:bg-red-600 text-theme-primary text-xs font-semibold px-4 py-1.5 rounded-lg transition-colors">
+                    <button className="bg-red-500 hover:bg-red-600 text-white text-xs font-semibold px-4 py-1.5 rounded-lg transition-colors">
                       Join live
                     </button>
                   )}

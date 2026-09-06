@@ -1,6 +1,10 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import { addDays, format } from "date-fns";
+
+// Log timestamps are computed relative to today so the demo data never goes stale.
+const dayStamp = (n: number) => format(addDays(new Date(), n), "yyyy-MM-dd");
 
 const AVATARS: Record<string, string> = {
   "sarah.j@ztred.com": "https://randomuser.me/api/portraits/women/44.jpg",
@@ -20,7 +24,7 @@ const CATEGORY_STYLES: Record<string, { color: string; bg: string }> = {
 
 const logs = [
   {
-    timestamp: "2026-01-15 14:32:10",
+    timestamp: `${dayStamp(0)} 14:32:10`,
     user: "Sarah Jenkins",
     email: "sarah.j@ztred.com",
     action: "Changed role from Member to Manager",
@@ -29,7 +33,7 @@ const logs = [
     ip: "192.168.1.45",
   },
   {
-    timestamp: "2026-01-15 13:15:04",
+    timestamp: `${dayStamp(0)} 13:15:04`,
     user: "John Mugisha",
     email: "john.m@ztred.com",
     action: "Invited new member clara@ztred.com",
@@ -38,7 +42,7 @@ const logs = [
     ip: "192.168.1.1",
   },
   {
-    timestamp: "2026-01-15 12:44:22",
+    timestamp: `${dayStamp(0)} 12:44:22`,
     user: "Marcus Aurelius",
     email: "marcus.a@ztred.com",
     action: "Failed login attempt (3rd)",
@@ -47,7 +51,7 @@ const logs = [
     ip: "45.12.89.22",
   },
   {
-    timestamp: "2026-01-15 10:30:15",
+    timestamp: `${dayStamp(0)} 10:30:15`,
     user: "Emma Johnson",
     email: "emma.j@ztred.com",
     action: "Updated channel #design to Private",
@@ -56,7 +60,7 @@ const logs = [
     ip: "88.192.4.15",
   },
   {
-    timestamp: "2026-01-15 09:12:40",
+    timestamp: `${dayStamp(0)} 09:12:40`,
     user: "Michael Torres",
     email: "michael.t@ztred.com",
     action: "Modified AI daily limit to 50",
@@ -65,7 +69,7 @@ const logs = [
     ip: "113.44.12.9",
   },
   {
-    timestamp: "2026-01-15 08:05:00",
+    timestamp: `${dayStamp(0)} 08:05:00`,
     user: "John Mugisha",
     email: "john.m@ztred.com",
     action: "Suspended user Robert Allen",
@@ -74,7 +78,7 @@ const logs = [
     ip: "192.168.1.1",
   },
   {
-    timestamp: "2026-01-15 07:44:12",
+    timestamp: `${dayStamp(0)} 07:44:12`,
     user: "Michael Torres",
     email: "michael.t@ztred.com",
     action: "Created new channel #engineering",
@@ -83,7 +87,7 @@ const logs = [
     ip: "113.44.12.9",
   },
   {
-    timestamp: "2026-01-14 18:22:31",
+    timestamp: `${dayStamp(-1)} 18:22:31`,
     user: "Sarah Jenkins",
     email: "sarah.j@ztred.com",
     action: "Updated 2FA settings",

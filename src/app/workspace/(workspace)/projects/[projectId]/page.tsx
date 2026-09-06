@@ -1,6 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { addDays, format } from "date-fns";
+
+// Relative dates keep the demo task list evergreen.
+const daysFromNow = (n: number) => format(addDays(new Date(), n), "MMM d");
+const dateFromNow = (n: number) => format(addDays(new Date(), n), "MMM dd, yyyy");
+const startOptions = [25, 55, 85].map(dateFromNow);
+const deadlineOptions = [55, 85, 115].map(dateFromNow);
 import {
   Settings,
   Share2,
@@ -61,8 +68,8 @@ const PROJECT_DATA: ProjectData = {
   description: "Complete brand overhaul and assets update",
   status: "On Track",
   progress: 72,
-  startDate: "Oct 01, 2026",
-  deadline: "Dec 31, 2026",
+  startDate: startOptions[0],
+  deadline: deadlineOptions[2],
   priority: "High",
   category: "Design",
   createdBy: "Sam Rivera",
@@ -137,7 +144,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Design hero section",
       priority: "High",
       category: "Design",
-      date: "Oct 05",
+      date: daysFromNow(29),
       subtasksDone: 1,
       subtasksTotal: 4,
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
@@ -147,7 +154,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Create testimonials block",
       priority: "Medium",
       category: "Design",
-      date: "Oct 08",
+      date: daysFromNow(32),
       avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=80",
     },
     {
@@ -155,7 +162,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Build pricing page",
       priority: "High",
       category: "Engineering",
-      date: "Oct 12",
+      date: daysFromNow(36),
       subtasksDone: 0,
       subtasksTotal: 3,
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
@@ -165,7 +172,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Write FAQ content",
       priority: "Low",
       category: "Marketing",
-      date: "Oct 15",
+      date: daysFromNow(39),
       avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
     },
   ],
@@ -175,7 +182,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Implement navigation",
       priority: "High",
       category: "Engineering",
-      date: "Oct 03",
+      date: daysFromNow(27),
       subtasksDone: 2,
       subtasksTotal: 3,
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
@@ -185,7 +192,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Design footer",
       priority: "Low",
       category: "Design",
-      date: "Oct 06",
+      date: daysFromNow(30),
       avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=80",
     },
     {
@@ -193,7 +200,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Set up CMS",
       priority: "Medium",
       category: "Backend",
-      date: "Oct 09",
+      date: daysFromNow(33),
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
     },
   ],
@@ -203,7 +210,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Homepage wireframe",
       priority: "High",
       category: "Design",
-      date: "Oct 01",
+      date: daysFromNow(25),
       subtasksDone: 5,
       subtasksTotal: 9,
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
@@ -213,7 +220,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Color palette approval",
       priority: "High",
       category: "Design",
-      date: "Sep 29",
+      date: daysFromNow(23),
       avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
     },
   ],
@@ -223,7 +230,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Project brief",
       priority: "Low",
       category: "Operations",
-      date: "Sep 24",
+      date: daysFromNow(18),
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
     },
     {
@@ -231,7 +238,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Competitor analysis",
       priority: "Medium",
       category: "Research",
-      date: "Sep 26",
+      date: daysFromNow(20),
       avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=80",
     },
     {
@@ -239,7 +246,7 @@ const INITIAL_BOARD: Record<string, BoardTask[]> = {
       title: "Brand mood board",
       priority: "High",
       category: "Design",
-      date: "Sep 28",
+      date: daysFromNow(22),
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
     },
   ],
@@ -354,7 +361,7 @@ const ACTIVITY_FEED: ActivityItem[] = [
     actor: "Jordan Lee",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
     time: "6:20 PM",
-    day: "JUL 28, 2026",
+    day: dateFromNow(-2).toUpperCase(),
     segments: [
       { text: " uploaded 2 files to " },
       { text: "\u201cBrand mood board\u201d", link: true },
@@ -366,7 +373,7 @@ const ACTIVITY_FEED: ActivityItem[] = [
     actor: "Daniel Kim",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
     time: "3:05 PM",
-    day: "JUL 28, 2026",
+    day: dateFromNow(-2).toUpperCase(),
     segments: [
       { text: " joined the project as " },
       { text: "Viewer", link: true },
@@ -1143,9 +1150,9 @@ export default function ProjectOverviewPage() {
                         color: "var(--text-primary)",
                       }}
                     >
-                      <option value="Oct 01, 2026">Oct 01, 2026</option>
-                      <option value="Nov 01, 2026">Nov 01, 2026</option>
-                      <option value="Dec 01, 2026">Dec 01, 2026</option>
+                      {startOptions.map((option) => (
+                        <option key={option} value={option}>{option}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -1162,9 +1169,9 @@ export default function ProjectOverviewPage() {
                         color: "var(--text-primary)",
                       }}
                     >
-                      <option value="Dec 31, 2026">Dec 31, 2026</option>
-                      <option value="Jan 31, 2027">Jan 31, 2027</option>
-                      <option value="Feb 28, 2027">Feb 28, 2027</option>
+                      {deadlineOptions.map((option) => (
+                        <option key={option} value={option}>{option}</option>
+                      ))}
                     </select>
                   </div>
                 </div>

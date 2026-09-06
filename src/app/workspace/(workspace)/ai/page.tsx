@@ -1,6 +1,10 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { addDays, format } from "date-fns";
+
+// Relative due dates keep the demo list evergreen.
+const daysFromNow = (n: number) => format(addDays(new Date(), n), "MMM d");
 import {
   Sparkles,
   Send,
@@ -54,10 +58,10 @@ const WORKSPACE_CONTEXT = {
     { name: "general", lastMessage: "Sam: Team standup at 10am", unread: 0 },
   ],
   tasks: [
-    { title: "API rate limiting", due: "Jul 22", priority: "high" },
-    { title: "QA mobile layout", due: "Jul 21", priority: "high" },
-    { title: "Design system tokens", due: "Jul 25", priority: "medium" },
-    { title: "Sprint retro notes", due: "Jul 25", priority: "low" },
+    { title: "API rate limiting", due: daysFromNow(1), priority: "high" },
+    { title: "QA mobile layout", due: daysFromNow(2), priority: "high" },
+    { title: "Design system tokens", due: daysFromNow(7), priority: "medium" },
+    { title: "Sprint retro notes", due: daysFromNow(10), priority: "low" },
   ],
   docs: [
     { title: "Q3 Product Roadmap", updatedBy: "Sam Rivera", updated: "2h ago" },

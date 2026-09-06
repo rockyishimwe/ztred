@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { addDays, format } from "date-fns";
 import {
   ChevronRight,
   ChevronLeft,
@@ -107,8 +108,9 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Design");
   const [priority, setPriority] = useState("High");
-  const [startDate, setStartDate] = useState("2026-10-01");
-  const [deadline, setDeadline] = useState("2026-12-31");
+  // Defaults computed relative to today so the form never opens pre-expired.
+  const [startDate, setStartDate] = useState(format(addDays(new Date(), 25), "yyyy-MM-dd"));
+  const [deadline, setDeadline] = useState(format(addDays(new Date(), 115), "yyyy-MM-dd"));
   const [status, setStatus] = useState("On Track");
   const [themeColor, setThemeColor] = useState("#8b5cf6");
   const [workspaceIcon, setWorkspaceIcon] = useState("Folder");

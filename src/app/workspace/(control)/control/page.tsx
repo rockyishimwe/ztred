@@ -2,6 +2,10 @@
 
 import React from "react";
 import Link from "next/link";
+import { addDays, format } from "date-fns";
+
+// Relative invite dates keep the demo list evergreen.
+const daysFromNow = (n: number) => format(addDays(new Date(), n), "MMM d, yyyy");
 import {
   Users,
   Shield,
@@ -77,9 +81,9 @@ export default function WorkspaceControlPage() {
   ];
 
   const pendingInvitations = [
-    { email: "clara.vance@ztred.com", role: "Manager", date: "Jan 14, 2026" },
-    { email: "developer.dan@ztred.com", role: "Member", date: "Jan 12, 2026" },
-    { email: "advisor.lee@external.com", role: "Guest", date: "Jan 10, 2026" },
+    { email: "clara.vance@ztred.com", role: "Manager", date: daysFromNow(-7) },
+    { email: "developer.dan@ztred.com", role: "Member", date: daysFromNow(-9) },
+    { email: "advisor.lee@external.com", role: "Guest", date: daysFromNow(-11) },
   ];
 
   return (

@@ -8,6 +8,10 @@ import {
   Calendar,
   X,
 } from "lucide-react";
+import { addDays, format } from "date-fns";
+
+// Due dates are computed relative to today so the mock board never goes stale.
+const daysFromNow = (n: number) => format(addDays(new Date(), n), "MMM d");
 
 // ─── Task Data ──────────────────────────────────────────────────
 
@@ -42,7 +46,7 @@ const initialTasks: Record<string, TaskCard[]> = {
       title: "Redesign onboarding flow",
       priority: "high",
       category: "Design",
-      date: "Jul 24",
+      date: daysFromNow(6),
       avatar:
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=80",
     },
@@ -51,7 +55,7 @@ const initialTasks: Record<string, TaskCard[]> = {
       title: "Set up analytics dashboard",
       priority: "medium",
       category: "Data",
-      date: "Jul 26",
+      date: daysFromNow(8),
       avatar:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
     },
@@ -62,7 +66,7 @@ const initialTasks: Record<string, TaskCard[]> = {
       title: "API rate limiting",
       priority: "high",
       category: "Backend",
-      date: "Jul 22",
+      date: daysFromNow(4),
       avatar:
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
     },
@@ -71,7 +75,7 @@ const initialTasks: Record<string, TaskCard[]> = {
       title: "Write launch blog post",
       priority: "low",
       category: "Content",
-      date: "Jul 28",
+      date: daysFromNow(10),
       avatar:
         "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
     },
@@ -82,7 +86,7 @@ const initialTasks: Record<string, TaskCard[]> = {
       title: "QA mobile responsive layout",
       priority: "medium",
       category: "QA",
-      date: "Jul 21",
+      date: daysFromNow(3),
       avatar:
         "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
     },
@@ -93,7 +97,7 @@ const initialTasks: Record<string, TaskCard[]> = {
       title: "Ship v2 pricing page",
       priority: "high",
       category: "Web",
-      date: "Jul 18",
+      date: daysFromNow(-2),
       avatar:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
     },
@@ -102,7 +106,7 @@ const initialTasks: Record<string, TaskCard[]> = {
       title: "User interview synthesis",
       priority: "medium",
       category: "Research",
-      date: "Jul 17",
+      date: daysFromNow(-4),
       avatar:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=80",
     },
