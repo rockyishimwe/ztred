@@ -1,14 +1,14 @@
 export default function SearchPage() {
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-theme-secondary p-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">Search</h1>
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-theme-card rounded-lg shadow p-6">
           <div className="mb-4">
             <input
               type="text"
               placeholder="Search messages, people, files..."
-              className="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
           <div className="space-y-4">

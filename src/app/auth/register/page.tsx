@@ -15,7 +15,7 @@ export default function RegisterPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push('/workspace/channels/general');
+    router.push('/workspace');
   };
 
   return (
@@ -124,13 +124,13 @@ export default function RegisterPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <button
-              onClick={() => router.push('/workspace/channels/general')}
+              onClick={() => router.push('/workspace')}
               className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-zinc-200"
             >
               Google
             </button>
             <button
-              onClick={() => router.push('/workspace/channels/general')}
+              onClick={() => router.push('/workspace')}
               className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-zinc-200"
             >
               GitHub

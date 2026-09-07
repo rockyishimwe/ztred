@@ -85,7 +85,7 @@ const members = [
     name: "Lisa Park",
     email: "lisa.park@zenith.com",
     avatar:
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     team: "Marketing",
     role: "Member",
     roleColor: "bg-zinc-500/20 text-zinc-400",
@@ -125,7 +125,7 @@ export default function AnalyticsPage() {
   const filteredMembers = members.filter(
     (m) =>
       m.name.toLowerCase().includes(memberSearch.toLowerCase()) ||
-      m.team.toLowerCase().includes(memberSearch.toLowerCase())
+      m.team.toLowerCase().includes(memberSearch.toLowerCase()),
   );
 
   return (
@@ -151,20 +151,37 @@ export default function AnalyticsPage() {
             </div>
             <div>
               <h1 className="text-2xl font-bold">Analytics</h1>
-              <p className="text-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+              <p
+                className="text-sm mt-0.5"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 Workspace activity and engagement
               </p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <button className="hover:opacity-80 text-sm font-medium px-4 py-2.5 rounded-xl transition-colors" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}>
+            <button
+              className="hover:opacity-80 text-sm font-medium px-4 py-2.5 rounded-xl transition-colors"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                border: "1px solid var(--border-color)",
+                color: "var(--text-primary)",
+              }}
+            >
               Platform console
             </button>
             <button className="bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 flex items-center gap-2 transition-all">
               <UserPlus className="w-4 h-4" />
               Invite member
             </button>
-            <button className="hover:opacity-80 text-sm font-medium px-4 py-2.5 rounded-xl flex items-center gap-2 transition-colors" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}>
+            <button
+              className="hover:opacity-80 text-sm font-medium px-4 py-2.5 rounded-xl flex items-center gap-2 transition-colors"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                border: "1px solid var(--border-color)",
+                color: "var(--text-primary)",
+              }}
+            >
               <Download className="w-4 h-4" />
               Export
             </button>
@@ -179,7 +196,10 @@ export default function AnalyticsPage() {
               <div
                 key={stat.label}
                 className="rounded-2xl p-5 transition-colors"
-                style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+                style={{
+                  backgroundColor: "var(--bg-card)",
+                  border: "1px solid var(--border-color)",
+                }}
               >
                 <div
                   className={`w-10 h-10 rounded-xl ${stat.iconBg} flex items-center justify-center mb-4`}
@@ -187,8 +207,18 @@ export default function AnalyticsPage() {
                   <Icon className={`w-5 h-5 ${stat.iconColor}`} />
                 </div>
                 <div className="text-2xl font-bold">{stat.value}</div>
-                <div className="text-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>{stat.label}</div>
-                <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{stat.sub}</div>
+                <div
+                  className="text-sm mt-0.5"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  {stat.label}
+                </div>
+                <div
+                  className="text-xs mt-1"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  {stat.sub}
+                </div>
               </div>
             );
           })}
@@ -197,13 +227,20 @@ export default function AnalyticsPage() {
         {/* Activity + Health Row */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
           {/* Workspace Activity Chart */}
-          <div className="lg:col-span-3 rounded-2xl p-6" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+          <div
+            className="lg:col-span-3 rounded-2xl p-6"
+            style={{
+              backgroundColor: "var(--bg-card)",
+              border: "1px solid var(--border-color)",
+            }}
+          >
             <div className="flex items-center justify-between mb-2">
               <div>
-                <h2 className="text-base font-bold">
-                  Workspace activity
-                </h2>
-                <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+                <h2 className="text-base font-bold">Workspace activity</h2>
+                <p
+                  className="text-xs mt-0.5"
+                  style={{ color: "var(--text-secondary)" }}
+                >
                   Messages, meetings, and completed tasks across the last 7
                   days.
                 </p>
@@ -216,7 +253,10 @@ export default function AnalyticsPage() {
             {/* Chart Area */}
             <div className="mt-6 h-48 flex items-end gap-2 px-2">
               {[40, 65, 55, 80, 70, 45, 60].map((h, i) => (
-                <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                <div
+                  key={i}
+                  className="flex-1 flex flex-col items-center gap-2"
+                >
                   <div className="w-full flex justify-center">
                     <div
                       className="w-full max-w-[40px] rounded-t-lg bg-purple-600/80 hover:bg-purple-500 transition-colors"
@@ -230,10 +270,7 @@ export default function AnalyticsPage() {
             {/* Day Labels */}
             <div className="flex gap-2 px-2 mt-2">
               {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
-                <div
-                  key={day}
-                  className="flex-1 text-center text-xs"
-                >
+                <div key={day} className="flex-1 text-center text-xs">
                   {day}
                 </div>
               ))}
@@ -241,26 +278,36 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Workspace Health */}
-          <div className="lg:col-span-2 rounded-2xl p-6 flex flex-col" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+          <div
+            className="lg:col-span-2 rounded-2xl p-6 flex flex-col"
+            style={{
+              backgroundColor: "var(--bg-card)",
+              border: "1px solid var(--border-color)",
+            }}
+          >
             <div className="flex items-center gap-2 mb-6">
               <ShieldCheck className="w-5 h-5 text-emerald-400" />
-              <h2 className="text-base font-bold">
-                Workspace health
-              </h2>
+              <h2 className="text-base font-bold">Workspace health</h2>
             </div>
 
             <div className="space-y-5 flex-1">
               {healthMetrics.map((metric) => (
                 <div key={metric.label}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <span
+                      className="text-sm"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
                       {metric.label}
                     </span>
                     <span className="text-sm font-semibold">
                       {metric.value}%
                     </span>
                   </div>
-                  <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--border-color)' }}>
+                  <div
+                    className="h-2 rounded-full overflow-hidden"
+                    style={{ backgroundColor: "var(--border-color)" }}
+                  >
                     <div
                       className={`h-full ${metric.color} rounded-full transition-all`}
                       style={{ width: `${metric.value}%` }}
@@ -270,37 +317,74 @@ export default function AnalyticsPage() {
               ))}
             </div>
 
-            <button className="mt-6 w-full hover:opacity-80 text-sm font-medium py-2.5 rounded-xl transition-colors" style={{ backgroundColor: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}>
+            <button
+              className="mt-6 w-full hover:opacity-80 text-sm font-medium py-2.5 rounded-xl transition-colors"
+              style={{
+                backgroundColor: "var(--bg-input)",
+                border: "1px solid var(--border-color)",
+                color: "var(--text-primary)",
+              }}
+            >
               Generate security report
             </button>
           </div>
         </div>
 
         {/* Members Section */}
-        <div className="rounded-2xl p-6" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+        <div
+          className="rounded-2xl p-6"
+          style={{
+            backgroundColor: "var(--bg-card)",
+            border: "1px solid var(--border-color)",
+          }}
+        >
           <div className="flex items-center justify-between mb-5">
             <div>
               <h2 className="text-base font-bold">Members</h2>
-              <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+              <p
+                className="text-xs mt-0.5"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 Manage roles and workspace access.
               </p>
             </div>
             <div className="flex items-center gap-2">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+                <Search
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
+                  style={{ color: "var(--text-muted)" }}
+                />
                 <input
                   type="text"
                   value={memberSearch}
                   onChange={(e) => setMemberSearch(e.target.value)}
                   placeholder="Search members"
                   className="pl-9 pr-3 py-2 rounded-xl text-sm focus:outline-none transition-colors w-48"
-                  style={{ backgroundColor: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
+                  style={{
+                    backgroundColor: "var(--bg-input)",
+                    border: "1px solid var(--border-color)",
+                    color: "var(--text-primary)",
+                  }}
                 />
               </div>
-              <button className="p-2 rounded-xl transition-colors" style={{ backgroundColor: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>
+              <button
+                className="p-2 rounded-xl transition-colors"
+                style={{
+                  backgroundColor: "var(--bg-input)",
+                  border: "1px solid var(--border-color)",
+                  color: "var(--text-muted)",
+                }}
+              >
                 <LayoutGrid className="w-4 h-4" />
               </button>
-              <button className="p-2 rounded-xl transition-colors" style={{ backgroundColor: 'var(--bg-input)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>
+              <button
+                className="p-2 rounded-xl transition-colors"
+                style={{
+                  backgroundColor: "var(--bg-input)",
+                  border: "1px solid var(--border-color)",
+                  color: "var(--text-muted)",
+                }}
+              >
                 <List className="w-4 h-4" />
               </button>
             </div>
@@ -310,7 +394,13 @@ export default function AnalyticsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="text-xs uppercase" style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>
+                <tr
+                  className="text-xs uppercase"
+                  style={{
+                    borderBottom: "1px solid var(--border-color)",
+                    color: "var(--text-muted)",
+                  }}
+                >
                   <th className="pb-3 font-semibold">Member</th>
                   <th className="pb-3 font-semibold">Team</th>
                   <th className="pb-3 font-semibold">Role</th>
@@ -319,12 +409,12 @@ export default function AnalyticsPage() {
                   <th className="pb-3"></th>
                 </tr>
               </thead>
-              <tbody className="divide-y" style={{ borderColor: 'var(--border-color)' }}>
+              <tbody
+                className="divide-y"
+                style={{ borderColor: "var(--border-color)" }}
+              >
                 {filteredMembers.map((member) => (
-                  <tr
-                    key={member.name}
-                    className="transition-colors"
-                  >
+                  <tr key={member.name} className="transition-colors">
                     <td className="py-3.5">
                       <div className="flex items-center gap-3">
                         {member.avatar ? (
@@ -344,13 +434,19 @@ export default function AnalyticsPage() {
                           <div className="text-sm font-semibold">
                             {member.name}
                           </div>
-                          <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                          <div
+                            className="text-xs"
+                            style={{ color: "var(--text-muted)" }}
+                          >
                             {member.email}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="py-3.5 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <td
+                      className="py-3.5 text-sm"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
                       {member.team}
                     </td>
                     <td className="py-3.5">
@@ -360,7 +456,10 @@ export default function AnalyticsPage() {
                         {member.role}
                       </span>
                     </td>
-                    <td className="py-3.5 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <td
+                      className="py-3.5 text-sm"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
                       {member.lastActive}
                     </td>
                     <td className="py-3.5">
@@ -371,7 +470,10 @@ export default function AnalyticsPage() {
                       </span>
                     </td>
                     <td className="py-3.5">
-                      <button className="p-1 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                      <button
+                        className="p-1 rounded-lg transition-colors"
+                        style={{ color: "var(--text-muted)" }}
+                      >
                         <MoreHorizontal className="w-4 h-4" />
                       </button>
                     </td>

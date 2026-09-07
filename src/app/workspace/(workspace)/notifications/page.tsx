@@ -34,7 +34,8 @@ const NOTIFICATIONS: Notification[] = [
     id: "1",
     user: {
       name: "Sam Rivera",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      avatar:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
     },
     action: "mentioned you in",
     target: "#design",
@@ -48,7 +49,8 @@ const NOTIFICATIONS: Notification[] = [
     id: "2",
     user: {
       name: "Lisa Park",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&auto=format&fit=crop&q=80",
+      avatar:
+        "https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     action: "liked your",
     target: "post",
@@ -62,7 +64,8 @@ const NOTIFICATIONS: Notification[] = [
     id: "3",
     user: {
       name: "Jordan Lee",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80",
+      avatar:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80",
     },
     action: 'assigned you a task: "QA mobile layout"',
     target: "",
@@ -76,7 +79,8 @@ const NOTIFICATIONS: Notification[] = [
     id: "4",
     user: {
       name: "Daniel Kim",
-      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+      avatar:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
     },
     action: "commented on your",
     target: "document",
@@ -90,7 +94,8 @@ const NOTIFICATIONS: Notification[] = [
     id: "5",
     user: {
       name: "Sam Rivera",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      avatar:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
     },
     action: "shared roadmap-v2.pdf with you",
     target: "",
@@ -104,7 +109,8 @@ const NOTIFICATIONS: Notification[] = [
     id: "6",
     user: {
       name: "Design Review",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      avatar:
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
     },
     action: "starts in 15 minutes",
     target: "",
@@ -143,14 +149,17 @@ export default function NotificationsPage() {
 
   const markAsRead = (id: string) => {
     setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, unread: false } : n))
+      prev.map((n) => (n.id === id ? { ...n, unread: false } : n)),
     );
   };
 
   return (
     <div
       className="flex-1 flex flex-col overflow-hidden font-sans"
-      style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
+      style={{
+        backgroundColor: "var(--bg-primary)",
+        color: "var(--text-primary)",
+      }}
     >
       {/* ═══ Header ═══ */}
       <div
@@ -162,7 +171,10 @@ export default function NotificationsPage() {
             <Bell className="w-5 h-5 text-purple-400" />
           </div>
           <div>
-            <h1 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
+            <h1
+              className="text-xl font-bold"
+              style={{ color: "var(--text-primary)" }}
+            >
               Notifications
             </h1>
             <p className="text-xs" style={{ color: "var(--text-muted)" }}>
@@ -235,19 +247,31 @@ export default function NotificationsPage() {
 
               {/* Content */}
               <div className="flex-1 min-w-0">
-                <p className="text-sm leading-snug" style={{ color: "var(--text-secondary)" }}>
-                  <span className="font-semibold" style={{ color: "var(--text-primary)" }}>
+                <p
+                  className="text-sm leading-snug"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  <span
+                    className="font-semibold"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     {notification.user.name}
                   </span>{" "}
                   {notification.action}
                   {notification.target && (
-                    <span className="font-semibold" style={{ color: "var(--text-primary)" }}>
+                    <span
+                      className="font-semibold"
+                      style={{ color: "var(--text-primary)" }}
+                    >
                       {" "}
                       {notification.target}
                     </span>
                   )}
                 </p>
-                <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                <p
+                  className="text-xs mt-0.5"
+                  style={{ color: "var(--text-muted)" }}
+                >
                   {notification.time}
                 </p>
               </div>
@@ -261,11 +285,20 @@ export default function NotificationsPage() {
 
           {filteredNotifications.length === 0 && (
             <div className="flex flex-col items-center justify-center py-20">
-              <Bell className="w-12 h-12 mb-4" style={{ color: "var(--text-muted)" }} />
-              <p className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>
+              <Bell
+                className="w-12 h-12 mb-4"
+                style={{ color: "var(--text-muted)" }}
+              />
+              <p
+                className="text-sm font-medium"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 No notifications
               </p>
-              <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
+              <p
+                className="text-xs mt-1"
+                style={{ color: "var(--text-muted)" }}
+              >
                 You&apos;re all caught up!
               </p>
             </div>

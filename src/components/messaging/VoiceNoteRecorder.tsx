@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Mic, Pause, Play, Square } from 'lucide-react';
 
 interface VoiceNoteRecorderProps {
@@ -15,10 +15,29 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<BlobPart[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  // Full teardown if the component unmounts mid-recording: otherwise the
+  // interval keeps ticking and the mic stream stays live after the UI is gone.
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+        mediaRecorderRef.current.stop();
+      }
+      mediaRecorderRef.current = null;
+      streamRef.current?.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+    };
+  }, []);
 
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
       mediaRecorderRef.current = new MediaRecorder(stream);
       audioChunksRef.current = [];
 
@@ -27,11 +46,14 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
       };
 
       mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/mp3' });
+        // Use the recorder's actual container type instead of assuming mp3.
+        const mimeType = mediaRecorderRef.current?.mimeType || 'audio/webm';
+        const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
         onVoiceNoteRecorded(audioBlob);
 
         // Clean up
         stream.getTracks().forEach(track => track.stop());
+        streamRef.current = null;
         mediaRecorderRef.current = null;
       };
 
@@ -66,7 +88,10 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
-      clearInterval(intervalRef.current as NodeJS.Timeout);
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     }
   };
 
@@ -81,7 +106,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
       {!isRecording && (
         <button
           onClick={startRecording}
-          className="p-2 rounded-hover hover:bg-zinc-100"
+          className="p-2 rounded hover:bg-zinc-100"
         >
           <Mic className="h-4 w-4 text-zinc-500 hover:text-zinc-600"/>
         </button>
@@ -91,7 +116,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
           <div className="flex items-center space-x-2">
             <button
               onClick={isPaused ? resumeRecording : pauseRecording}
-              className="p-2 rounded-hover hover:bg-zinc-100"
+              className="p-2 rounded hover:bg-zinc-100"
             >
               {isPaused ? (
                 <Play className="h-4 w-4 text-zinc-500 hover:text-zinc-600"/>
@@ -101,7 +126,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
             </button>
             <button
               onClick={stopRecording}
-              className="p-2 rounded-hover hover:bg-zinc-100"
+              className="p-2 rounded hover:bg-zinc-100"
             >
               <Square className="h-4 w-4 text-zinc-500 hover:text-zinc-600"/>
             </button>

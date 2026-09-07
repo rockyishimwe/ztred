@@ -12,7 +12,7 @@ export default function AppearanceSettingsPage() {
                   type="radio"
                   name="theme"
                   defaultChecked
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   Light
@@ -22,7 +22,7 @@ export default function AppearanceSettingsPage() {
                 <input
                   type="radio"
                   name="theme"
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   Dark
@@ -32,7 +32,7 @@ export default function AppearanceSettingsPage() {
                 <input
                   type="radio"
                   name="theme"
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   System
@@ -42,7 +42,7 @@ export default function AppearanceSettingsPage() {
                 <input
                   type="checkbox"
                   defaultChecked
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   Follow system theme
@@ -50,7 +50,7 @@ export default function AppearanceSettingsPage() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
               >
                 Save Changes
               </button>
@@ -64,7 +64,7 @@ export default function AppearanceSettingsPage() {
                 <input
                   type="checkbox"
                   defaultChecked
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   Reduce motion
@@ -74,7 +74,7 @@ export default function AppearanceSettingsPage() {
                 <input
                   type="checkbox"
                   defaultChecked
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   High contrast mode
@@ -84,7 +84,7 @@ export default function AppearanceSettingsPage() {
                 <input
                   type="checkbox"
                   defaultChecked={false}
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   Screen reader optimizations
@@ -94,7 +94,7 @@ export default function AppearanceSettingsPage() {
                 <input
                   type="checkbox"
                   defaultChecked
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   Keyboard navigation enhancements

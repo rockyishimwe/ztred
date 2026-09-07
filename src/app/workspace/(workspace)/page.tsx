@@ -38,7 +38,7 @@ export default function WorkspaceHomePage() {
     },
     {
       name: 'Lisa Park',
-      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&auto=format&fit=crop&q=80',
+      avatar: 'https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200&auto=format&fit=crop&q=80',
       time: '3h',
     },
@@ -51,7 +51,7 @@ export default function WorkspaceHomePage() {
     {
       name: 'Jordan Lee',
       avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
-      image: 'https://images.unsplash.com/photo-1511497584788-876761197069?w=1200&auto=format&fit=crop&q=80',
+      image: 'https://plus.unsplash.com/premium_photo-1692640261730-58046cb3db1b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       time: '2h',
     },
   ];

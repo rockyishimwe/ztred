@@ -6,16 +6,16 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-focus transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4',
   {
     variants: {
       variant: {
-        default: 'bg-primary-600 text-primary-foreground hover:bg-primary-700',
-        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-        outline: 'border border-input hover:bg-accent hover:text-accent-foreground',
-        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-pointer underline-offset-4 hover:underline',
+        default: 'bg-purple-600 text-white hover:bg-purple-700',
+        destructive: 'bg-red-600 text-white hover:bg-red-700',
+        outline: 'border border-theme-hover hover:bg-theme-tinted',
+        secondary: 'bg-theme-tinted text-zinc-900 dark:text-zinc-100 hover:bg-theme-hover',
+        ghost: 'hover:bg-theme-tinted',
+        link: 'text-purple-600 underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-10 py-2 px-4',

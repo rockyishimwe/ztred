@@ -28,7 +28,7 @@ const members: Member[] = [
     role: "Product Marketing",
     department: "Marketing",
     avatar:
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     online: true,
   },
   {
@@ -88,7 +88,7 @@ export default function PeoplePage() {
     (m) =>
       m.name.toLowerCase().includes(search.toLowerCase()) ||
       m.role.toLowerCase().includes(search.toLowerCase()) ||
-      m.department.toLowerCase().includes(search.toLowerCase())
+      m.department.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -98,7 +98,10 @@ export default function PeoplePage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">People</h1>
-            <p className="text-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+            <p
+              className="text-sm mt-0.5"
+              style={{ color: "var(--text-secondary)" }}
+            >
               {members.length} members in this workspace
             </p>
           </div>
@@ -110,14 +113,21 @@ export default function PeoplePage() {
 
         {/* Search */}
         <div className="relative max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+          <Search
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
+            style={{ color: "var(--text-muted)" }}
+          />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search people..."
             className="w-full rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none transition-colors"
-            style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
+            style={{
+              backgroundColor: "var(--bg-card)",
+              border: "1px solid var(--border-color)",
+              color: "var(--text-primary)",
+            }}
           />
         </div>
 
@@ -127,7 +137,10 @@ export default function PeoplePage() {
             <div
               key={member.name}
               className="rounded-2xl p-5 flex flex-col items-center text-center transition-colors"
-              style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+              style={{
+                backgroundColor: "var(--bg-card)",
+                border: "1px solid var(--border-color)",
+              }}
             >
               {/* Avatar */}
               <div className="relative mb-3">
@@ -150,11 +163,17 @@ export default function PeoplePage() {
               </div>
 
               {/* Info */}
-              <h3 className="font-semibold text-sm">
-                {member.name}
-              </h3>
-              <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>{member.role}</p>
-              <span className="text-[11px] mt-2 inline-block" style={{ color: 'var(--text-muted)' }}>
+              <h3 className="font-semibold text-sm">{member.name}</h3>
+              <p
+                className="text-xs mt-0.5"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {member.role}
+              </p>
+              <span
+                className="text-[11px] mt-2 inline-block"
+                style={{ color: "var(--text-muted)" }}
+              >
                 {member.department}
               </span>
 
@@ -167,7 +186,13 @@ export default function PeoplePage() {
                   <MessageSquare className="w-3.5 h-3.5" />
                   Chat
                 </Link>
-                <button className="flex-1 flex items-center justify-center gap-1.5 hover:opacity-80 text-xs font-medium py-2 rounded-xl transition-colors" style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-secondary)' }}>
+                <button
+                  className="flex-1 flex items-center justify-center gap-1.5 hover:opacity-80 text-xs font-medium py-2 rounded-xl transition-colors"
+                  style={{
+                    backgroundColor: "var(--bg-surface)",
+                    color: "var(--text-secondary)",
+                  }}
+                >
                   Profile
                 </button>
               </div>

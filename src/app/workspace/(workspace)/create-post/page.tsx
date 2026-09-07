@@ -97,7 +97,7 @@ export default function CreatePostPage() {
                 disabled={!content.trim()}
                 className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${
                   content.trim()
-                    ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-600/25'
+                    ? 'bg-theme-brand hover:bg-theme-brand-hover text-white shadow-lg shadow-purple-600/25'
                     : 'cursor-not-allowed'
                 }`}
               >
@@ -114,8 +114,8 @@ export default function CreatePostPage() {
                 onClick={() => setAudience(option)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                   audience === option
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-theme-card border border-theme hover:border-zinc-700'
+                    ? 'bg-theme-brand text-white'
+                    : 'bg-theme-card border border-theme hover:border-theme-hover'
                 }`}
               >
                 {option}

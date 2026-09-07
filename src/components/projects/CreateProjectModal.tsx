@@ -25,6 +25,7 @@ interface CreateProjectModalProps {
     description: string;
     category: string;
     priority: string;
+    startDate: string;
     dueDate: string;
     team: string[];
     teamMembers: TeamMember[];
@@ -77,7 +78,7 @@ const WORKSPACE_MEMBERS = [
     id: "m2",
     name: "Lisa Park",
     title: "Lead Developer",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=80",
+    avatar: "https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     defaultRole: "Editor",
   },
   {
@@ -152,6 +153,7 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
       description,
       category,
       priority,
+      startDate,
       dueDate: deadline,
       team: teamMembers.map((m) => m.avatar),
       teamMembers,

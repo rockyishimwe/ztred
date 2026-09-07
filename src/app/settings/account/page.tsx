@@ -14,7 +14,7 @@ export default function AccountSettingsPage() {
                 <input
                   type="text"
                   defaultValue="Alex Rivera"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
               <div>
@@ -24,7 +24,7 @@ export default function AccountSettingsPage() {
                 <input
                   type="email"
                   defaultValue="alex.rivera@ztred.io"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
               <div>
@@ -34,12 +34,12 @@ export default function AccountSettingsPage() {
                 <input
                   type="text"
                   defaultValue="Focusing on ZTRED v2.0 Release 🚀"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
               >
                 Save Changes
               </button>
@@ -54,7 +54,7 @@ export default function AccountSettingsPage() {
                   Change Password
                 </label>
                 <button
-                  className="w-full text-left text-primary-600 hover:text-primary-700 underline"
+                  className="w-full text-left text-purple-600 hover:text-purple-700 underline"
                 >
                   Change Password
                 </button>
@@ -63,7 +63,7 @@ export default function AccountSettingsPage() {
                 <input
                   type="checkbox"
                   defaultChecked
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   Enable two-factor authentication

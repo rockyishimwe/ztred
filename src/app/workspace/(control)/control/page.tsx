@@ -5,7 +5,8 @@ import Link from "next/link";
 import { addDays, format } from "date-fns";
 
 // Relative invite dates keep the demo list evergreen.
-const daysFromNow = (n: number) => format(addDays(new Date(), n), "MMM d, yyyy");
+const daysFromNow = (n: number) =>
+  format(addDays(new Date(), n), "MMM d, yyyy");
 import {
   Users,
   Shield,
@@ -62,35 +63,102 @@ export default function WorkspaceControlPage() {
     { icon: Hash, label: "Manage Channels", sub: "Organize discussions" },
     { icon: Brain, label: "AI Settings", sub: "Set token usage & rules" },
     { icon: Lock, label: "Security Settings", sub: "Configure 2FA & sign-on" },
-    { icon: FileText, label: "View Audit Logs", sub: "Trace absolute activities" },
+    {
+      icon: FileText,
+      label: "View Audit Logs",
+      sub: "Trace absolute activities",
+    },
   ];
 
   const memberStatus = [
-    { count: 42, label: "Active", color: "var(--success)", bgColor: "var(--bg-secondary)" },
-    { count: 3, label: "Pending", color: "var(--warning)", bgColor: "var(--bg-secondary)" },
-    { count: 1, label: "Suspended", color: "var(--danger)", bgColor: "var(--bg-secondary)" },
-    { count: 1, label: "Banned", color: "var(--danger)", bgColor: "var(--bg-secondary)" },
+    {
+      count: 42,
+      label: "Active",
+      color: "var(--success)",
+      bgColor: "var(--bg-secondary)",
+    },
+    {
+      count: 3,
+      label: "Pending",
+      color: "var(--warning)",
+      bgColor: "var(--bg-secondary)",
+    },
+    {
+      count: 1,
+      label: "Suspended",
+      color: "var(--danger)",
+      bgColor: "var(--bg-secondary)",
+    },
+    {
+      count: 1,
+      label: "Banned",
+      color: "var(--danger)",
+      bgColor: "var(--bg-secondary)",
+    },
   ];
 
   const recentActivity = [
-    { name: "Sarah Jenkins", action: "updated permission configurations for Manager role", time: "2m ago", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&auto=format&fit=crop&q=80" },
-    { name: "Robert Allen", action: "was suspended by Owner", time: "15m ago", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80" },
-    { name: "Emma Johnson", action: "uploaded new policy document 'compliance_2026.pdf'", time: "1h ago", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&auto=format&fit=crop&q=80" },
-    { name: "Michael Torres", action: "created private channel '#exec-board'", time: "2h ago", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" },
-    { name: "David Smith", action: "accepted invitation to join workspace", time: "3h ago", avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&auto=format&fit=crop&q=80" },
+    {
+      name: "Sarah Jenkins",
+      action: "updated permission configurations for Manager role",
+      time: "2m ago",
+      avatar:
+        "https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      name: "Robert Allen",
+      action: "was suspended by Owner",
+      time: "15m ago",
+      avatar:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+    },
+    {
+      name: "Emma Johnson",
+      action: "uploaded new policy document 'compliance_2026.pdf'",
+      time: "1h ago",
+      avatar:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&auto=format&fit=crop&q=80",
+    },
+    {
+      name: "Michael Torres",
+      action: "created private channel '#exec-board'",
+      time: "2h ago",
+      avatar:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+    },
+    {
+      name: "David Smith",
+      action: "accepted invitation to join workspace",
+      time: "3h ago",
+      avatar:
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&auto=format&fit=crop&q=80",
+    },
   ];
 
   const pendingInvitations = [
     { email: "clara.vance@ztred.com", role: "Manager", date: daysFromNow(-7) },
     { email: "developer.dan@ztred.com", role: "Member", date: daysFromNow(-9) },
-    { email: "advisor.lee@external.com", role: "Guest", date: daysFromNow(-11) },
+    {
+      email: "advisor.lee@external.com",
+      role: "Guest",
+      date: daysFromNow(-11),
+    },
   ];
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundColor: "var(--bg-primary)",
+        color: "var(--text-primary)",
+      }}
+    >
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-sm mb-6" aria-label="Breadcrumb">
+        <nav
+          className="flex items-center gap-1.5 text-sm mb-6"
+          aria-label="Breadcrumb"
+        >
           <Link
             href="/workspace/control"
             className="font-medium transition-colors"
@@ -98,13 +166,20 @@ export default function WorkspaceControlPage() {
           >
             Workspace control
           </Link>
-          <ChevronRight className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} aria-hidden="true" />
+          <ChevronRight
+            className="w-3.5 h-3.5"
+            style={{ color: "var(--text-muted)" }}
+            aria-hidden="true"
+          />
           <span style={{ color: "var(--text-muted)" }}>Overview</span>
         </nav>
 
         {/* Title Row */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-          <h1 className="responsive-text-h1 text-2xl sm:text-3xl font-extrabold tracking-tight" style={{ color: "var(--text-primary)" }}>
+          <h1
+            className="responsive-text-h1 text-2xl sm:text-3xl font-extrabold tracking-tight"
+            style={{ color: "var(--text-primary)" }}
+          >
             Workspace control
           </h1>
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
@@ -153,15 +228,26 @@ export default function WorkspaceControlPage() {
                 }}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>
+                  <span
+                    className="text-sm font-medium"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
                     {stat.label}
                   </span>
-                  <Icon className={`w-5 h-5 ${stat.iconColor}`} aria-hidden="true" />
+                  <Icon
+                    className={`w-5 h-5 ${stat.iconColor}`}
+                    aria-hidden="true"
+                  />
                 </div>
-                <div className="text-3xl font-extrabold tracking-tight" style={{ color: "var(--text-primary)" }}>
+                <div
+                  className="text-3xl font-extrabold tracking-tight"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   {stat.value}
                 </div>
-                <span className={`text-xs font-medium mt-1 block ${stat.subColor}`}>
+                <span
+                  className={`text-xs font-medium mt-1 block ${stat.subColor}`}
+                >
                   {stat.sub}
                 </span>
               </div>
@@ -179,7 +265,10 @@ export default function WorkspaceControlPage() {
               border: "1px solid var(--border-color)",
             }}
           >
-            <h2 className="text-lg font-bold mb-5" style={{ color: "var(--text-primary)" }}>
+            <h2
+              className="text-lg font-bold mb-5"
+              style={{ color: "var(--text-primary)" }}
+            >
               Quick actions
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -196,15 +285,28 @@ export default function WorkspaceControlPage() {
                   >
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: "color-mix(in srgb, var(--primary) 15%, transparent)" }}
+                      style={{
+                        backgroundColor:
+                          "color-mix(in srgb, var(--primary) 15%, transparent)",
+                      }}
                     >
-                      <Icon className="w-5 h-5" style={{ color: "var(--primary)" }} aria-hidden="true" />
+                      <Icon
+                        className="w-5 h-5"
+                        style={{ color: "var(--primary)" }}
+                        aria-hidden="true"
+                      />
                     </div>
                     <div className="min-w-0">
-                      <div className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                      <div
+                        className="text-sm font-semibold"
+                        style={{ color: "var(--text-primary)" }}
+                      >
                         {action.label}
                       </div>
-                      <div className="text-[11px] mt-0.5" style={{ color: "var(--text-muted)" }}>
+                      <div
+                        className="text-[11px] mt-0.5"
+                        style={{ color: "var(--text-muted)" }}
+                      >
                         {action.sub}
                       </div>
                     </div>
@@ -222,7 +324,10 @@ export default function WorkspaceControlPage() {
               border: "1px solid var(--border-color)",
             }}
           >
-            <h2 className="text-lg font-bold mb-5" style={{ color: "var(--text-primary)" }}>
+            <h2
+              className="text-lg font-bold mb-5"
+              style={{ color: "var(--text-primary)" }}
+            >
               Member status
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -232,10 +337,16 @@ export default function WorkspaceControlPage() {
                   className="rounded-xl p-4 text-center"
                   style={{ backgroundColor: status.bgColor }}
                 >
-                  <div className="text-2xl font-extrabold" style={{ color: status.color }}>
+                  <div
+                    className="text-2xl font-extrabold"
+                    style={{ color: status.color }}
+                  >
                     {status.count}
                   </div>
-                  <div className="text-xs font-medium mt-1" style={{ color: "var(--text-secondary)" }}>
+                  <div
+                    className="text-xs font-medium mt-1"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
                     {status.label}
                   </div>
                 </div>
@@ -255,7 +366,10 @@ export default function WorkspaceControlPage() {
             }}
           >
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>
+              <h2
+                className="text-lg font-bold"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Pending invitations
               </h2>
               <button
@@ -272,11 +386,17 @@ export default function WorkspaceControlPage() {
                   key={inv.email}
                   className="flex items-center justify-between py-4"
                   style={{
-                    borderBottom: idx < pendingInvitations.length - 1 ? "1px solid var(--border-color)" : "none",
+                    borderBottom:
+                      idx < pendingInvitations.length - 1
+                        ? "1px solid var(--border-color)"
+                        : "none",
                   }}
                 >
                   <div className="flex items-center gap-4 flex-1">
-                    <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
+                    <span
+                      className="text-sm font-medium"
+                      style={{ color: "var(--text-primary)" }}
+                    >
                       {inv.email}
                     </span>
                     <span
@@ -289,7 +409,10 @@ export default function WorkspaceControlPage() {
                     >
                       {inv.role}
                     </span>
-                    <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+                    <span
+                      className="text-xs"
+                      style={{ color: "var(--text-muted)" }}
+                    >
                       {inv.date}
                     </span>
                   </div>
@@ -317,7 +440,10 @@ export default function WorkspaceControlPage() {
               border: "1px solid var(--border-color)",
             }}
           >
-            <h2 className="text-lg font-bold mb-5" style={{ color: "var(--text-primary)" }}>
+            <h2
+              className="text-lg font-bold mb-5"
+              style={{ color: "var(--text-primary)" }}
+            >
               Recent activity
             </h2>
             <div className="space-y-4">
@@ -329,13 +455,22 @@ export default function WorkspaceControlPage() {
                     className="w-9 h-9 rounded-full object-cover shrink-0"
                   />
                   <div className="min-w-0">
-                    <p className="text-sm leading-snug" style={{ color: "var(--text-secondary)" }}>
-                      <span className="font-semibold" style={{ color: "var(--text-primary)" }}>
+                    <p
+                      className="text-sm leading-snug"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
+                      <span
+                        className="font-semibold"
+                        style={{ color: "var(--text-primary)" }}
+                      >
                         {activity.name}
                       </span>{" "}
                       {activity.action}
                     </p>
-                    <span className="text-[11px] mt-0.5 block" style={{ color: "var(--text-muted)" }}>
+                    <span
+                      className="text-[11px] mt-0.5 block"
+                      style={{ color: "var(--text-muted)" }}
+                    >
                       {activity.time}
                     </span>
                   </div>

@@ -147,6 +147,7 @@ export default function ProjectsPage() {
     description: string;
     category: string;
     priority: string;
+    startDate: string;
     dueDate: string;
     team: string[];
   }) => {

@@ -219,7 +219,7 @@ function UploadModal({
           className={`border-2 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center cursor-pointer transition-all mb-4 ${
             isDragging
               ? "border-purple-500 bg-purple-500/10"
-              : "border-theme hover:border-theme-hover hover:bg-theme-secondary/30"
+              : "border-theme hover:border-theme-hover hover:bg-theme-secondary-subtle"
           }`}
         >
           <input

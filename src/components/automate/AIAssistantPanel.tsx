@@ -1,10 +1,12 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Send, Mic, RefreshCw, Trash2, ChevronDown } from 'lucide-react';
+import { AIMessage, AIAction } from '@/types/api';
 
 export const AIAssistantPanel: React.FC = () => {
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<any[]>([
+  const replyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [messages, setMessages] = useState<AIMessage[]>([
     {
       id: '1',
       content: 'Hey Alex! I\'m ZTRED-AI, your ambient AI assistant. How can I help you today?',
@@ -26,47 +28,57 @@ export const AIAssistantPanel: React.FC = () => {
     }
   ]);
 
+  // Clear the pending simulated reply on unmount so we never setState
+  // after the panel is gone.
+  useEffect(() => {
+    return () => {
+      if (replyTimerRef.current !== null) {
+        clearTimeout(replyTimerRef.current);
+      }
+    };
+  }, []);
+
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const userMessage = {
-      id: Date.now().toString(),
+    const userMessage: AIMessage = {
+      id: `${Date.now()}-user`,
       content: input,
       isUser: true
     };
 
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
+    const loadingId = `${Date.now()}-loading`;
 
-    // Simulate AI response
-    setMessages(prev => [...prev, {
-      id: Date.now().toString() + 'a',
+    setMessages(prev => [...prev, userMessage, {
+      id: loadingId,
       content: 'Generating response...',
       isUser: false,
       isLoading: true
     }]);
+    setInput('');
 
-    // Simulate delay
-    setTimeout(() => {
-      setMessages(prev => {
-        const updated = [...prev];
-        updated[updated.length - 1] = {
-          id: Date.now().toString() + 'a',
-          content: 'Based on the conversation, I see you\'re discussing the Q3 frontend roadmap. Would you like me to summarize the key decisions made or extract any action items?',
-          isUser: false,
-          actions: [
-            {
-              label: 'Summarize thread',
-              onClick: () => {}
-            },
-            {
-              label: 'Extract action items',
-              onClick: () => {}
+    // Simulate delay. Replace the loading row by id (not by position) so
+    // messages sent while a reply is pending can't corrupt the wrong row.
+    replyTimerRef.current = setTimeout(() => {
+      setMessages(prev => prev.map(m =>
+        m.id === loadingId
+          ? {
+              id: loadingId,
+              content: 'Based on the conversation, I see you\'re discussing the Q3 frontend roadmap. Would you like me to summarize the key decisions made or extract any action items?',
+              isUser: false,
+              actions: [
+                {
+                  label: 'Summarize thread',
+                  onClick: () => {}
+                },
+                {
+                  label: 'Extract action items',
+                  onClick: () => {}
+                }
+              ]
             }
-          ]
-        };
-        return updated;
-      });
+          : m
+      ));
     }, 1500);
   };
 
@@ -104,17 +116,17 @@ export const AIAssistantPanel: React.FC = () => {
               }`}>
                 <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                 {message.isLoading && (
-                  <div className="h-2 w-full bg-theme-brand/20 rounded mt-1">
+                  <div className="h-2 w-full bg-theme-brand-subtle rounded mt-1">
                     <div className="h-2 w-1/3 bg-theme-brand rounded"></div>
                   </div>
                 )}
                 {message.actions && message.actions.length > 0 && (
-                  <div className="flex space-x-2 mt-2">
-                    {message.actions.map((action: any, index: number) => (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {message.actions.map((action: AIAction, index: number) => (
                       <button
                         key={index}
                         onClick={action.onClick}
-                        className="text-xs bg-transparent hover:text-theme-on-primary px-2 py-1 rounded transition-colors"
+                        className="text-[10px] bg-theme-secondary-subtle hover:bg-theme-secondary text-theme-primary px-2 py-1 rounded transition-colors border border-theme"
                       >
                         {action.label}
                       </button>
@@ -144,8 +156,10 @@ export const AIAssistantPanel: React.FC = () => {
             </button>
           </div>
         </div>
+        {/* Voice input placeholder — wired up with the messaging backend. */}
         <button
-          onClick={() => setInput('')}
+          type="button"
+          title="Voice input coming soon"
           className="ml-2 p-1 rounded-lg hover:bg-theme-secondary transition-colors"
         >
           <Mic className="h-4 w-4 text-theme-muted hover:text-theme-primary"/>

@@ -31,7 +31,7 @@ export default function VerifyPage() {
 
   const handleVerify = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push('/workspace/channels/general');
+    router.push('/workspace');
   };
 
   return (

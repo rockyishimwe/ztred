@@ -37,19 +37,19 @@ export const DocEditor: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center space-x-2">
-          <button className="p-2 rounded-hover hover:bg-zinc-100">
+          <button className="p-2 rounded hover:bg-zinc-100">
             <MessageSquareMore className="h-4 w-4 text-zinc-600 hover:text-zinc-800"/>
           </button>
-          <button className="p-2 rounded-hover hover:bg-zinc-100">
+          <button className="p-2 rounded hover:bg-zinc-100">
             <ClipboardList className="h-4 w-4 text-zinc-600 hover:text-zinc-800"/>
           </button>
-          <button className="p-2 rounded-hover hover:bg-zinc-100">
+          <button className="p-2 rounded hover:bg-zinc-100">
             <Heart className="h-4 w-4 text-zinc-600 hover:text-zinc-800"/>
           </button>
         </div>
       </div>
       <div className="flex-1 overflow-auto p-4">
-        <div ref={editorRef} className="w-full h-full border border-zinc-300 rounded-lg dark:border-zinc-700 bg-white dark:bg-ztred-surface-dark">
+        <div ref={editorRef} className="w-full h-full border border-zinc-300 rounded-lg dark:border-zinc-700 bg-white dark:bg-ztred-surface">
           {/* Editor content will be rendered here by Yjs + TipTap */}
         </div>
       </div>

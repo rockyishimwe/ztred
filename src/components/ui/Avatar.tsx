@@ -27,7 +27,7 @@ export const Avatar: React.FC<AvatarProps> = ({
       <img
         src={src}
         alt={alt}
-        className={`${sizeMap[size]} rounded-full ring-2 ring-white dark:ring-zinc-900 ${ring ? 'ring-primary-500' : ''} object-cover`}
+        className={`${sizeMap[size]} rounded-full ring-2 ring-white dark:ring-zinc-900 ${ring ? 'ring-purple-500' : ''} object-cover`}
       />
       {alt && (
         <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-xs text-center text-white p-1">

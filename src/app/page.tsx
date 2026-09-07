@@ -25,7 +25,7 @@ export default function LandingPage() {
   const toggleTheme = useUIStore((s) => s.toggleTheme);
 
   const handleGetStarted = () => {
-    router.push("/workspace/control");
+    router.push("/workspace");
   };
 
   const switchForm = (to: "signin" | "signup" | "forgot") => {

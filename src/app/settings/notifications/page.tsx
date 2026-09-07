@@ -21,7 +21,7 @@ export default function NotificationSettingsPage() {
                   <input
                     type="checkbox"
                     defaultChecked
-                    className="h-4 w-4 text-primary-600"
+                    className="h-4 w-4 text-purple-600"
                   />
                   <span className="text-sm text-gray-600">All messages</span>
                 </div>
@@ -48,7 +48,7 @@ export default function NotificationSettingsPage() {
                   <input
                     type="checkbox"
                     defaultChecked={false}
-                    className="h-4 w-4 text-primary-600"
+                    className="h-4 w-4 text-purple-600"
                   />
                   <span className="text-sm text-gray-600">All messages</span>
                 </div>
@@ -63,7 +63,7 @@ export default function NotificationSettingsPage() {
 
               <button
                 type="submit"
-                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
               >
                 Save Changes
               </button>
@@ -77,7 +77,7 @@ export default function NotificationSettingsPage() {
                 <input
                   type="checkbox"
                   defaultChecked
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   Desktop notifications
@@ -87,7 +87,7 @@ export default function NotificationSettingsPage() {
                 <input
                   type="checkbox"
                   defaultChecked={false}
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   Email notifications
@@ -97,7 +97,7 @@ export default function NotificationSettingsPage() {
                 <input
                   type="checkbox"
                   defaultChecked
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   Mobile push notifications
@@ -107,7 +107,7 @@ export default function NotificationSettingsPage() {
                 <input
                   type="checkbox"
                   defaultChecked={false}
-                  className="h-4 w-4 text-primary-600"
+                  className="h-4 w-4 text-purple-600"
                 />
                 <label className="text-sm font-medium text-gray-700">
                   Sound notifications

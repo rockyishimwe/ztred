@@ -175,3 +175,17 @@ export interface WhiteboardData {
   elements: WhiteboardElement[];
   updatedAt: string;
 }
+
+// AI Related Types
+export interface AIAction {
+  label: string;
+  onClick: () => void;
+}
+
+export interface AIMessage {
+  id: string;
+  content: string;
+  isUser: boolean;
+  isLoading?: boolean;
+  actions?: AIAction[];
+}

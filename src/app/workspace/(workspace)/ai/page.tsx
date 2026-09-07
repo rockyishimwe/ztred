@@ -74,12 +74,19 @@ const WORKSPACE_CONTEXT = {
   ],
 };
 
+// Canned replies reference tasks by title so the dates in the copy always
+// match the (relative) dates shown in the workspace data.
+const taskDue = (title: string) => {
+  const task = WORKSPACE_CONTEXT.tasks.find((t) => t.title === title);
+  return task ? task.due : "TBD";
+};
+
 const getAIResponseForMessage = (userMessage: string): string => {
   const lower = userMessage.toLowerCase().trim();
 
   // Greetings
   if (lower === "hi" || lower === "hello" || lower === "hey" || lower === "yo") {
-    return `Based on your workspace, the design team wrapped the icon set update and Jordan is swapping them into the mobile nav this afternoon. Two high-priority tasks are due this week — "API rate limiting" (Jul 22) and "QA mobile layout" (Jul 21). Want me to draft a follow-up or create a summary doc?`;
+    return `Based on your workspace, the design team wrapped the icon set update and Jordan is swapping them into the mobile nav this afternoon. Two high-priority tasks are due this week — "API rate limiting" (${taskDue("API rate limiting")}) and "QA mobile layout" (${taskDue("QA mobile layout")}). Want me to draft a follow-up or create a summary doc?`;
   }
 
   // Summarize requests
@@ -90,7 +97,7 @@ const getAIResponseForMessage = (userMessage: string): string => {
 
   // Task queries
   if (lower.includes("task") || lower.includes("due") || lower.includes("deadline")) {
-    return `Here's a quick take on your tasks:\n\nTwo high-priority items need attention: "API rate limiting" is due Jul 22 and "QA mobile layout" is due Jul 21. Jordan is handling both. On the design side, "Design system tokens" and "Sprint retro notes" are both due Jul 25. Want me to send a reminder to the team or update the board?`;
+    return `Here's a quick take on your tasks:\n\nTwo high-priority items need attention: "API rate limiting" is due ${taskDue("API rate limiting")} and "QA mobile layout" is due ${taskDue("QA mobile layout")}. Jordan is handling both. On the design side, "Design system tokens" and "Sprint retro notes" are both due ${taskDue("Design system tokens")}. Want me to send a reminder to the team or update the board?`;
   }
 
   // Find/search requests
@@ -99,9 +106,7 @@ const getAIResponseForMessage = (userMessage: string): string => {
   }
 
   // Draft requests
-  if (lower.includes("draft") || lower.includes("write") || lower.includes("compose")) {
-    return `Here's a quick draft:\n\n"Team — quick update on this week's progress. The design team delivered the new icon set (48 icons, consistent 2px stroke). Jordan is integrating them into the mobile nav today. Two critical tasks are in flight: API rate limiting (Jul 22) and QA mobile layout (Jul 21). Design review is tomorrow at 10 AM. Let me know if you need anything else."
-\nWant me to adjust the tone or send it to a specific channel?`;
+  if (lower.includes("draft") || lower.includes("write") || lower.includes("compose")) {    return `Here's a quick draft:\n\n"Team — quick update on this week's progress. The design team delivered the new icon set (48 icons, consistent 2px stroke). Jordan is integrating them into the mobile nav today. Two critical tasks are in flight: API rate limiting (${taskDue("API rate limiting")}) and QA mobile layout (${taskDue("QA mobile layout")}). Design review is tomorrow at 10 AM. Let me know if you need anything else."\nWant me to adjust the tone or send it to a specific channel?`;
   }
 
   // Meeting queries
@@ -131,6 +136,17 @@ export default function AIAssistantPage() {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const replyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Clear any pending simulated reply on unmount so we never setState
+  // after the page is gone.
+  useEffect(() => {
+    return () => {
+      if (replyTimerRef.current !== null) {
+        clearTimeout(replyTimerRef.current);
+      }
+    };
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -156,7 +172,7 @@ export default function AIAssistantPage() {
     setIsTyping(true);
 
     // Simulate AI response delay
-    setTimeout(() => {
+    replyTimerRef.current = setTimeout(() => {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",

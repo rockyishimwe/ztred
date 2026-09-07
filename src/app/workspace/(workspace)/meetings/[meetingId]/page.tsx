@@ -32,7 +32,7 @@ const participants = [
   {
     name: "Lisa Park",
     avatar:
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     isMuted: true,
     isSpeaking: false,
   },
@@ -59,7 +59,7 @@ const scheduleItems = [
     status: "live" as const,
     avatars: [
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
     ],
   },
@@ -78,7 +78,7 @@ const scheduleItems = [
     status: "upcoming" as const,
     avatars: [
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
     ],
   },
@@ -353,7 +353,7 @@ export default function MeetingsPage() {
                         ? "bg-red-500/20 text-red-400"
                         : item.status === "upcoming"
                         ? "bg-blue-500/20 text-blue-400"
-                        : "bg-theme-secondary/50 text-theme-muted"
+                        : "bg-theme-secondary-subtle text-theme-muted"
                     }`}
                   >
                     {item.status}

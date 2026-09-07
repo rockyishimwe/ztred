@@ -91,10 +91,19 @@ function CreateDocModal({
   ];
 
   const handleCreate = () => {
+    // The selected template seeds the summary so the choice has an effect.
+    const templatePrefix: Record<string, string> = {
+      brief: "Project brief: ",
+      meeting: "Meeting notes: ",
+      plan: "Team plan: ",
+    };
+    const templateSummary = selectedTemplate
+      ? `${templatePrefix[selectedTemplate] ?? ""}${summary}`.trim()
+      : summary;
     onCreate({
       id: `doc_${Date.now()}`,
       title: title || "Untitled document",
-      description: summary || "New document",
+      description: templateSummary || "New document",
       updated: "Just now",
       readTime: "1 min read",
       starred: false,
