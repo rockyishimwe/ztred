@@ -387,7 +387,7 @@ export default function AIAssistantPage() {
             border: "1px solid var(--border-color)",
           }}
         >
-          <button
+          <button aria-label="Add attachment" title="Add attachment"
             className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-0.5 transition-colors"
             style={{ color: "var(--text-muted)" }}
           >

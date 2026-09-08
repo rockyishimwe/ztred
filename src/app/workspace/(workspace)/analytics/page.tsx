@@ -206,7 +206,7 @@ export default function AnalyticsPage() {
                 >
                   <Icon className={`w-5 h-5 ${stat.iconColor}`} />
                 </div>
-                <div className="text-2xl font-bold">{stat.value}</div>
+                <div className="text-2xl font-bold tabular">{stat.value}</div>
                 <div
                   className="text-sm mt-0.5"
                   style={{ color: "var(--text-secondary)" }}
@@ -300,7 +300,7 @@ export default function AnalyticsPage() {
                     >
                       {metric.label}
                     </span>
-                    <span className="text-sm font-semibold">
+                    <span className="text-sm font-semibold tabular">
                       {metric.value}%
                     </span>
                   </div>
@@ -367,7 +367,7 @@ export default function AnalyticsPage() {
                   }}
                 />
               </div>
-              <button
+              <button aria-label="Grid view" title="Grid view"
                 className="p-2 rounded-xl transition-colors"
                 style={{
                   backgroundColor: "var(--bg-input)",
@@ -377,7 +377,7 @@ export default function AnalyticsPage() {
               >
                 <LayoutGrid className="w-4 h-4" />
               </button>
-              <button
+              <button aria-label="List view" title="List view"
                 className="p-2 rounded-xl transition-colors"
                 style={{
                   backgroundColor: "var(--bg-input)",
@@ -470,7 +470,7 @@ export default function AnalyticsPage() {
                       </span>
                     </td>
                     <td className="py-3.5">
-                      <button
+                      <button aria-label="Member options" title="Member options"
                         className="p-1 rounded-lg transition-colors"
                         style={{ color: "var(--text-muted)" }}
                       >

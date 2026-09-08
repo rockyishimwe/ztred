@@ -36,7 +36,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
         </div>
       )}
       <form onSubmit={handleSubmit} className="flex items-center gap-2 p-4 bg-theme-card border-t border-theme">
-        <button
+        <button aria-label="Attach file" title="Attach file"
           type="button"
           className="p-2 text-theme-muted hover:text-theme-primary hover:bg-theme-secondary rounded-lg transition-colors"
         >
@@ -49,7 +49,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
         >
           <Smile className="w-5 h-5" />
         </button>
-        <button
+        <button aria-label="Mention someone" title="Mention someone"
           type="button"
           className="p-2 text-theme-muted hover:text-theme-primary hover:bg-theme-secondary rounded-lg transition-colors"
         >
@@ -62,13 +62,13 @@ export const MessageInput: React.FC<MessageInputProps> = ({
           placeholder={placeholder}
           className="flex-1 bg-theme-input border border-theme rounded-xl px-4 py-2.5 text-sm text-theme-primary placeholder-theme focus:outline-none focus:border-theme-accent focus:ring-2 focus:ring-theme-primary/20 transition-all"
         />
-        <button
+        <button aria-label="Record voice note" title="Record voice note"
           type="button"
           className="p-2 text-theme-muted hover:text-theme-primary hover:bg-theme-secondary rounded-lg transition-colors"
         >
           <Mic className="w-5 h-5" />
         </button>
-        <button
+        <button aria-label="Send message" title="Send message"
           type="submit"
           disabled={!message.trim()}
           className="p-2 bg-theme-brand text-white rounded-lg hover:bg-theme-brand-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"

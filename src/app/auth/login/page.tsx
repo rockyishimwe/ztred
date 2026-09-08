@@ -1,24 +1,28 @@
 "use client";
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { NavLink } from "@/components/ui/NavLink";
+import { useNavigation } from '@/components/navigation/NavigationProvider';
+import { Spinner } from '@/components/ui/spinner';
 import { Eye, EyeOff, Check, ArrowRight } from 'lucide-react';
 import { ZtredLogo } from "@/components/ui/ZtredLogo";
 
 export default function LoginPage() {
-  const router = useRouter();
+  const { navigate } = useNavigation();
+  // Which control the user pressed, so only that one shows a spinner.
+  const [pending, setPending] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push('/workspace');
+    setPending('submit');
+    navigate('/workspace');
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
+    <div className="min-h-dvh bg-[#0b0f19] text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
       {/* Left Column - Form */}
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-12 max-w-xl mx-auto lg:mx-0 w-full">
         <div className="space-y-8">
@@ -85,10 +89,16 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-theme-primary font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group mt-2"
+              disabled={pending !== null}
+              aria-busy={pending === 'submit' || undefined}
+              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-theme-primary font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group mt-2 disabled:opacity-70 disabled:cursor-progress"
             >
-              <span>Sign in</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span>{pending === 'submit' ? 'Signing in…' : 'Sign in'}</span>
+              {pending === 'submit' ? (
+                <Spinner size="small" className="size-4" />
+              ) : (
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              )}
             </button>
           </form>
 
@@ -100,24 +110,30 @@ export default function LoginPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <button
-              onClick={() => router.push('/workspace')}
-              className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-theme-secondary"
+              onClick={() => { setPending('Google'); navigate('/workspace'); }}
+              disabled={pending !== null}
+              aria-busy={pending === 'Google' || undefined}
+              className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-theme-secondary flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-progress"
             >
+              {pending === 'Google' ? <Spinner size="small" className="size-3.5" /> : null}
               Google
             </button>
             <button
-              onClick={() => router.push('/workspace')}
-              className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-theme-secondary"
+              onClick={() => { setPending('GitHub'); navigate('/workspace'); }}
+              disabled={pending !== null}
+              aria-busy={pending === 'GitHub' || undefined}
+              className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-theme-secondary flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-progress"
             >
+              {pending === 'GitHub' ? <Spinner size="small" className="size-3.5" /> : null}
               GitHub
             </button>
           </div>
 
           <div className="text-center text-xs text-theme-muted pt-2">
             New to Ztred?{' '}
-            <Link href="/auth/register" className="text-purple-400 font-semibold hover:underline">
+            <NavLink href="/auth/register" className="text-purple-400 font-semibold hover:underline">
               Create an account
-            </Link>
+            </NavLink>
           </div>
         </div>
       </div>

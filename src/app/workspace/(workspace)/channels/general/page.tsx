@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 import { usePathname } from "next/navigation";
 import {
   BarChart2,
@@ -148,20 +148,20 @@ export default function GeneralChannelPage() {
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-theme-primary font-sans text-theme-primary selection:bg-purple-500 selection:text-white">
+    <div className="flex h-dvh w-full overflow-hidden bg-theme-primary font-sans text-theme-primary selection:bg-purple-500 selection:text-white">
       <aside
         className="hidden w-[72px] shrink-0 flex-col items-center justify-between border-r border-theme bg-theme-sidebar px-3 py-4 md:flex"
         aria-label="Main navigation"
       >
         <div className="flex flex-col items-center gap-4">
-          <Link
+          <NavLink
             href="/workspace/control"
             aria-label="Workspace control"
             className="flex h-11 w-11 items-center justify-center rounded-xl bg-theme-brand shadow-[0_10px_22px_rgba(95,61,255,0.35)]"
             title="Workspace control"
           >
             <ZtredLogo className="h-11 w-11" title="Ztred" />
-          </Link>
+          </NavLink>
 
           <button
             type="button"
@@ -178,7 +178,7 @@ export default function GeneralChannelPage() {
               const isActive = pathname === item.href;
 
               return (
-                <Link
+                <NavLink
                   key={item.href}
                   href={item.href}
                   aria-label={item.label}
@@ -191,7 +191,7 @@ export default function GeneralChannelPage() {
                   }`}
                 >
                   <Icon className="h-5 w-5" aria-hidden="true" />
-                </Link>
+                </NavLink>
               );
             })}
           </nav>
@@ -214,7 +214,7 @@ export default function GeneralChannelPage() {
             )}
           </button>
 
-          <Link
+          <NavLink
             href="/settings/profile"
             className="relative block h-11 w-11 rounded-full"
           aria-label="Jordan Lee profile"
@@ -229,7 +229,7 @@ export default function GeneralChannelPage() {
               className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 bg-theme-success"
               style={{ borderColor: "var(--sidebar-bg)" }}
             />
-          </Link>
+          </NavLink>
         </div>
       </aside>
 

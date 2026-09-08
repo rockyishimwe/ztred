@@ -492,7 +492,7 @@ function NewTaskModal({
           <h2 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>
             Create new task
           </h2>
-          <button
+          <button aria-label="Close" title="Close"
             onClick={onClose}
             className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
             style={{ color: "var(--text-muted)" }}
@@ -624,7 +624,7 @@ function FilterTasksModal({
           <h2 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>
             Filter tasks
           </h2>
-          <button
+          <button aria-label="Close" title="Close"
             onClick={onClose}
             className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
             style={{ color: "var(--text-muted)" }}

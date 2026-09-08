@@ -2,7 +2,7 @@
 
 export default function SAMLPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-ztred-primary-dark to-ztred-primary-light p-8">
+    <div className="min-h-dvh flex flex-col items-center justify-center bg-gradient-to-br from-ztred-primary-dark to-ztred-primary-light p-8">
       <div className="w-full max-w-md space-y-6">
         <h1 className="text-3xl font-bold text-center text-white">
           Sign in with Company SSO

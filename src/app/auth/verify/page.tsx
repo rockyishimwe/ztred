@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { NavLink } from "@/components/ui/NavLink";
+import { useNavigation } from '@/components/navigation/NavigationProvider';
+import { Spinner } from '@/components/ui/spinner';
 import { Mail, RefreshCw, ArrowRight, Check } from 'lucide-react';
 import { ZtredLogo } from "@/components/ui/ZtredLogo";
 
 export default function VerifyPage() {
-  const router = useRouter();
+  const { navigate } = useNavigation();
+  const [verifying, setVerifying] = useState(false);
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -32,11 +34,12 @@ export default function VerifyPage() {
 
   const handleVerify = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push('/workspace');
+    setVerifying(true);
+    navigate('/workspace');
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
+    <div className="min-h-dvh bg-[#0b0f19] text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
       {/* Left Column - Form */}
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-12 max-w-xl mx-auto lg:mx-0 w-full">
         <div className="space-y-8">
@@ -48,12 +51,12 @@ export default function VerifyPage() {
                 Ztred
               </span>
             </div>
-            <Link
+            <NavLink
               href="/auth/register"
               className="text-xs font-semibold text-purple-400 hover:underline flex items-center"
             >
               ← Back to sign up
-            </Link>
+            </NavLink>
           </div>
 
           <div className="space-y-3">
@@ -87,10 +90,16 @@ export default function VerifyPage() {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-theme-primary font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group"
+              disabled={verifying}
+              aria-busy={verifying || undefined}
+              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-theme-primary font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group disabled:opacity-70 disabled:cursor-progress"
             >
-              <span>Verify email</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span>{verifying ? 'Verifying…' : 'Verify email'}</span>
+              {verifying ? (
+                <Spinner size="small" className="size-4" />
+              ) : (
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              )}
             </button>
           </form>
 

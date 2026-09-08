@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
+import { Spinner } from "@/components/ui/spinner";
 import { usePathname } from "next/navigation";
 import {
   Settings,
@@ -64,7 +65,7 @@ export default function SettingsLayout({
               const Icon = item.icon;
               const isActive = pathname === item.href;
               return (
-                <Link
+                <NavLink
                   key={item.href}
                   href={item.href}
                   className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all"
@@ -73,9 +74,17 @@ export default function SettingsLayout({
                     color: isActive ? "var(--on-primary)" : "var(--text-secondary)",
                   }}
                 >
-                  <Icon className="w-4 h-4" />
-                  {item.label}
-                </Link>
+                  {(pending) => (
+                    <>
+                      {pending ? (
+                        <Spinner size="small" className="size-4" />
+                      ) : (
+                        <Icon className="w-4 h-4" />
+                      )}
+                      {item.label}
+                    </>
+                  )}
+                </NavLink>
               );
             })}
           </nav>

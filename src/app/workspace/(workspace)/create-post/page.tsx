@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { NavLink } from "@/components/ui/NavLink";
+import { useNavigation } from '@/components/navigation/NavigationProvider';
+import { Spinner } from '@/components/ui/spinner';
 import {
   ArrowLeft,
   Image as ImageIcon,
@@ -15,14 +16,16 @@ import {
 const AUDIENCE_OPTIONS = ['Everyone', 'Team only', 'Just me'] as const;
 
 export default function CreatePostPage() {
-  const router = useRouter();
+  const { navigate } = useNavigation();
+  const [posting, setPosting] = useState(false);
   const [content, setContent] = useState('');
   const [audience, setAudience] = useState<string>('Everyone');
 
   const handlePost = () => {
-    if (!content.trim()) return;
+    if (!content.trim() || posting) return;
     // TODO: submit post to backend
-    router.push('/workspace');
+    setPosting(true);
+    navigate('/workspace');
   };
 
   return (
@@ -31,12 +34,12 @@ export default function CreatePostPage() {
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="flex items-center gap-3 mb-6">
-            <Link
+            <NavLink
               href="/workspace"
               className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
-            </Link>
+            </NavLink>
             <h1 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>Create Post</h1>
           </div>
 
@@ -75,33 +78,35 @@ export default function CreatePostPage() {
             {/* Bottom Toolbar */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1">
-                <button className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button aria-label="Add image" title="Add image" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <ImageIcon className="w-5 h-5" />
                 </button>
-                <button className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button aria-label="Add video" title="Add video" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <Video className="w-5 h-5" />
                 </button>
-                <button className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button aria-label="Add emoji" title="Add emoji" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <Smile className="w-5 h-5" />
                 </button>
-                <button className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button aria-label="Tag a channel" title="Tag a channel" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <Hash className="w-5 h-5" />
                 </button>
-                <button className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button aria-label="Add location" title="Add location" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <MapPin className="w-5 h-5" />
                 </button>
               </div>
 
               <button
                 onClick={handlePost}
-                disabled={!content.trim()}
-                className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${
+                disabled={!content.trim() || posting}
+                aria-busy={posting || undefined}
+                className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${
                   content.trim()
                     ? 'bg-theme-brand hover:bg-theme-brand-hover text-white shadow-lg shadow-purple-600/25'
                     : 'cursor-not-allowed'
-                }`}
+                } ${posting ? 'opacity-70 cursor-progress' : ''}`}
               >
-                Post
+                {posting ? <Spinner size="small" className="size-4" /> : null}
+                {posting ? 'Posting…' : 'Post'}
               </button>
             </div>
           </div>

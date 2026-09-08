@@ -25,7 +25,7 @@ export function LoadingScreen({
       role="status"
       aria-live="polite"
       className={`flex flex-1 flex-col items-center justify-center gap-3 ${
-        variant === "full" ? "min-h-screen w-full" : "min-h-[240px] w-full"
+        variant === "full" ? "min-h-dvh w-full" : "min-h-[240px] w-full"
       }`}
       style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-muted)" }}
     >

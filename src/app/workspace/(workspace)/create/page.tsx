@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigation } from '@/components/navigation/NavigationProvider';
 import {
   ArrowRight, ArrowLeft, Check,
   Plus, X, Users, Link2
@@ -24,7 +24,7 @@ interface Invitee {
 }
 
 export default function CreateWorkspacePage() {
-  const router = useRouter();
+  const { navigate } = useNavigation();
   const [step, setStep] = useState(1);
   const [workspaceName, setWorkspaceName] = useState('');
   const [workspaceDescription, setWorkspaceDescription] = useState('');
@@ -54,7 +54,7 @@ export default function CreateWorkspacePage() {
     params.set('name', workspaceName || 'Untitled');
     params.set('invites', String(invitees.length));
     setTimeout(() => {
-      router.push(`/workspace/finishing?${params.toString()}`);
+      navigate(`/workspace/finishing?${params.toString()}`);
     }, 1200);
   };
 
@@ -77,7 +77,7 @@ export default function CreateWorkspacePage() {
         <div className="flex items-center justify-center gap-0 mb-10">
           {/* Back arrow */}
           {step > 1 && (
-            <button
+            <button aria-label="Go back" title="Go back"
               onClick={handleBack}
               className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors mr-3"
             >
@@ -236,7 +236,7 @@ export default function CreateWorkspacePage() {
                   placeholder="name@company.com"
                   className="flex-1 bg-theme-card border border-theme rounded-xl px-4 py-3 text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-sm transition-all"
                 />
-                <button
+                <button aria-label="Add invitee" title="Add invitee"
                   onClick={addInvitee}
                   className="w-11 h-11 rounded-xl bg-purple-600 hover:bg-purple-700 flex items-center justify-center text-white shadow-lg shadow-purple-600/25 transition-all shrink-0"
                 >

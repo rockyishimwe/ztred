@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Link from 'next/link';
+import { NavLink } from "@/components/ui/NavLink";
 import {
   ShieldAlert,
   Server,
@@ -35,13 +35,13 @@ export default function AdminDashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-theme-primary text-theme-primary flex flex-col font-sans">
+    <div className="min-h-dvh bg-theme-primary text-theme-primary flex flex-col font-sans">
       {/* Admin Top Header */}
       <header className="h-16 border-b border-theme px-6 flex items-center justify-between bg-theme-card">
         <div className="flex items-center gap-4">
-          <Link href="/" className="p-2 rounded-lg hover:bg-theme-secondary text-theme-muted hover:text-theme-primary transition-colors">
+          <NavLink href="/" className="p-2 rounded-lg hover:bg-theme-secondary text-theme-muted hover:text-theme-primary transition-colors">
             <ArrowLeft className="w-5 h-5" />
-          </Link>
+          </NavLink>
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded bg-purple-600 flex items-center justify-center font-bold text-sm">
               Z
@@ -61,12 +61,12 @@ export default function AdminDashboardPage() {
           >
             {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
-          <Link
+          <NavLink
             href="/workspace"
             className="text-xs bg-purple-600 hover:bg-purple-500 text-white font-semibold px-4 py-2 rounded-md transition-colors"
           >
             Open Workspace App
-          </Link>
+          </NavLink>
         </div>
       </header>
 
@@ -79,7 +79,7 @@ export default function AdminDashboardPage() {
               <span>STORAGE USED</span>
               <Database className="w-4 h-4 text-purple-400" />
             </div>
-            <div className="text-2xl font-bold text-theme-primary">24.8%</div>
+            <div className="text-2xl font-bold text-theme-primary tabular">24.8%</div>
             <span className="text-xs text-emerald-400 mt-1 block">+1.2% vs last week</span>
           </div>
 
@@ -88,7 +88,7 @@ export default function AdminDashboardPage() {
               <span>MEMORY LOAD</span>
               <Server className="w-4 h-4 text-indigo-400" />
             </div>
-            <div className="text-2xl font-bold text-theme-primary">62.1%</div>
+            <div className="text-2xl font-bold text-theme-primary tabular">62.1%</div>
             <span className="text-xs text-theme-muted mt-1 block">7.4 / 12.0 GB allocation</span>
           </div>
 
@@ -97,7 +97,7 @@ export default function AdminDashboardPage() {
               <span>UPTIME</span>
               <Activity className="w-4 h-4 text-emerald-400" />
             </div>
-            <div className="text-2xl font-bold text-emerald-400">99.99%</div>
+            <div className="text-2xl font-bold text-emerald-400 tabular">99.99%</div>
             <span className="text-xs text-theme-muted mt-1 block">Last incident: 42d ago</span>
           </div>
 
@@ -106,7 +106,7 @@ export default function AdminDashboardPage() {
               <span>ACTIVE ORGS</span>
               <Users className="w-4 h-4 text-sky-400" />
             </div>
-            <div className="text-2xl font-bold text-theme-primary">142</div>
+            <div className="text-2xl font-bold text-theme-primary tabular">142</div>
             <span className="text-xs text-sky-400 mt-1 block">2.055 total members</span>
           </div>
         </div>

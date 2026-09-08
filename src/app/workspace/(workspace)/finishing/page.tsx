@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Link from 'next/link';
+import { NavLink } from "@/components/ui/NavLink";
 import { useSearchParams } from 'next/navigation';
 import { Check, Rocket } from 'lucide-react';
 import { Suspense } from 'react';
@@ -77,12 +77,12 @@ function FinishingContent() {
         </p>
 
         {/* Go to workspace button */}
-        <Link
+        <NavLink
           href="/workspace"
           className="inline-block w-full max-w-xs bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm py-3 rounded-xl transition-colors"
         >
           Go to workspace
-        </Link>
+        </NavLink>
       </div>
     </div>
   );

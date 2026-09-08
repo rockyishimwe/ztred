@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 import { usePathname } from "next/navigation";
 import {
   Home,
@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { useUIStore } from "@/stores/uiStore";
 import { ZtredLogo } from "@/components/ui/ZtredLogo";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function WorkspaceLayout({
   children,
@@ -82,7 +83,7 @@ export default function WorkspaceLayout({
 
   return (
     <div
-      className="h-screen w-screen flex flex-col md:flex-row overflow-hidden font-sans selection:bg-purple-500 selection:text-white"
+      className="h-dvh w-full flex flex-col md:flex-row overflow-hidden font-sans selection:bg-purple-500 selection:text-white"
       style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
     >
       {/* Mobile Top Bar */}
@@ -91,9 +92,9 @@ export default function WorkspaceLayout({
         style={{ backgroundColor: "var(--bg-primary)", borderBottom: "1px solid var(--border-color)" }}
       >
         <div className="flex items-center gap-3">
-          <Link href="/workspace/control" aria-label="Workspace control">
+          <NavLink href="/workspace/control" aria-label="Workspace control">
             <ZtredLogo className="w-8 h-8" title="Ztred" />
-          </Link>
+          </NavLink>
           <span className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Ztred</span>
         </div>
         <div className="flex items-center gap-2">
@@ -126,7 +127,7 @@ export default function WorkspaceLayout({
             aria-hidden="true"
           />
           <div
-            className="fixed top-[52px] left-0 w-72 h-[calc(100vh-52px)] z-50 overflow-y-auto md:hidden"
+            className="fixed top-[52px] left-0 w-72 h-[calc(100dvh-52px)] z-50 overflow-y-auto md:hidden"
             style={{ backgroundColor: "var(--bg-card)", borderRight: "1px solid var(--border-color)" }}
           >
             <nav className="flex flex-col gap-1 p-3" aria-label="Mobile navigation">
@@ -134,7 +135,7 @@ export default function WorkspaceLayout({
                 const Icon = item.icon;
                 const isActive = pathname === item.href || (idx === 0 && pathname === "/workspace");
                 return (
-                  <Link
+                  <NavLink
                     key={idx}
                     href={item.href}
                     className="mobile-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all"
@@ -143,9 +144,20 @@ export default function WorkspaceLayout({
                       color: isActive ? "var(--on-primary)" : "var(--text-secondary)",
                     }}
                   >
-                    <Icon className="w-5 h-5 shrink-0" aria-hidden="true" />
-                    <span>{item.label}</span>
-                  </Link>
+                    {(pending) =>
+                      pending ? (
+                        <>
+                          <Spinner size="small" className="size-5 shrink-0" />
+                          <span>{item.label}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Icon className="w-5 h-5 shrink-0" aria-hidden="true" />
+                          <span>{item.label}</span>
+                        </>
+                      )
+                    }
+                  </NavLink>
                 );
               })}
             </nav>
@@ -165,14 +177,14 @@ export default function WorkspaceLayout({
       >
         <div className="flex flex-col items-center space-y-4">
           {/* Z Brand Logo */}
-          <Link
+          <NavLink
             href="/workspace/control"
             className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg transition-transform hover:scale-105"
             aria-label="Workspace control"
             title="Workspace control"
           >
             <ZtredLogo className="w-10 h-10" title="Ztred" />
-          </Link>
+          </NavLink>
 
           {/* Plus Add Button */}
           <button
@@ -196,7 +208,7 @@ export default function WorkspaceLayout({
               const Icon = item.icon;
               const isActive = pathname === item.href || (idx === 0 && pathname === "/workspace");
               return (
-                <Link
+                <NavLink
                   key={idx}
                   href={item.href}
                   title={item.label}
@@ -209,8 +221,14 @@ export default function WorkspaceLayout({
                     boxShadow: isActive ? "0 10px 15px -3px rgb(0 0 0 / 0.3)" : "none",
                   }}
                 >
-                  <Icon className="w-5 h-5" aria-hidden="true" />
-                </Link>
+                  {(pending) =>
+                    pending ? (
+                      <Spinner size="small" className="size-5" />
+                    ) : (
+                      <Icon className="w-5 h-5" aria-hidden="true" />
+                    )
+                  }
+                </NavLink>
               );
             })}
           </div>
@@ -236,7 +254,7 @@ export default function WorkspaceLayout({
             )}
           </button>
 
-          <Link href="/settings/profile" className="relative group cursor-pointer" aria-label="Jordan Lee's profile">
+          <NavLink href="/settings/profile" className="relative group cursor-pointer" aria-label="Jordan Lee's profile">
             <div
               className="w-10 h-10 rounded-full overflow-hidden"
               style={{ border: "1px solid var(--border-color)" }}
@@ -251,7 +269,7 @@ export default function WorkspaceLayout({
               className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-500 border-2"
               style={{ borderColor: "var(--bg-primary)" }}
             />
-          </Link>
+          </NavLink>
         </div>
       </aside>
 
@@ -274,7 +292,7 @@ export default function WorkspaceLayout({
           const Icon = item.icon;
           const isActive = pathname === item.href;
           return (
-            <Link
+            <NavLink
               key={item.href}
               href={item.href}
               className="mobile-nav-item flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all"
@@ -284,9 +302,17 @@ export default function WorkspaceLayout({
               }}
               aria-current={isActive ? "page" : undefined}
             >
-              <Icon className="w-5 h-5" aria-hidden="true" />
-              <span className="text-[10px] font-medium">{item.label}</span>
-            </Link>
+              {(pending) => (
+                <>
+                  {pending ? (
+                    <Spinner size="small" className="size-5" />
+                  ) : (
+                    <Icon className="w-5 h-5" aria-hidden="true" />
+                  )}
+                  <span className="text-[10px] font-medium">{item.label}</span>
+                </>
+              )}
+            </NavLink>
           );
         })}
       </nav>

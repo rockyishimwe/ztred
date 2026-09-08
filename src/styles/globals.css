@@ -1294,3 +1294,102 @@ html {
   outline: none;
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 35%, transparent);
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   Navigation pending state (NavigationProvider / NavLink)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Top-of-viewport progress bar, shown while a route push is in flight. */
+.nav-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 100;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.nav-progress-bar {
+  width: 40%;
+  height: 100%;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--primary) 20%, transparent),
+    var(--primary)
+  );
+  animation: navProgressSlide 1.1s ease-in-out infinite;
+}
+
+@keyframes navProgressSlide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+/* Any NavLink whose destination is still loading. Dimming the label reads as
+   "received, working on it" without shifting layout. */
+a[data-pending="true"] {
+  opacity: 0.65;
+  cursor: progress;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-progress-bar {
+    width: 100%;
+    animation: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Accessibility repairs (ui-ux-pro-max: focus-states, focus-appearance)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Tailwind's `.focus\:outline-none:focus` is (0,2,0) and therefore beats both
+   `:focus-visible` (0,1,0) and `button:focus-visible` (0,1,1) above — so every
+   control carrying `focus:outline-none` *without* a replacement ring had no
+   visible keyboard focus at all.
+
+   This selector is (0,3,0) — class, pseudo-class, and the attribute selector
+   inside `:not()`, which contributes its own specificity — so it outranks the
+   utility wherever Tailwind emits the utilities layer. Order is not
+   load-bearing; the `:not([class*="ring"])` is, since it skips controls that
+   already declare a ring so the two indicators never stack. */
+.focus\:outline-none:focus-visible:not([class*="ring"]) {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* The main landmark is focused programmatically after each route change (see
+   NavigationProvider). It is a region, not a control, so it needs no visible
+   indicator — and a 2px ring around the whole viewport would read as a bug.
+   Controls inside it keep their own focus styles. */
+#main-content:focus,
+#main-content:focus-visible {
+  outline: none;
+}
+
+/* number-tabular: proportional digits change width as values update, so
+   counters, metrics, timers and numeric table columns visibly jitter. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* tap-delay: mobile browsers hold a ~300ms window on every tap waiting to see
+   whether it becomes a double-tap-to-zoom. Opting controls out removes that
+   delay without touching page-level pinch zoom, which must stay available. */
+button,
+a,
+label,
+summary,
+select,
+[role="button"],
+[role="tab"],
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"] {
+  touch-action: manipulation;
+}

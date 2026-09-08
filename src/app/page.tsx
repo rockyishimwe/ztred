@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigation } from "@/components/navigation/NavigationProvider";
+import { Spinner } from "@/components/ui/spinner";
 import {
   ArrowRight,
   Mail,
@@ -18,7 +19,8 @@ import { useUIStore } from "@/stores/uiStore";
 import { ZtredLogo } from "@/components/ui/ZtredLogo";
 
 export default function LandingPage() {
-  const router = useRouter();
+  const { navigate } = useNavigation();
+  const [entering, setEntering] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [activeForm, setActiveForm] = useState<"signin" | "signup" | "forgot">("signin");
@@ -26,7 +28,8 @@ export default function LandingPage() {
   const toggleTheme = useUIStore((s) => s.toggleTheme);
 
   const handleGetStarted = () => {
-    router.push("/workspace");
+    setEntering(true);
+    navigate("/workspace");
   };
 
   const switchForm = (to: "signin" | "signup" | "forgot") => {
@@ -39,7 +42,7 @@ export default function LandingPage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col font-sans"
+      className="min-h-dvh flex flex-col font-sans"
       style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
     >
       {/* Top Header */}
@@ -176,10 +179,12 @@ export default function LandingPage() {
                     {/* Sign In Button */}
                     <button
                       onClick={handleGetStarted}
-                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2"
+                      disabled={entering}
+                      aria-busy={entering || undefined}
+                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-progress"
                     >
-                      <span>Sign in</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <span>{entering ? "Signing in…" : "Sign in"}</span>
+                      {entering ? <Spinner size="small" className="size-4" /> : <ArrowRight className="w-4 h-4" />}
                     </button>
 
                     {/* Divider */}
@@ -300,10 +305,12 @@ export default function LandingPage() {
                     {/* Sign Up Button */}
                     <button
                       onClick={handleGetStarted}
-                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2"
+                      disabled={entering}
+                      aria-busy={entering || undefined}
+                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-progress"
                     >
-                      <span>Create account</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <span>{entering ? "Creating account…" : "Create account"}</span>
+                      {entering ? <Spinner size="small" className="size-4" /> : <ArrowRight className="w-4 h-4" />}
                     </button>
 
                     {/* Divider */}
@@ -379,10 +386,12 @@ export default function LandingPage() {
                     {/* Send Reset Link Button */}
                     <button
                       onClick={handleGetStarted}
-                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2"
+                      disabled={entering}
+                      aria-busy={entering || undefined}
+                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-progress"
                     >
-                      <Send className="w-4 h-4" />
-                      <span>Send reset link</span>
+                      {entering ? <Spinner size="small" className="size-4" /> : <Send className="w-4 h-4" />}
+                      <span>{entering ? "Sending…" : "Send reset link"}</span>
                     </button>
 
                     {/* Back to sign in */}

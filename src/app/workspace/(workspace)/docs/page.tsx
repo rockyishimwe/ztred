@@ -10,7 +10,7 @@ import {
   Clock,
   X,
 } from "lucide-react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 
 // ─── Data ───────────────────────────────────────────────────────
 
@@ -117,7 +117,7 @@ function CreateDocModal({
         {/* Header */}
         <div className="flex items-center justify-between mb-1">
           <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Create a document</h2>
-          <button
+          <button aria-label="Close" title="Close"
             onClick={onClose}
             className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
           >
@@ -279,12 +279,12 @@ export default function DocsListingPage() {
                     <FileText className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
                   </div>
                   <div>
-                    <Link
+                    <NavLink
                       href={`/workspace/docs/${doc.id}`}
                       className="text-sm font-bold hover:text-purple-400 transition-colors"
                     >
                       {doc.title}
-                    </Link>
+                    </NavLink>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <Clock className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
                       <span className="text-[11px]" style={{ color: 'var(--text-muted)' }}>
@@ -304,7 +304,7 @@ export default function DocsListingPage() {
                       }`}
                     />
                   </button>
-                  <button className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors">
+                  <button aria-label="Document options" title="Document options" className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors">
                     <MoreHorizontal className="w-4 h-4" />
                   </button>
                 </div>

@@ -23,7 +23,7 @@ export const ScheduledMessagePicker: React.FC<ScheduledMessagePickerProps> = ({
         <h3 className="text-sm font-bold text-theme-primary">
           Schedule message
         </h3>
-        <button
+        <button aria-label="Close" title="Close"
           onClick={onClose}
           className="p-1 text-theme-muted hover:text-theme-primary hover:bg-theme-secondary rounded-lg transition-colors"
         >

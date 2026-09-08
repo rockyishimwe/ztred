@@ -104,7 +104,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
   return (
     <div className="flex items-center space-x-2">
       {!isRecording && (
-        <button
+        <button aria-label="Start recording" title="Start recording"
           onClick={startRecording}
           className="p-2 rounded hover:bg-theme-secondary"
         >
@@ -124,7 +124,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
                 <Pause className="h-4 w-4 text-theme-secondary hover:text-theme-primary"/>
               )}
             </button>
-            <button
+            <button aria-label="Stop recording" title="Stop recording"
               onClick={stopRecording}
               className="p-2 rounded hover:bg-theme-secondary"
             >

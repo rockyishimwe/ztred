@@ -144,7 +144,7 @@ function AddEventModal({
         {/* Header */}
         <div className="flex items-center justify-between mb-1">
           <h2 className="text-lg font-bold text-theme-primary">Add event</h2>
-          <button
+          <button aria-label="Close" title="Close"
             onClick={onClose}
             className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors"
           >
@@ -343,13 +343,13 @@ export default function CalendarPage() {
             {monthName} {currentYear}
           </h2>
           <div className="flex items-center gap-1">
-            <button
+            <button aria-label="Previous month" title="Previous month"
               onClick={prevMonth}
               className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Next month" title="Next month"
               onClick={nextMonth}
               className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors"
             >

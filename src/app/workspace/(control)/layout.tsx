@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 import { usePathname } from "next/navigation";
 import {
   Home,
@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { useUIStore } from "@/stores/uiStore";
 import { ZtredLogo } from "@/components/ui/ZtredLogo";
+import { Spinner } from "@/components/ui/spinner";
 
 const mainNavItems = [
   { icon: Home, href: "/workspace", label: "Home" },
@@ -88,7 +89,7 @@ export default function WorkspaceControlLayout({
 
   return (
     <div
-      className="h-screen w-screen flex flex-col md:flex-row overflow-hidden font-sans selection:bg-purple-500 selection:text-white"
+      className="h-dvh w-full flex flex-col md:flex-row overflow-hidden font-sans selection:bg-purple-500 selection:text-white"
       style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
     >
       {/* Mobile Top Bar */}
@@ -97,12 +98,12 @@ export default function WorkspaceControlLayout({
         style={{ backgroundColor: "var(--bg-primary)", borderBottom: "1px solid var(--border-color)" }}
       >
         <div className="flex items-center gap-3">
-          <Link href="/workspace" className="w-8 h-8 rounded-lg flex items-center justify-center" aria-label="Back to workspace">
+          <NavLink href="/workspace" className="w-8 h-8 rounded-lg flex items-center justify-center" aria-label="Back to workspace">
             <ChevronLeft className="w-5 h-5" style={{ color: "var(--text-muted)" }} />
-          </Link>
-          <Link href="/workspace/control" aria-label="Workspace control">
+          </NavLink>
+          <NavLink href="/workspace/control" aria-label="Workspace control">
             <ZtredLogo className="w-8 h-8" title="Ztred" />
-          </Link>
+          </NavLink>
           <span className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Control</span>
         </div>
         <div className="flex items-center gap-2">
@@ -135,7 +136,7 @@ export default function WorkspaceControlLayout({
             aria-hidden="true"
           />
           <div
-            className="fixed top-[52px] left-0 w-72 h-[calc(100vh-52px)] z-50 overflow-y-auto md:hidden flex flex-col"
+            className="fixed top-[52px] left-0 w-72 h-[calc(100dvh-52px)] z-50 overflow-y-auto md:hidden flex flex-col"
             style={{ backgroundColor: "var(--bg-card)", borderRight: "1px solid var(--border-color)" }}
           >
             {/* Workspace Info */}
@@ -157,7 +158,7 @@ export default function WorkspaceControlLayout({
                     : pathname.startsWith(item.href);
 
                 return (
-                  <Link
+                  <NavLink
                     key={item.href}
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
@@ -167,9 +168,20 @@ export default function WorkspaceControlLayout({
                       color: isActive ? "var(--on-primary)" : "var(--text-secondary)",
                     }}
                   >
-                    <Icon className="w-5 h-5 shrink-0" aria-hidden="true" />
-                    <span>{item.label}</span>
-                  </Link>
+                    {(pending) =>
+                      pending ? (
+                        <>
+                          <Spinner size="small" className="size-5 shrink-0" />
+                          <span>{item.label}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Icon className="w-5 h-5 shrink-0" aria-hidden="true" />
+                          <span>{item.label}</span>
+                        </>
+                      )
+                    }
+                  </NavLink>
                 );
               })}
             </nav>
@@ -190,14 +202,14 @@ export default function WorkspaceControlLayout({
           role="navigation"
         >
           <div className="flex flex-col items-center space-y-4">
-            <Link
+            <NavLink
               href="/workspace/control"
               className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg transition-transform hover:scale-105"
               aria-label="Workspace control"
               title="Workspace control"
             >
               <ZtredLogo className="w-10 h-10" title="Ztred" />
-            </Link>
+            </NavLink>
 
             <button
               className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
@@ -219,7 +231,7 @@ export default function WorkspaceControlLayout({
                 const Icon = item.icon;
                 const isActive = pathname === item.href || (idx === 0 && pathname === "/workspace");
                 return (
-                  <Link
+                  <NavLink
                     key={idx}
                     href={item.href}
                     title={item.label}
@@ -232,15 +244,21 @@ export default function WorkspaceControlLayout({
                       boxShadow: isActive ? "0 10px 15px -3px rgb(0 0 0 / 0.3)" : "none",
                     }}
                   >
-                    <Icon className="w-5 h-5" aria-hidden="true" />
-                  </Link>
+                    {(pending) =>
+                      pending ? (
+                        <Spinner size="small" className="size-5" />
+                      ) : (
+                        <Icon className="w-5 h-5" aria-hidden="true" />
+                      )
+                    }
+                  </NavLink>
                 );
               })}
             </div>
           </div>
 
           <div className="flex flex-col items-center space-y-3">
-            <Link href={profileHref} className="relative group cursor-pointer" aria-label="Jordan Lee's profile">
+            <NavLink href={profileHref} className="relative group cursor-pointer" aria-label="Jordan Lee's profile">
               <div className="w-10 h-10 rounded-full overflow-hidden" style={{ border: "1px solid var(--border-color)" }}>
                 <img
                   src={profileImage}
@@ -252,7 +270,7 @@ export default function WorkspaceControlLayout({
                 className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-500 border-2"
                 style={{ borderColor: "var(--bg-primary)" }}
               />
-            </Link>
+            </NavLink>
           </div>
         </aside>
 
@@ -285,7 +303,7 @@ export default function WorkspaceControlLayout({
                     : pathname.startsWith(item.href);
 
                 return (
-                  <Link
+                  <NavLink
                     key={item.href}
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
@@ -295,9 +313,20 @@ export default function WorkspaceControlLayout({
                       color: isActive ? "var(--on-primary)" : "var(--text-secondary)",
                     }}
                   >
-                    <Icon className="w-5 h-5 shrink-0" aria-hidden="true" />
-                    <span>{item.label}</span>
-                  </Link>
+                    {(pending) =>
+                      pending ? (
+                        <>
+                          <Spinner size="small" className="size-5 shrink-0" />
+                          <span>{item.label}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Icon className="w-5 h-5 shrink-0" aria-hidden="true" />
+                          <span>{item.label}</span>
+                        </>
+                      )
+                    }
+                  </NavLink>
                 );
               })}
             </nav>
@@ -305,7 +334,7 @@ export default function WorkspaceControlLayout({
 
           <div className="flex flex-col px-5 pb-5">
             <div className="mx-2 mb-3" style={{ borderBottom: "1px solid var(--border-color)" }} />
-            <Link
+            <NavLink
               href={profileHref}
               className="flex items-center gap-3 rounded-lg p-2 transition-colors"
               style={{ backgroundColor: "var(--bg-secondary)" }}
@@ -332,7 +361,7 @@ export default function WorkspaceControlLayout({
                   Workspace owner
                 </span>
               </div>
-            </Link>
+            </NavLink>
           </div>
         </aside>
 

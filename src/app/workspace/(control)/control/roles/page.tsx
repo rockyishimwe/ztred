@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 import {
   ChevronRight,
   Plus,
@@ -71,13 +71,13 @@ export default function RolesPage() {
   // contents were never built. Reintroduce tabs when they exist.
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
+    <div className="min-h-dvh" style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-sm mb-6" aria-label="Breadcrumb">
-          <Link href="/workspace/control" className="font-medium transition-colors" style={{ color: "var(--primary)" }}>
+          <NavLink href="/workspace/control" className="font-medium transition-colors" style={{ color: "var(--primary)" }}>
             Workspace control
-          </Link>
+          </NavLink>
           <ChevronRight className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} aria-hidden="true" />
           <span style={{ color: "var(--text-muted)" }}>Roles & permissions</span>
         </nav>

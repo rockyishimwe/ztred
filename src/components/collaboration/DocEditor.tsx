@@ -37,13 +37,13 @@ export const DocEditor: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center space-x-2">
-          <button className="p-2 rounded hover:bg-theme-secondary">
+          <button aria-label="Comments" title="Comments" className="p-2 rounded hover:bg-theme-secondary">
             <MessageSquareMore className="h-4 w-4 text-theme-secondary hover:text-theme-primary"/>
           </button>
-          <button className="p-2 rounded hover:bg-theme-secondary">
+          <button aria-label="Copy document" title="Copy document" className="p-2 rounded hover:bg-theme-secondary">
             <ClipboardList className="h-4 w-4 text-theme-secondary hover:text-theme-primary"/>
           </button>
-          <button className="p-2 rounded hover:bg-theme-secondary">
+          <button aria-label="Favorite document" title="Favorite document" className="p-2 rounded hover:bg-theme-secondary">
             <Heart className="h-4 w-4 text-theme-secondary hover:text-theme-primary"/>
           </button>
         </div>

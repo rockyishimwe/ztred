@@ -148,18 +148,40 @@ export function accentLogoSvg(hex: string): string {
   ].join('');
 }
 
-/** Swap the tab icon to a freshly tinted mark. */
+/**
+ * Swap the tab icon to a freshly tinted mark.
+ *
+ * The `<link rel="icon">` tags in <head> are rendered by Next from the
+ * `metadata.icons` export, which means React owns those DOM nodes as hoistables
+ * and holds direct references to them. Removing one leaves React with a
+ * detached node, and the next client-side route change crashes the whole tree
+ * in `unmountHoistable` with "Cannot read properties of null (reading
+ * 'removeChild')" — every navigation blanked the page.
+ *
+ * So retint in place instead: mutate `href` on the tags that are already there
+ * (React never re-renders them, so the new value sticks) and only create a tag
+ * when the rel is missing entirely, tagging the ones we own so repeat calls
+ * reuse them rather than piling up.
+ */
 export function applyFavicon(hex: string): void {
   if (typeof document === 'undefined') return;
   const href = `data:image/svg+xml,${encodeURIComponent(accentLogoSvg(hex))}`;
   for (const rel of ['icon', 'apple-touch-icon']) {
-    document.head
-      .querySelectorAll<HTMLLinkElement>(`link[rel="${rel}"]`)
-      .forEach((link) => link.remove());
+    const existing = document.head.querySelectorAll<HTMLLinkElement>(
+      `link[rel="${rel}"]`
+    );
+    if (existing.length > 0) {
+      existing.forEach((link) => {
+        link.type = 'image/svg+xml';
+        link.href = href;
+      });
+      continue;
+    }
     const link = document.createElement('link');
     link.rel = rel;
     link.type = 'image/svg+xml';
     link.href = href;
+    link.dataset.ztredFavicon = 'true';
     document.head.appendChild(link);
   }
 }

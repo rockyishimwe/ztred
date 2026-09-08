@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 import { ChevronLeft, Camera, User } from "lucide-react";
 
 export default function ProfileSettingsPage() {
@@ -40,14 +40,14 @@ export default function ProfileSettingsPage() {
   return (
     <div className="max-w-2xl">
       {/* Back path */}
-      <Link
+      <NavLink
         href="/workspace/control/settings"
         className="inline-flex items-center gap-1.5 text-sm font-medium mb-6 transition-colors"
         style={{ color: "var(--text-secondary)" }}
       >
         <ChevronLeft className="w-4 h-4" />
         Back to workspace settings
-      </Link>
+      </NavLink>
 
       {/* Profile header */}
       <div className="flex items-center gap-5 mb-8">
@@ -172,7 +172,7 @@ export default function ProfileSettingsPage() {
         </div>
 
         <div className="flex items-center justify-end gap-3 mt-6 pt-5" style={{ borderTop: "1px solid var(--border-color)" }}>
-          <Link
+          <NavLink
             href="/workspace/control/settings"
             className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all"
             style={{
@@ -182,7 +182,7 @@ export default function ProfileSettingsPage() {
             }}
           >
             Cancel
-          </Link>
+          </NavLink>
           <button
             onClick={handleSave}
             className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"

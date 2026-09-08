@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 import { Search, MessageSquare, UserPlus } from "lucide-react";
 
 interface Member {
@@ -179,13 +179,13 @@ export default function PeoplePage() {
 
               {/* Actions */}
               <div className="flex items-center gap-2 mt-4 w-full">
-                <Link
+                <NavLink
                   href={`/workspace/dm/${member.name.toLowerCase().replace(/\s+/g, "_")}`}
                   className="flex-1 flex items-center justify-center gap-1.5 bg-purple-600/10 hover:bg-purple-600/20 text-purple-500 text-xs font-medium py-2 rounded-xl transition-colors"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
                   Chat
-                </Link>
+                </NavLink>
                 <button
                   className="flex-1 flex items-center justify-center gap-1.5 hover:opacity-80 text-xs font-medium py-2 rounded-xl transition-colors"
                   style={{

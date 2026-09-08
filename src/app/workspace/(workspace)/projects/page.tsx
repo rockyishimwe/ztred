@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 import { addDays, format } from "date-fns";
 
 // Relative deadlines keep the demo data evergreen.
@@ -295,7 +295,7 @@ export default function ProjectsPage() {
             const statusColor = STATUS_COLORS[project.status];
 
             return (
-              <Link
+              <NavLink
                 href={`/workspace/projects/${project.id}`}
                 key={project.id}
                 className="block rounded-2xl p-5 transition-all hover:scale-[1.01] cursor-pointer"
@@ -312,7 +312,7 @@ export default function ProjectsPage() {
                   >
                     {project.name}
                   </h3>
-                  <button
+                  <button aria-label="Project options" title="Project options"
                     className="p-1 rounded-lg transition-colors"
                     style={{ color: "var(--text-muted)" }}
                   >
@@ -429,7 +429,7 @@ export default function ProjectsPage() {
                     </div>
                   </div>
                 </div>
-              </Link>
+              </NavLink>
             );
           })}
         </div>

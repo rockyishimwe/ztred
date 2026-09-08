@@ -153,7 +153,7 @@ function CreateTaskModal({
         {/* Header */}
         <div className="flex items-center justify-between mb-1">
           <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Create task</h2>
-          <button
+          <button aria-label="Close" title="Close"
             onClick={onClose}
             className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
           >
@@ -277,7 +277,7 @@ function FilterTasksModal({
         {/* Header */}
         <div className="flex items-center justify-between mb-1">
           <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Filter tasks</h2>
-          <button
+          <button aria-label="Close" title="Close"
             onClick={onClose}
             className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
           >
@@ -502,7 +502,7 @@ export default function TaskBoardPage() {
                       {getFilteredTasks(col.id).length}
                     </span>
                   </div>
-                  <button className="w-7 h-7 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors">
+                  <button aria-label="Add task to this column" title="Add task to this column" className="w-7 h-7 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors">
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>

@@ -107,7 +107,7 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
         {/* Header */}
         <div className="flex items-center justify-between mb-1">
           <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Create meeting</h2>
-          <button
+          <button aria-label="Close" title="Close"
             onClick={onClose}
             className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
           >
@@ -312,13 +312,13 @@ export default function MeetingsPage() {
                 <VideoOff className="w-5 h-5" />
               )}
             </button>
-            <button className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
+            <button aria-label="Share screen" title="Share screen" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
               <MonitorUp className="w-5 h-5" />
             </button>
-            <button className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
+            <button aria-label="Show participants" title="Show participants" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
               <Users className="w-5 h-5" />
             </button>
-            <button className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
+            <button aria-label="Open meeting chat" title="Open meeting chat" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
               <MessageSquare className="w-5 h-5" />
             </button>
             <button className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-lg shadow-red-500/25 transition-all ml-2">

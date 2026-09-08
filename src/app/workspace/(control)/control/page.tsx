@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 import { addDays, format } from "date-fns";
 
 // Relative invite dates keep the demo list evergreen.
@@ -147,7 +147,7 @@ export default function WorkspaceControlPage() {
 
   return (
     <div
-      className="min-h-screen"
+      className="min-h-dvh"
       style={{
         backgroundColor: "var(--bg-primary)",
         color: "var(--text-primary)",
@@ -159,13 +159,13 @@ export default function WorkspaceControlPage() {
           className="flex items-center gap-1.5 text-sm mb-6"
           aria-label="Breadcrumb"
         >
-          <Link
+          <NavLink
             href="/workspace/control"
             className="font-medium transition-colors"
             style={{ color: "var(--primary)" }}
           >
             Workspace control
-          </Link>
+          </NavLink>
           <ChevronRight
             className="w-3.5 h-3.5"
             style={{ color: "var(--text-muted)" }}
@@ -240,7 +240,7 @@ export default function WorkspaceControlPage() {
                   />
                 </div>
                 <div
-                  className="text-3xl font-extrabold tracking-tight"
+                  className="text-3xl font-extrabold tracking-tight tabular"
                   style={{ color: "var(--text-primary)" }}
                 >
                   {stat.value}
@@ -482,14 +482,14 @@ export default function WorkspaceControlPage() {
 
         {/* Continue to Workspace Button */}
         <div className="mt-8 flex justify-center">
-          <Link
+          <NavLink
             href="/workspace"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
             style={{ backgroundColor: "var(--primary)" }}
           >
             Continue to workspace
             <ChevronRight className="w-4 h-4" aria-hidden="true" />
-          </Link>
+          </NavLink>
         </div>
       </div>
     </div>

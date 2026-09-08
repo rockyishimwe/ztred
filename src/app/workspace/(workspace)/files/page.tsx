@@ -199,7 +199,7 @@ function UploadModal({
         {/* Header */}
         <div className="flex items-center justify-between mb-1">
           <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Upload files</h2>
-          <button
+          <button aria-label="Close" title="Close"
             onClick={onClose}
             className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
           >
@@ -384,7 +384,7 @@ export default function FilesPage() {
                     </p>
                   </div>
                 </div>
-                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-card transition-colors">
+                <button aria-label="Folder options" title="Folder options" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-card transition-colors">
                   <MoreHorizontal className="w-4 h-4" />
                 </button>
               </div>
@@ -411,7 +411,7 @@ export default function FilesPage() {
                   >
                     {file.icon}
                   </div>
-                  <button className="w-7 h-7 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-card transition-colors">
+                  <button aria-label="File options" title="File options" className="w-7 h-7 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-card transition-colors">
                     <MoreHorizontal className="w-4 h-4" />
                   </button>
                 </div>

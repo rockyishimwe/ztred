@@ -1,16 +1,18 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
+import React, { useState } from "react";
+import { NavLink } from "@/components/ui/NavLink";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function NotFound() {
   const router = useRouter();
+  const [goingBack, setGoingBack] = useState(false);
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center font-sans selection:bg-purple-500 selection:text-white"
+      className="min-h-dvh flex items-center justify-center font-sans selection:bg-purple-500 selection:text-white"
       style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
     >
       <div className="text-center max-w-lg px-8">
@@ -50,24 +52,33 @@ export default function NotFound() {
 
         <div className="flex items-center justify-center gap-3">
           <button
-            onClick={() => router.back()}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors"
+            onClick={() => {
+              setGoingBack(true);
+              router.back();
+            }}
+            disabled={goingBack}
+            aria-busy={goingBack || undefined}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors disabled:opacity-70 disabled:cursor-progress"
             style={{
               backgroundColor: "var(--bg-card)",
               border: "1px solid var(--border-color)",
               color: "var(--text-primary)",
             }}
           >
-            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-            Go back
+            {goingBack ? (
+              <Spinner size="small" className="size-4" />
+            ) : (
+              <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+            )}
+            {goingBack ? "Going back…" : "Go back"}
           </button>
-          <Link
+          <NavLink
             href="/workspace"
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors"
             style={{ backgroundColor: "var(--primary)" }}
           >
             Workspace home
-          </Link>
+          </NavLink>
         </div>
       </div>
     </div>

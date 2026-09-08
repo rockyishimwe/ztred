@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { Message } from '@/types/api';
-import { Users, MessageSquareMore, Trash2, Reply, ClipboardList } from 'lucide-react';
+import { Users, MessageSquareMore, Trash2, Reply, ClipboardList, FileText, Video, Paperclip } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 interface MessageBubbleProps {
@@ -45,8 +45,15 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                     />
                   )}
                   {!attachment.mimeType.startsWith('image/') && (
-                    <div className="flex h-full w-full items-center justify-center text-xs font-medium text-theme-muted">
-                      {attachment.mimeType.includes('pdf') ? '📄' : attachment.mimeType.includes('video') ? '🎥' : '📎'}
+                    <div className="flex h-full w-full items-center justify-center text-theme-muted">
+                      {/* Decorative: the file name beside it is the visible label. */}
+                      {attachment.mimeType.includes('pdf') ? (
+                        <FileText className="h-4 w-4" aria-hidden="true" />
+                      ) : attachment.mimeType.includes('video') ? (
+                        <Video className="h-4 w-4" aria-hidden="true" />
+                      ) : (
+                        <Paperclip className="h-4 w-4" aria-hidden="true" />
+                      )}
                     </div>
                   )}
                 </div>
@@ -59,13 +66,13 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
           </div>
         )}
         <div className="flex items-center space-x-4 text-xs text-theme-muted">
-          <button className="hover:text-theme-primary transition-colors">
+          <button aria-label="Reply in thread" title="Reply in thread" className="hover:text-theme-primary transition-colors">
             <MessageSquareMore className="h-4 w-4"/>
           </button>
-          <button className="hover:text-theme-primary transition-colors">
+          <button aria-label="Reply" title="Reply" className="hover:text-theme-primary transition-colors">
             <Reply className="h-4 w-4"/>
           </button>
-          <button className="hover:text-theme-primary transition-colors">
+          <button aria-label="Copy message" title="Copy message" className="hover:text-theme-primary transition-colors">
             <ClipboardList className="h-4 w-4"/>
           </button>
           {/* Reactions will be rendered here */}

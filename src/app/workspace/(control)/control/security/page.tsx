@@ -4,7 +4,7 @@ import React, { useState } from "react";
 // NOTE: tab navigation (Authentication/Sessions/IP allowlist/Compliance) was
 // removed — every tab rendered this same single security view; the other tab
 // contents were never built. Reintroduce tabs when those sections exist.
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 import {
   ChevronRight,
   Upload,
@@ -63,9 +63,9 @@ export default function SecurityPage() {
       <div className="w-full max-w-[1280px] mx-auto px-6 sm:px-8 py-6 sm:py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-sm mb-6" aria-label="Breadcrumb">
-          <Link href="/workspace/control" className="font-medium transition-colors" style={{ color: "var(--primary)" }}>
+          <NavLink href="/workspace/control" className="font-medium transition-colors" style={{ color: "var(--primary)" }}>
             Workspace control
-          </Link>
+          </NavLink>
           <ChevronRight className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} aria-hidden="true" />
           <span style={{ color: "var(--text-muted)" }}>Security</span>
         </nav>

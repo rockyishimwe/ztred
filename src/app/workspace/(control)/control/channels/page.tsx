@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 import {
   ChevronRight,
   Plus,
@@ -160,13 +160,13 @@ export default function ChannelsPage() {
           className="flex items-center gap-1.5 text-sm mb-6"
           aria-label="Breadcrumb"
         >
-          <Link
+          <NavLink
             href="/workspace/control"
             className="font-medium transition-colors"
             style={{ color: "var(--primary)" }}
           >
             Workspace control
-          </Link>
+          </NavLink>
           <ChevronRight
             className="w-3.5 h-3.5"
             style={{ color: "var(--text-muted)" }}

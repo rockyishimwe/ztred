@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { NavigationProvider } from '@/components/navigation/NavigationProvider';
 
 export const metadata: Metadata = {
   title: 'Ztred — Team chat, calls, files, and AI in one workspace',
@@ -76,21 +77,23 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="min-h-screen antialiased font-sans"
+        className="min-h-dvh antialiased font-sans"
         style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
         suppressHydrationWarning
       >
         <ThemeProvider>
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold"
-            style={{ backgroundColor: 'var(--primary)', color: '#ffffff' }}
-          >
-            Skip to main content
-          </a>
-          <main id="main-content">
-            {children}
-          </main>
+          <NavigationProvider>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold"
+              style={{ backgroundColor: 'var(--primary)', color: '#ffffff' }}
+            >
+              Skip to main content
+            </a>
+            <main id="main-content">
+              {children}
+            </main>
+          </NavigationProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import { NavLink } from "@/components/ui/NavLink";
 import {
   Sparkles,
   Plus,
@@ -122,10 +122,10 @@ export default function WorkspaceHomePage() {
               <h1 className="type-h1">Home</h1>
               <p className="type-body-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>Latest from your workspace</p>
             </div>
-            <Link href="/workspace/create-post" className="btn btn-primary btn-md">
+            <NavLink href="/workspace/create-post" className="btn btn-primary btn-md">
               <Plus className="w-4 h-4" />
               <span>New Post</span>
-            </Link>
+            </NavLink>
           </div>
 
           {/* Stories Row */}
@@ -158,7 +158,7 @@ export default function WorkspaceHomePage() {
           </div>
 
           {/* Share Composer */}
-          <Link href="/workspace/create-post" className="rounded-2xl px-4 py-3 flex items-center gap-3 transition-colors cursor-pointer" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+          <NavLink href="/workspace/create-post" className="rounded-2xl px-4 py-3 flex items-center gap-3 transition-colors cursor-pointer" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
             <div className="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center font-bold text-[11px] shrink-0 text-white">
               AR
             </div>
@@ -173,7 +173,7 @@ export default function WorkspaceHomePage() {
                 <Smile className="w-5 h-5" />
               </div>
             </div>
-          </Link>
+          </NavLink>
 
           {/* Post Card */}
           <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
@@ -190,7 +190,7 @@ export default function WorkspaceHomePage() {
                     <p className="type-caption">Senior Engineer · 2h ago</p>
                   </div>
                 </div>
-                <button className="p-1 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button aria-label="Post options" title="Post options" className="p-1 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <MoreHorizontal className="w-5 h-5" />
                 </button>
               </div>
@@ -221,9 +221,9 @@ export default function WorkspaceHomePage() {
           </div>
           <p className="type-caption" style={{ lineHeight: 'var(--leading-relaxed)' }}>
             Summarize threads, draft posts, or find anything across your workspace.
-          </p>           <a href="/workspace/ai" className="inline-block text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors pt-1">
+          </p>           <NavLink href="/workspace/ai" className="inline-block text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors pt-1">
             Ask Zenith AI
-           </a>
+           </NavLink>
         </div>
 
         {/* Trending Widget */}
@@ -334,8 +334,8 @@ export default function WorkspaceHomePage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
-                  <button className="p-1 hover:bg-white/10 rounded"><Pause className="w-4 h-4" /></button>
-                  <button className="p-1 hover:bg-white/10 rounded"><MoreHorizontal className="w-4 h-4" /></button>
+                  <button aria-label="Pause story" title="Pause story" className="p-1 hover:bg-white/10 rounded"><Pause className="w-4 h-4" /></button>
+                  <button aria-label="Story options" title="Story options" className="p-1 hover:bg-white/10 rounded"><MoreHorizontal className="w-4 h-4" /></button>
                   <button onClick={() => setActiveStoryIndex(null)} className="p-1 hover:bg-white/10 rounded"><X className="w-5 h-5" /></button>
                 </div>
               </div>
@@ -344,12 +344,12 @@ export default function WorkspaceHomePage() {
             {/* Navigation Arrows */}
             <div className="absolute inset-y-20 inset-x-0 z-10 flex items-center justify-between px-2 pointer-events-none">
               {activeStoryIndex !== null && activeStoryIndex > 0 ? (
-                <button onClick={handlePrevStory} className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/60 transition-colors pointer-events-auto">
+                <button aria-label="Previous story" title="Previous story" onClick={handlePrevStory} className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/60 transition-colors pointer-events-auto">
                   <ChevronLeft className="w-6 h-6" />
                 </button>
               ) : <div></div>}
               {activeStoryIndex !== null && activeStoryIndex < stories.length - 1 ? (
-                <button onClick={handleNextStory} className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/60 transition-colors pointer-events-auto">
+                <button aria-label="Next story" title="Next story" onClick={handleNextStory} className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/60 transition-colors pointer-events-auto">
                   <ChevronRight className="w-6 h-6" />
                 </button>
               ) : <div></div>}
@@ -365,10 +365,10 @@ export default function WorkspaceHomePage() {
                 className="flex-1 backdrop-blur-md rounded-full px-4 py-3 text-sm focus:outline-none focus:ring-2"
                 style={{ backgroundColor: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white' }}
               />
-              <button className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white transition-colors">
+              <button aria-label="Like story" title="Like story" className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white transition-colors">
                 <Heart className="w-5 h-5" />
               </button>
-              <button className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white transition-colors">
+              <button aria-label="Share story" title="Share story" className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white transition-colors">
                 <Send className="w-5 h-5" />
               </button>
             </div>

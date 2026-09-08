@@ -17,37 +17,37 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     <div className="border border-theme rounded-xl overflow-hidden">
       {/* Toolbar */}
       <div className="flex items-center space-x-1 p-2 border-b border-theme bg-theme-secondary">
-        <button
+        <button aria-label="Bold" title="Bold"
           type="button"
           className="p-1.5 text-theme-muted hover:text-theme-primary hover:bg-theme-card rounded-md transition-colors"
         >
           <Bold className="w-4 h-4" />
         </button>
-        <button
+        <button aria-label="Italic" title="Italic"
           type="button"
           className="p-1.5 text-theme-muted hover:text-theme-primary hover:bg-theme-card rounded-md transition-colors"
         >
           <Italic className="w-4 h-4" />
         </button>
-        <button
+        <button aria-label="Bulleted list" title="Bulleted list"
           type="button"
           className="p-1.5 text-theme-muted hover:text-theme-primary hover:bg-theme-card rounded-md transition-colors"
         >
           <List className="w-4 h-4" />
         </button>
-        <button
+        <button aria-label="Insert link" title="Insert link"
           type="button"
           className="p-1.5 text-theme-muted hover:text-theme-primary hover:bg-theme-card rounded-md transition-colors"
         >
           <Link className="w-4 h-4" />
         </button>
-        <button
+        <button aria-label="Code" title="Code"
           type="button"
           className="p-1.5 text-theme-muted hover:text-theme-primary hover:bg-theme-card rounded-md transition-colors"
         >
           <Code className="w-4 h-4" />
         </button>
-        <button
+        <button aria-label="Quote" title="Quote"
           type="button"
           className="p-1.5 text-theme-muted hover:text-theme-primary hover:bg-theme-card rounded-md transition-colors"
         >

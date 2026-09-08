@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import Link from "next/link";
+import { NavLink } from "@/components/ui/NavLink";
 import { useParams } from "next/navigation";
 import {
   Search,
@@ -430,13 +430,13 @@ function AudioCallOverlay({
           >
             <Volume2 className="w-5 h-5" />
           </button>
-          <button className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary flex items-center justify-center transition-colors">
+          <button aria-label="More call options" title="More call options" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary flex items-center justify-center transition-colors">
             <MoreHorizontal className="w-5 h-5" />
           </button>
         </div>
 
         {/* End Call Button */}
-        <button
+        <button aria-label="End call" title="End call"
           onClick={onEnd}
           className="w-14 h-14 rounded-full bg-theme-danger hover:bg-red-600 flex items-center justify-center transition-colors shadow-lg shadow-red-500/30"
         >
@@ -548,7 +548,7 @@ export default function MessagingPage() {
         <div className="px-5 pt-5 pb-3">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-xl font-bold text-theme-primary">Messages</h1>
-            <button
+            <button aria-label="New message" title="New message"
               className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
               style={{
                 backgroundColor: "var(--bg-card)",
@@ -708,10 +708,10 @@ export default function MessagingPage() {
           </div>
 
           <div className="flex items-center gap-1">
-            <button className="w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+            <button aria-label="Pin conversation" title="Pin conversation" className="w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
               <Pin className="w-4 h-4" />
             </button>
-            <button className="w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+            <button aria-label="Search in conversation" title="Search in conversation" className="w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
               <Search className="w-4 h-4" />
             </button>
             <button
@@ -723,13 +723,13 @@ export default function MessagingPage() {
             >
               <Phone className="w-4 h-4" />
             </button>
-            <Link
+            <NavLink
               href="/workspace/meetings/current"
               className="w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors"
             >
               <Video className="w-4 h-4" />
-            </Link>
-            <button className="w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+            </NavLink>
+            <button aria-label="More conversation options" title="More conversation options" className="w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
               <MoreHorizontal className="w-4 h-4" />
             </button>
           </div>
@@ -842,7 +842,7 @@ export default function MessagingPage() {
                           border: "1px solid var(--border-color)",
                         }}
                       >
-                        <button className="w-8 h-8 rounded-full bg-theme-brand flex items-center justify-center shrink-0">
+                        <button aria-label="Play voice note" title="Play voice note" className="w-8 h-8 rounded-full bg-theme-brand flex items-center justify-center shrink-0">
                           <Play className="w-3.5 h-3.5 text-white ml-0.5" />
                         </button>
                         <div className="flex items-center gap-[2px] h-6">
@@ -896,13 +896,13 @@ export default function MessagingPage() {
                           </div>
                         </div>
                         <div className="flex items-center gap-1">
-                          <button className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                          <button aria-label="Download file" title="Download file" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                             <Download className="w-4 h-4" />
                           </button>
-                          <button className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                          <button aria-label="Open file in a new tab" title="Open file in a new tab" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                             <ExternalLink className="w-4 h-4" />
                           </button>
-                          <button className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                          <button aria-label="More file options" title="More file options" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                             <MoreHorizontal className="w-4 h-4" />
                           </button>
                         </div>
@@ -938,25 +938,25 @@ export default function MessagingPage() {
             />
             <div className="flex items-center justify-between mt-3">
               <div className="flex items-center gap-0.5">
-                <button className="w-8 h-8 rounded-lg bg-theme-brand flex items-center justify-center text-white hover:bg-purple-700 transition-colors">
+                <button aria-label="Add attachment" title="Add attachment" className="w-8 h-8 rounded-lg bg-theme-brand flex items-center justify-center text-white hover:bg-purple-700 transition-colors">
                   <Plus className="w-4 h-4" />
                 </button>
-                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button aria-label="Add emoji" title="Add emoji" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <Smile className="w-4 h-4" />
                 </button>
-                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button aria-label="Insert code block" title="Insert code block" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <Code className="w-4 h-4" />
                 </button>
-                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button aria-label="Attach file" title="Attach file" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <Paperclip className="w-4 h-4" />
                 </button>
-                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button aria-label="Record voice note" title="Record voice note" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <Mic className="w-4 h-4" />
                 </button>
-                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button aria-label="Mention someone" title="Mention someone" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <AtSign className="w-4 h-4" />
                 </button>
-                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button aria-label="Quick actions" title="Quick actions" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <Zap className="w-4 h-4" />
                 </button>
               </div>
