@@ -1,37 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { useUIStore } from "@/stores/uiStore";
+import { useUIStore, type ThemePreference } from "@/stores/uiStore";
+import { ACCENT_PRESETS, normalizeHex } from "@/lib/accent";
 import { Monitor, Palette, Type, Check } from "lucide-react";
-
-const ACCENT_COLORS = [
-  // Row 1
-  { name: "Violet", value: "#8b5cf6", bg: "bg-violet-500" },
-  { name: "Blue", value: "#6366f1", bg: "bg-indigo-500" },
-  { name: "Indigo", value: "#4f46e5", bg: "bg-indigo-600" },
-  { name: "Cyan", value: "#06b6d4", bg: "bg-cyan-500" },
-  { name: "Blue", value: "#3b82f6", bg: "bg-blue-500" },
-  { name: "Teal", value: "#14b8a6", bg: "bg-teal-500" },
-  { name: "Green", value: "#22c55e", bg: "bg-green-500" },
-  // Row 2
-  { name: "Lime", value: "#84cc16", bg: "bg-lime-500" },
-  { name: "Yellow", value: "#eab308", bg: "bg-yellow-500" },
-  { name: "Orange", value: "#f97316", bg: "bg-orange-500" },
-  { name: "Pink", value: "#ec4899", bg: "bg-pink-500" },
-  { name: "Red", value: "#ef4444", bg: "bg-red-500" },
-  { name: "Rose", value: "#f43f5e", bg: "bg-rose-500" },
-  { name: "Magenta", value: "#d946ef", bg: "bg-fuchsia-500" },
-  // Row 3
-  { name: "Purple", value: "#a855f7", bg: "bg-purple-500" },
-  { name: "Slate", value: "#64748b", bg: "bg-slate-500" },
-  { name: "Gray", value: "#6b7280", bg: "bg-gray-500" },
-  { name: "Zinc", value: "#71717a", bg: "bg-zinc-500" },
-  { name: "Cyan Light", value: "#22d3ee", bg: "bg-cyan-400" },
-  { name: "Teal Light", value: "#2dd4bf", bg: "bg-teal-400" },
-  { name: "Amber", value: "#f59e0b", bg: "bg-amber-500" },
-  // Row 4
-  { name: "Orange Light", value: "#fb923c", bg: "bg-orange-400" },
-];
 
 const FONT_SIZES = [
   { label: "Small", value: "13px" },
@@ -39,11 +11,27 @@ const FONT_SIZES = [
   { label: "Large", value: "16px" },
 ];
 
+const THEME_OPTIONS: {
+  id: ThemePreference;
+  label: string;
+  swatch: { bg: string; border: string; block: string };
+}[] = [
+  { id: "dark", label: "Dark", swatch: { bg: "#0b0f19", border: "#1e293b", block: "#1e293b" } },
+  { id: "light", label: "Light", swatch: { bg: "#f8fafc", border: "#e2e8f0", block: "#e2e8f0" } },
+  { id: "system", label: "System", swatch: { bg: "#0b0f19", border: "#64748b", block: "#475569" } },
+];
+
 export default function AppearanceSettingsPage() {
   const theme = useUIStore((s) => s.theme);
-  const toggleTheme = useUIStore((s) => s.toggleTheme);
-  const [selectedColor, setSelectedColor] = useState("Violet");
+  const themePreference = useUIStore((s) => s.themePreference);
+  const setThemePreference = useUIStore((s) => s.setThemePreference);
+  const accentColor = useUIStore((s) => s.accentColor);
+  const setAccentColor = useUIStore((s) => s.setAccentColor);
   const [fontSize, setFontSize] = useState("Default");
+
+  const activePreset = ACCENT_PRESETS.find(
+    (preset) => preset.value.toLowerCase() === accentColor.toLowerCase()
+  );
 
   return (
     <div className="max-w-2xl space-y-6">
@@ -58,71 +46,59 @@ export default function AppearanceSettingsPage() {
             Theme
           </h2>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          {/* Dark Theme Card */}
-          <button
-            onClick={() => {
-              if (theme !== "dark") toggleTheme();
-            }}
-            className="relative rounded-xl p-3 text-left transition-all"
-            style={{
-              border: `2px solid ${theme === "dark" ? "var(--primary)" : "var(--border-color)"}`,
-              backgroundColor: "var(--bg-input)",
-            }}
-          >
-            <div
-              className="w-full h-24 rounded-lg mb-3"
-              style={{
-                backgroundColor: "#0b0f19",
-                border: "1px solid #1e293b",
-              }}
-            >
-              <div className="p-3 space-y-2">
-                <div className="w-16 h-2 rounded" style={{ backgroundColor: "#1e293b" }} />
-                <div className="w-12 h-2 rounded" style={{ backgroundColor: "#1e293b" }} />
-                <div className="flex gap-2 mt-2">
-                  <div className="w-6 h-6 rounded" style={{ backgroundColor: "#1e293b" }} />
-                  <div className="w-6 h-6 rounded" style={{ backgroundColor: "#1e293b" }} />
+        <div className="grid grid-cols-3 gap-4">
+          {THEME_OPTIONS.map((option) => {
+            const isSelected = themePreference === option.id;
+            return (
+              <button
+                key={option.id}
+                type="button"
+                onClick={() => setThemePreference(option.id)}
+                aria-pressed={isSelected}
+                className="relative rounded-xl p-3 text-left transition-all"
+                style={{
+                  border: `2px solid ${isSelected ? "var(--primary)" : "var(--border-color)"}`,
+                  backgroundColor: "var(--bg-input)",
+                }}
+              >
+                <div
+                  className="w-full h-24 rounded-lg mb-3 overflow-hidden"
+                  style={{
+                    backgroundColor: option.swatch.bg,
+                    border: `1px solid ${option.swatch.border}`,
+                    // The System swatch is split down the middle to show it tracks the OS.
+                    backgroundImage:
+                      option.id === "system"
+                        ? "linear-gradient(to right, #0b0f19 50%, #f8fafc 50%)"
+                        : undefined,
+                  }}
+                >
+                  <div className="p-3 space-y-2">
+                    <div className="w-16 h-2 rounded" style={{ backgroundColor: option.swatch.block }} />
+                    <div className="w-12 h-2 rounded" style={{ backgroundColor: option.swatch.block }} />
+                    <div className="flex gap-2 mt-2">
+                      <div className="w-6 h-6 rounded" style={{ backgroundColor: option.swatch.block }} />
+                      <div className="w-6 h-6 rounded" style={{ backgroundColor: option.swatch.block }} />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
-              dark
-            </span>
-          </button>
-
-          {/* Light Theme Card */}
-          <button
-            onClick={() => {
-              if (theme !== "light") toggleTheme();
-            }}
-            className="relative rounded-xl p-3 text-left transition-all"
-            style={{
-              border: `2px solid ${theme === "light" ? "var(--primary)" : "var(--border-color)"}`,
-              backgroundColor: "var(--bg-input)",
-            }}
-          >
-            <div
-              className="w-full h-24 rounded-lg mb-3"
-              style={{
-                backgroundColor: "#f8fafc",
-                border: "1px solid #e2e8f0",
-              }}
-            >
-              <div className="p-3 space-y-2">
-                <div className="w-16 h-2 rounded" style={{ backgroundColor: "#e2e8f0" }} />
-                <div className="w-12 h-2 rounded" style={{ backgroundColor: "#e2e8f0" }} />
-                <div className="flex gap-2 mt-2">
-                  <div className="w-6 h-6 rounded" style={{ backgroundColor: "#e2e8f0" }} />
-                  <div className="w-6 h-6 rounded" style={{ backgroundColor: "#e2e8f0" }} />
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
+                    {option.label}
+                  </span>
+                  {isSelected && (
+                    <Check className="w-4 h-4 shrink-0" style={{ color: "var(--primary)" }} />
+                  )}
                 </div>
-              </div>
-            </div>
-            <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
-              light
-            </span>
-          </button>
+              </button>
+            );
+          })}
         </div>
+        {themePreference === "system" && (
+          <p className="text-xs mt-4" style={{ color: "var(--text-muted)" }}>
+            Following your device setting — currently {theme}.
+          </p>
+        )}
       </div>
 
       {/* ═══ Accent Color Section ═══ */}
@@ -132,57 +108,89 @@ export default function AppearanceSettingsPage() {
       >
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <Palette className="w-5 h-5 text-purple-400" />
+            <Palette className="w-5 h-5" style={{ color: "var(--primary)" }} />
             <h2 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>
               Accent color
             </h2>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-violet-500" />
+            <div
+              className="w-3 h-3 rounded-full"
+              style={{ backgroundColor: "var(--primary)" }}
+            />
             <span className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>
-              {selectedColor}
+              {activePreset ? activePreset.name : accentColor.toUpperCase()}
             </span>
           </div>
         </div>
         <p className="text-xs mb-5" style={{ color: "var(--text-muted)" }}>
-          Choose a color family for buttons, active navigation, focus states, and workspace highlights.
+          Applies everywhere — buttons, active navigation, focus states, the Ztred
+          logo and the browser tab icon.
         </p>
 
-        {/* Color Grid */}
         <div className="grid grid-cols-7 gap-2 mb-4">
-          {ACCENT_COLORS.map((color) => (
-            <button
-              key={color.name}
-              onClick={() => setSelectedColor(color.name)}
-              className="relative w-full aspect-square rounded-xl transition-all hover:scale-110"
-              style={{ backgroundColor: color.value }}
-            >
-              {selectedColor === color.name && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Check className="w-5 h-5 text-white drop-shadow-lg" />
-                </div>
-              )}
-            </button>
-          ))}
+          {ACCENT_PRESETS.map((preset) => {
+            const isSelected = preset.value.toLowerCase() === accentColor.toLowerCase();
+            return (
+              <button
+                key={preset.value}
+                type="button"
+                onClick={() => setAccentColor(preset.value)}
+                title={preset.name}
+                aria-label={preset.name}
+                aria-pressed={isSelected}
+                className="relative w-full aspect-square rounded-xl transition-all hover:scale-110"
+                style={{ backgroundColor: preset.value }}
+              >
+                {isSelected && (
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <Check className="w-5 h-5 text-white drop-shadow-lg" />
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Custom Color */}
-        <button
-          className="w-full flex items-center gap-3 p-3 rounded-xl transition-all"
+        {/* Custom hex — the native picker writes through on every change. */}
+        <label
+          className="w-full flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer"
           style={{ border: "1px solid var(--border-color)", backgroundColor: "var(--bg-input)" }}
         >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 flex items-center justify-center">
-            <Palette className="w-5 h-5 text-white" />
-          </div>
-          <div className="text-left">
-            <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+          <span
+            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+            style={{ backgroundColor: accentColor }}
+          >
+            <Palette className="w-5 h-5 text-white drop-shadow" />
+          </span>
+          <span className="text-left flex-1 min-w-0">
+            <span className="block text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
               Custom color
-            </p>
-            <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+            </span>
+            <span className="block text-xs" style={{ color: "var(--text-muted)" }}>
               Use your own brand hex value
-            </p>
-          </div>
-        </button>
+            </span>
+          </span>
+          <input
+            type="color"
+            value={accentColor}
+            onChange={(event) => setAccentColor(event.target.value)}
+            className="sr-only"
+            aria-label="Custom accent color"
+          />
+          <input
+            type="text"
+            value={accentColor.toUpperCase()}
+            onChange={(event) => {
+              // Only commit once the typed value is a complete, valid hex.
+              if (normalizeHex(event.target.value)) setAccentColor(event.target.value);
+            }}
+            spellCheck={false}
+            className="input-theme w-28 shrink-0 px-3 py-2 text-sm font-mono uppercase"
+            aria-label="Accent color hex value"
+            onClick={(event) => event.stopPropagation()}
+          />
+        </label>
       </div>
 
       {/* ═══ Message Font Size Section ═══ */}
@@ -205,7 +213,7 @@ export default function AppearanceSettingsPage() {
               style={{
                 backgroundColor: fontSize === size.label ? "var(--primary)" : "var(--bg-input)",
                 border: `1px solid ${fontSize === size.label ? "var(--primary)" : "var(--border-color)"}`,
-                color: fontSize === size.label ? "#ffffff" : "var(--text-secondary)",
+                color: fontSize === size.label ? "var(--on-primary)" : "var(--text-secondary)",
               }}
             >
               {size.label}

@@ -361,7 +361,7 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
                         style={{
                           backgroundColor: isSelected ? "var(--primary)" : "var(--bg-input)",
                           border: `1px solid ${isSelected ? "var(--primary)" : "var(--border-color)"}`,
-                          color: isSelected ? "#ffffff" : "var(--text-muted)",
+                          color: isSelected ? "var(--on-primary)" : "var(--text-muted)",
                         }}
                       >
                         <Icon className="w-5 h-5" />

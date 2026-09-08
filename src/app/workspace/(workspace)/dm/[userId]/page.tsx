@@ -384,7 +384,7 @@ function AudioCallOverlay({
       >
         {/* Avatar with ring */}
         <div className="relative mb-5">
-          <div className="w-24 h-24 rounded-full border-[3px] border-zinc-400 p-[3px]">
+          <div className="w-24 h-24 rounded-full border-[3px] border-theme-hover p-[3px]">
             <img
               src={avatar}
               alt={name}
@@ -430,7 +430,7 @@ function AudioCallOverlay({
           >
             <Volume2 className="w-5 h-5" />
           </button>
-          <button className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-zinc-600 flex items-center justify-center transition-colors">
+          <button className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary flex items-center justify-center transition-colors">
             <MoreHorizontal className="w-5 h-5" />
           </button>
         </div>

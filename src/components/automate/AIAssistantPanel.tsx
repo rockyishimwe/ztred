@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Send, Mic, RefreshCw, Trash2, ChevronDown } from 'lucide-react';
 import { AIMessage, AIAction } from '@/types/api';
+import { Spinner } from '@/components/ui/spinner';
 
 export const AIAssistantPanel: React.FC = () => {
   const [input, setInput] = useState('');
@@ -114,11 +115,13 @@ export const AIAssistantPanel: React.FC = () => {
                   ? 'bg-theme-brand text-white'
                   : 'bg-theme-secondary text-theme-primary'
               }`}>
-                <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                {message.isLoading && (
-                  <div className="h-2 w-full bg-theme-brand-subtle rounded mt-1">
-                    <div className="h-2 w-1/3 bg-theme-brand rounded"></div>
-                  </div>
+                {message.isLoading ? (
+                  <p className="flex items-center gap-2 text-sm">
+                    <Spinner size="small" className="size-4 shrink-0" />
+                    <span>{message.content}</span>
+                  </p>
+                ) : (
+                  <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                 )}
                 {message.actions && message.actions.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-2">

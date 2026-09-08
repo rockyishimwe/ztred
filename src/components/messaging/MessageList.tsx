@@ -33,7 +33,7 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   if (messages.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center w-full p-8">
-        <div className="text-center text-zinc-500">
+        <div className="text-center text-theme-muted">
           No messages yet. Start the conversation!
         </div>
       </div>

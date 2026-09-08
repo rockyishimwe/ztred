@@ -466,7 +466,7 @@ export default function ChannelsPage() {
                             ch.type === "Public"
                               ? "var(--success)"
                               : "var(--primary)",
-                          color: "#ffffff",
+                          color: "var(--on-primary)",
                         }}
                       >
                         {ch.type}

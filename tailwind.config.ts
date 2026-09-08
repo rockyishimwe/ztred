@@ -28,27 +28,39 @@ const config: Config = {
         'theme-input': 'var(--bg-input)',
         'theme-elevated': 'var(--surface-elevated)',
         'theme-tinted': 'var(--bg-tinted)',
-        'theme-brand': 'var(--primary)',
-        'theme-brand-hover': 'var(--primary-hover)',
-        'theme-on-primary': 'var(--primary)',
-        'theme-primary-hover': 'var(--primary-hover)',
+        'theme-brand': 'rgb(var(--accent-600) / <alpha-value>)',
+        'theme-brand-hover': 'rgb(var(--accent-700) / <alpha-value>)',
+        'theme-on-primary': 'rgb(var(--accent-600) / <alpha-value>)',
+        'theme-primary-hover': 'rgb(var(--accent-700) / <alpha-value>)',
         'theme-success': 'var(--success)',
         'theme-warning': 'var(--warning)',
         'theme-danger': 'var(--danger)',
         'theme-hover': 'var(--border-hover)',
         'theme-sidebar-hover': 'var(--sidebar-hover)',
+        /* shadcn-compatible aliases. Components pasted from shadcn expect a
+           `primary` color to exist; without it `text-primary` / `bg-primary`
+           generate no CSS at all and the element renders colorless. Pointed at
+           the accent scale so those components follow the workspace accent. */
+        primary: {
+          DEFAULT: 'rgb(var(--accent-600) / <alpha-value>)',
+          foreground: 'var(--on-primary)',
+        },
+        /* Driven by the user's accent color. Declared as channel triplets so
+           opacity modifiers (bg-purple-600/20) still resolve — a bare
+           `var(--primary)` string cannot carry an alpha value.
+           See src/lib/accent.ts. */
         purple: {
-          50: '#f3f0ff',
-          100: '#e9e3ff',
-          200: '#d4c9ff',
-          300: '#b5a1ff',
-          400: '#9178ff',
-          500: '#5F3DFF',
-          600: '#5F3DFF',
-          700: '#4A2DE6',
-          800: '#3A22B3',
-          900: '#2A1A80',
-          950: '#1A104D',
+          50: 'rgb(var(--accent-50) / <alpha-value>)',
+          100: 'rgb(var(--accent-100) / <alpha-value>)',
+          200: 'rgb(var(--accent-200) / <alpha-value>)',
+          300: 'rgb(var(--accent-300) / <alpha-value>)',
+          400: 'rgb(var(--accent-400) / <alpha-value>)',
+          500: 'rgb(var(--accent-500) / <alpha-value>)',
+          600: 'rgb(var(--accent-600) / <alpha-value>)',
+          700: 'rgb(var(--accent-700) / <alpha-value>)',
+          800: 'rgb(var(--accent-800) / <alpha-value>)',
+          900: 'rgb(var(--accent-900) / <alpha-value>)',
+          950: 'rgb(var(--accent-950) / <alpha-value>)',
         },
         ztred: {
           dark: "#0b0f19",
@@ -64,9 +76,9 @@ const config: Config = {
             darkBg: "#121016",
           },
           primary: {
-            DEFAULT: "#5F3DFF",
-            dark: "#4A2DE6",
-            light: "#7B5FFF",
+            DEFAULT: "rgb(var(--accent-600) / <alpha-value>)",
+            dark: "rgb(var(--accent-700) / <alpha-value>)",
+            light: "rgb(var(--accent-400) / <alpha-value>)",
             accent: "#007A5A",
             blue: "#1264A3",
           },

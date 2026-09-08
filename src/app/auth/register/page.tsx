@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Check, ArrowRight } from 'lucide-react';
+import { ZtredLogo } from "@/components/ui/ZtredLogo";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function RegisterPage() {
         <div className="space-y-8">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <img src="/ztred-logo.svg" alt="Ztred" className="w-10 h-10" />
+            <ZtredLogo className="w-10 h-10" title="Ztred" />
             <span className="text-xl font-bold tracking-tight text-theme-primary">
               Ztred
             </span>
@@ -36,7 +37,7 @@ export default function RegisterPage() {
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-theme-primary">
               Create your Ztred account
             </h1>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-theme-muted">
               Bring your team&apos;s work into one focused, shared space.
             </p>
           </div>
@@ -102,7 +103,7 @@ export default function RegisterPage() {
                 onChange={(e) => setAgreeTerms(e.target.checked)}
                 className="w-4 h-4 rounded bg-theme-card border-theme text-purple-600 focus:ring-purple-500"
               />
-              <label htmlFor="terms" className="text-xs text-zinc-400">
+              <label htmlFor="terms" className="text-xs text-theme-muted">
                 I agree to the <a href="#" className="text-purple-400 hover:underline">Terms of Service</a> and <a href="#" className="text-purple-400 hover:underline">Privacy Policy</a>.
               </label>
             </div>
@@ -125,19 +126,19 @@ export default function RegisterPage() {
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => router.push('/workspace')}
-              className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-zinc-200"
+              className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-theme-secondary"
             >
               Google
             </button>
             <button
               onClick={() => router.push('/workspace')}
-              className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-zinc-200"
+              className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-theme-secondary"
             >
               GitHub
             </button>
           </div>
 
-          <div className="text-center text-xs text-zinc-400 pt-2">
+          <div className="text-center text-xs text-theme-muted pt-2">
             Already have an account?{' '}
             <Link href="/auth/login" className="text-purple-400 font-semibold hover:underline">
               Sign in
@@ -168,12 +169,12 @@ export default function RegisterPage() {
             </div>
             <div>
               <div className="font-semibold text-sm text-theme-primary">Maya Chen</div>
-              <div className="text-xs text-zinc-400">Growth Lead, Northstar</div>
+              <div className="text-xs text-theme-muted">Growth Lead, Northstar</div>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center space-x-6 text-xs text-zinc-400 z-10">
+        <div className="flex items-center space-x-6 text-xs text-theme-muted z-10">
           <span className="flex items-center"><Check className="w-3.5 h-3.5 text-green-500 mr-1.5" /> SOC 2 ready</span>
           <span className="flex items-center"><Check className="w-3.5 h-3.5 text-green-500 mr-1.5" /> Private by default</span>
         </div>

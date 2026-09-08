@@ -33,7 +33,7 @@ interface TaskCard {
 }
 
 const columns = [
-  { id: "todo", label: "To Do", dotColor: "bg-zinc-400" },
+  { id: "todo", label: "To Do", dotColor: "bg-theme-muted" },
   { id: "in_progress", label: "In Progress", dotColor: "bg-purple-500" },
   { id: "in_review", label: "In Review", dotColor: "bg-amber-500" },
   { id: "done", label: "Done", dotColor: "bg-green-500" },
@@ -301,7 +301,7 @@ function FilterTasksModal({
                 className={`px-4 py-2 rounded-xl text-sm font-semibold capitalize transition-all ${
                   priority === p
                     ? "bg-purple-600 text-white shadow"
-                    : "bg-theme-card border border-theme hover:border-zinc-600"
+                    : "bg-theme-card border border-theme hover:border-theme-hover"
                 }`}
               >
                 {p}
@@ -324,7 +324,7 @@ function FilterTasksModal({
                   (a === "Everyone" && assignee === "everyone") ||
                   (a === "Assigned to me" && assignee === "me")
                     ? "bg-purple-600 text-white shadow"
-                    : "bg-theme-card border border-theme hover:border-zinc-600"
+                    : "bg-theme-card border border-theme hover:border-theme-hover"
                 }`}
               >
                 {a}
@@ -340,7 +340,7 @@ function FilterTasksModal({
               setPriority("all");
               setAssignee("everyone");
             }}
-            className="flex items-center gap-1.5 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+            className="flex items-center gap-1.5 text-sm font-medium text-theme-muted hover:text-theme-primary transition-colors"
           >
             <X className="w-3.5 h-3.5" />
             Clear filters
@@ -370,7 +370,7 @@ function TaskCardView({ task }: { task: TaskCard }) {
   };
 
   return (
-    <div className="bg-theme-card border border-theme rounded-xl p-4 hover:border-zinc-700 transition-colors cursor-pointer">
+    <div className="bg-theme-card border border-theme rounded-xl p-4 hover:border-theme-hover transition-colors cursor-pointer">
       {/* Tags */}
       <div className="flex items-center gap-2 mb-3">
         <span
@@ -378,7 +378,7 @@ function TaskCardView({ task }: { task: TaskCard }) {
         >
           {task.priority}
         </span>
-        <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-zinc-800 text-zinc-400">
+        <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-theme-surface text-theme-muted">
           {task.category}
         </span>
       </div>
@@ -390,14 +390,14 @@ function TaskCardView({ task }: { task: TaskCard }) {
 
       {/* Footer: Date + Avatar */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5 text-zinc-500">
+        <div className="flex items-center gap-1.5 text-theme-muted">
           <Calendar className="w-3.5 h-3.5" />
           <span className="text-[11px] font-medium">{task.date}</span>
         </div>
         <img
           src={task.avatar}
           alt=""
-          className="w-7 h-7 rounded-full object-cover border border-zinc-700"
+          className="w-7 h-7 rounded-full object-cover border border-theme"
         />
       </div>
     </div>
@@ -452,7 +452,7 @@ export default function TaskBoardPage() {
                 </span>
               </div>
             </div>
-            <p className="text-xs text-zinc-500">
+            <p className="text-xs text-theme-muted">
               Complete brand overhaul and assets update
             </p>
           </div>
@@ -463,7 +463,7 @@ export default function TaskBoardPage() {
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all ${
               hasActiveFilters
                 ? "border-purple-500/50 bg-purple-600/10 text-purple-400"
-                : "border-zinc-700 text-zinc-300 hover:text-white hover:border-zinc-600"
+                : "border-theme text-theme-secondary hover:text-theme-primary hover:border-theme-hover"
             }`}
           >
             <Filter className="w-4 h-4" />
@@ -498,11 +498,11 @@ export default function TaskBoardPage() {
                     <span className="text-sm font-bold text-white">
                       {col.label}
                     </span>
-                    <span className="text-xs font-semibold text-zinc-500 bg-zinc-800/80 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-semibold text-theme-muted bg-theme-surface px-2 py-0.5 rounded-full">
                       {getFilteredTasks(col.id).length}
                     </span>
                   </div>
-                  <button className="w-7 h-7 rounded-lg flex items-center justify-center text-zinc-500 hover:text-white hover:bg-zinc-800 transition-colors">
+                  <button className="w-7 h-7 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors">
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>

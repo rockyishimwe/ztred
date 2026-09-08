@@ -32,9 +32,43 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
+                var root = document.documentElement;
                 try {
-                  var theme = localStorage.getItem('ztred-theme') || 'dark';
-                  document.documentElement.setAttribute('data-theme', theme);
+                  var saved = localStorage.getItem('ztred-theme');
+                  var pref = (saved === 'light' || saved === 'dark' || saved === 'system') ? saved : 'dark';
+                  var theme = pref === 'system'
+                    ? (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
+                    : pref;
+                  root.setAttribute('data-theme', theme);
+                  root.style.colorScheme = theme;
+                } catch(e) {
+                  root.setAttribute('data-theme', 'dark');
+                }
+                try {
+                  // Mirrors accentShades() in src/lib/accent.ts. Duplicated here
+                  // on purpose: this must run before first paint, so it cannot
+                  // wait for the bundle. Keep the two in sync.
+                  var hex = (localStorage.getItem('ztred-accent') || '').trim().replace(/^#/, '');
+                  if (/^[0-9a-fA-F]{3}$/.test(hex)) {
+                    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+                  }
+                  if (!/^[0-9a-fA-F]{6}$/.test(hex)) return;
+                  var n = parseInt(hex, 16);
+                  var rgb = [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+                  var mix = { '50': 0.95, '100': 0.89, '200': 0.77, '300': 0.6, '400': 0.36,
+                              '500': 0, '600': 0, '700': -0.1, '800': -0.3, '900': -0.5, '950': -0.7 };
+                  var shades = {};
+                  for (var stop in mix) {
+                    var m = mix[stop], target = m >= 0 ? 255 : 0, amount = Math.abs(m);
+                    shades[stop] = rgb.map(function(c) {
+                      return Math.round(c + (target - c) * amount);
+                    }).join(' ');
+                    root.style.setProperty('--accent-' + stop, shades[stop]);
+                  }
+                  root.style.setProperty('--primary', 'rgb(' + shades['600'] + ')');
+                  root.style.setProperty('--primary-hover', 'rgb(' + shades['700'] + ')');
+                  root.style.setProperty('--ring', 'rgb(' + shades['600'] + ')');
+                  root.style.setProperty('--sidebar-active', 'rgb(' + shades['600'] + ')');
                 } catch(e) {}
               })();
             `,

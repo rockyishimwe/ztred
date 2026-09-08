@@ -177,7 +177,7 @@ export default function AIManagementPage() {
                               className="sr-only peer"
                               aria-label={`Toggle AI for ${row.role}`}
                             />
-                            <span className="w-11 h-6 rounded-full bg-gray-300 dark:bg-zinc-700 transition-colors duration-200 peer-checked:bg-[var(--primary)]" aria-hidden="true" />
+                            <span className="w-11 h-6 rounded-full bg-theme-surface transition-colors duration-200 peer-checked:bg-[var(--primary)]" aria-hidden="true" />
                             <span className="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 peer-checked:translate-x-5" aria-hidden="true" />
                           </label>
                           <span style={{ fontSize: '13px', color: row.aiAccess ? 'var(--text-primary)' : 'var(--text-muted)' }}>
@@ -318,7 +318,7 @@ export default function AIManagementPage() {
                         className="sr-only peer"
                         aria-label={`Toggle ${feature.name}`}
                       />
-                      <span className="w-11 h-6 rounded-full bg-gray-300 dark:bg-zinc-700 transition-colors duration-200 peer-checked:bg-[var(--primary)]" aria-hidden="true" />
+                      <span className="w-11 h-6 rounded-full bg-theme-surface transition-colors duration-200 peer-checked:bg-[var(--primary)]" aria-hidden="true" />
                       <span className="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 peer-checked:translate-x-5" aria-hidden="true" />
                     </label>
                   </div>

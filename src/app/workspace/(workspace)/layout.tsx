@@ -25,6 +25,7 @@ import {
   X,
 } from "lucide-react";
 import { useUIStore } from "@/stores/uiStore";
+import { ZtredLogo } from "@/components/ui/ZtredLogo";
 
 export default function WorkspaceLayout({
   children,
@@ -91,7 +92,7 @@ export default function WorkspaceLayout({
       >
         <div className="flex items-center gap-3">
           <Link href="/workspace/control" aria-label="Workspace control">
-            <img src="/ztred-logo.svg" alt="Ztred" className="w-8 h-8" />
+            <ZtredLogo className="w-8 h-8" title="Ztred" />
           </Link>
           <span className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Ztred</span>
         </div>
@@ -139,7 +140,7 @@ export default function WorkspaceLayout({
                     className="mobile-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all"
                     style={{
                       backgroundColor: isActive ? "var(--primary)" : "transparent",
-                      color: isActive ? "#ffffff" : "var(--text-secondary)",
+                      color: isActive ? "var(--on-primary)" : "var(--text-secondary)",
                     }}
                   >
                     <Icon className="w-5 h-5 shrink-0" aria-hidden="true" />
@@ -170,7 +171,7 @@ export default function WorkspaceLayout({
             aria-label="Workspace control"
             title="Workspace control"
           >
-            <img src="/ztred-logo.svg" alt="Ztred" className="w-10 h-10" />
+            <ZtredLogo className="w-10 h-10" title="Ztred" />
           </Link>
 
           {/* Plus Add Button */}
@@ -204,7 +205,7 @@ export default function WorkspaceLayout({
                   className="w-10 h-10 rounded-xl flex items-center justify-center transition-all"
                   style={{
                     backgroundColor: isActive ? "var(--primary)" : "transparent",
-                    color: isActive ? "#ffffff" : "var(--text-muted)",
+                    color: isActive ? "var(--on-primary)" : "var(--text-muted)",
                     boxShadow: isActive ? "0 10px 15px -3px rgb(0 0 0 / 0.3)" : "none",
                   }}
                 >

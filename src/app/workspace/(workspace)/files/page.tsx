@@ -134,7 +134,7 @@ function getFileIcon(name: string) {
     case "xls":
       return { icon: <FileText className="w-5 h-5" />, bg: "bg-green-500/15 text-green-400" };
     default:
-      return { icon: <File className="w-5 h-5" />, bg: "bg-zinc-500/15 text-theme-muted" };
+      return { icon: <File className="w-5 h-5" />, bg: "bg-theme-surface text-theme-muted" };
   }
 }
 

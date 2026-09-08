@@ -650,7 +650,7 @@ function FilterTasksModal({
               style={{
                 backgroundColor: priority === p ? "var(--primary)" : "var(--bg-input)",
                 border: `1px solid ${priority === p ? "var(--primary)" : "var(--border-color)"}`,
-                color: priority === p ? "#ffffff" : "var(--text-secondary)",
+                color: priority === p ? "var(--on-primary)" : "var(--text-secondary)",
               }}
             >
               {p}
@@ -940,7 +940,7 @@ export default function ProjectOverviewPage() {
                     style={{
                       backgroundColor: isActive ? "var(--primary)" : "var(--bg-card)",
                       border: `1px solid ${isActive ? "var(--primary)" : "var(--border-color)"}`,
-                      color: isActive ? "#ffffff" : "var(--text-secondary)",
+                      color: isActive ? "var(--on-primary)" : "var(--text-secondary)",
                     }}
                   >
                     {f.label}

@@ -9,7 +9,10 @@ import {
   Bell,
   Palette,
   IdCard,
+  Moon,
+  Sun,
 } from "lucide-react";
+import { useUIStore } from "@/stores/uiStore";
 
 // NOTE: only routes that actually exist under /settings —
 // the removed Security/Members/Billing entries pointed at pages
@@ -27,6 +30,8 @@ export default function SettingsLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const theme = useUIStore((s) => s.theme);
+  const toggleTheme = useUIStore((s) => s.toggleTheme);
 
   return (
     <div
@@ -38,8 +43,11 @@ export default function SettingsLayout({
         className="px-8 py-5 flex items-center gap-3 shrink-0"
         style={{ borderBottom: "1px solid var(--border-color)" }}
       >
-        <div className="w-10 h-10 rounded-xl bg-purple-600/20 flex items-center justify-center">
-          <Settings className="w-5 h-5 text-purple-400" />
+        <div
+          className="w-10 h-10 rounded-xl flex items-center justify-center"
+          style={{ backgroundColor: "color-mix(in srgb, var(--primary) 15%, transparent)" }}
+        >
+          <Settings className="w-5 h-5" style={{ color: "var(--primary)" }} />
         </div>
         <div>
           <h1 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
@@ -49,6 +57,22 @@ export default function SettingsLayout({
             Manage your account and workspace
           </p>
         </div>
+
+        {/* This tree renders outside the workspace shell, so it carries its own
+            theme toggle — otherwise there is no way to switch mode from here. */}
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="ml-auto w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
+          style={{
+            backgroundColor: "var(--bg-card)",
+            border: "1px solid var(--border-color)",
+            color: "var(--text-muted)",
+          }}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </button>
       </div>
 
       {/* ═══ Content Area ═══ */}
@@ -69,7 +93,7 @@ export default function SettingsLayout({
                   className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all"
                   style={{
                     backgroundColor: isActive ? "var(--primary)" : "transparent",
-                    color: isActive ? "#ffffff" : "var(--text-secondary)",
+                    color: isActive ? "var(--on-primary)" : "var(--text-secondary)",
                   }}
                 >
                   <Icon className="w-4 h-4" />

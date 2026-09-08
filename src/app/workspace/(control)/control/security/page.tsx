@@ -107,7 +107,7 @@ export default function SecurityPage() {
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer shrink-0">
                     <input type="checkbox" checked={twoFactor} onChange={() => setTwoFactor(!twoFactor)} className="sr-only peer" aria-label="Toggle two-factor authentication" />
-                    <span className="w-11 h-6 rounded-full bg-gray-300 transition-colors duration-200 peer-checked:bg-[var(--primary)]" aria-hidden="true" />
+                    <span className="w-11 h-6 rounded-full bg-theme-surface transition-colors duration-200 peer-checked:bg-[var(--primary)]" aria-hidden="true" />
                     <span className="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 peer-checked:translate-x-5" aria-hidden="true" />
                   </label>
                 </div>
@@ -120,7 +120,7 @@ export default function SecurityPage() {
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer shrink-0">
                     <input type="checkbox" checked={sso} onChange={() => setSso(!sso)} className="sr-only peer" aria-label="Toggle SSO" />
-                    <span className="w-11 h-6 rounded-full bg-gray-300 transition-colors duration-200 peer-checked:bg-[var(--primary)]" aria-hidden="true" />
+                    <span className="w-11 h-6 rounded-full bg-theme-surface transition-colors duration-200 peer-checked:bg-[var(--primary)]" aria-hidden="true" />
                     <span className="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 peer-checked:translate-x-5" aria-hidden="true" />
                   </label>
                 </div>

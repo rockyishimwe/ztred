@@ -1,122 +1,98 @@
+"use client";
+
+import React from "react";
+import { Bell, Hash } from "lucide-react";
+
+const CHANNEL_NOTIFICATIONS = [
+  { id: "general", name: "general", topic: "Company-wide announcements", level: "all" },
+  { id: "random", name: "random", topic: "Random fun stuff", level: "mentions" },
+];
+
+const DELIVERY_PREFERENCES = [
+  { id: "desktop", label: "Desktop notifications", hint: "Show alerts on this device", enabled: true },
+  { id: "email", label: "Email notifications", hint: "Digest of what you missed", enabled: false },
+  { id: "mobile", label: "Mobile push notifications", hint: "Alerts on the Ztred mobile app", enabled: true },
+  { id: "sound", label: "Sound notifications", hint: "Play a sound for new messages", enabled: false },
+];
+
 export default function NotificationSettingsPage() {
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Notification Settings</h1>
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-4">Channel Notifications</h2>
-            <form className="space-y-4">
-              <div className="flex items-center justify-between p-3 border rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">
-                    #
-                  </div>
-                  <div>
-                    <p className="font-medium">#general</p>
-                    <p className="text-sm text-gray-500">Company-wide announcements</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    defaultChecked
-                    className="h-4 w-4 text-purple-600"
-                  />
-                  <span className="text-sm text-gray-600">All messages</span>
-                </div>
-                <div className="relative">
-                  <select className="pl-2 pr-8 border border-gray-300 rounded-lg">
-                    <option value="all">All messages</option>
-                    <option value="mentions">Only mentions & DMs</option>
-                    <option value="none">Nothing</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between p-3 border rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs">
-                    #
-                  </div>
-                  <div>
-                    <p className="font-medium">#random</p>
-                    <p className="text-sm text-gray-500">Random fun stuff</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    defaultChecked={false}
-                    className="h-4 w-4 text-purple-600"
-                  />
-                  <span className="text-sm text-gray-600">All messages</span>
-                </div>
-                <div className="relative">
-                  <select className="pl-2 pr-8 border border-gray-300 rounded-lg">
-                    <option value="all">All messages</option>
-                    <option value="mentions">Only mentions & DMs</option>
-                    <option value="none">Nothing</option>
-                  </select>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
-              >
-                Save Changes
-              </button>
-            </form>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-4">Notification Preferences</h2>
-            <form className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <input
-                  type="checkbox"
-                  defaultChecked
-                  className="h-4 w-4 text-purple-600"
-                />
-                <label className="text-sm font-medium text-gray-700">
-                  Desktop notifications
-                </label>
-              </div>
-              <div className="flex items-center space-x-3">
-                <input
-                  type="checkbox"
-                  defaultChecked={false}
-                  className="h-4 w-4 text-purple-600"
-                />
-                <label className="text-sm font-medium text-gray-700">
-                  Email notifications
-                </label>
-              </div>
-              <div className="flex items-center space-x-3">
-                <input
-                  type="checkbox"
-                  defaultChecked
-                  className="h-4 w-4 text-purple-600"
-                />
-                <label className="text-sm font-medium text-gray-700">
-                  Mobile push notifications
-                </label>
-              </div>
-              <div className="flex items-center space-x-3">
-                <input
-                  type="checkbox"
-                  defaultChecked={false}
-                  className="h-4 w-4 text-purple-600"
-                />
-                <label className="text-sm font-medium text-gray-700">
-                  Sound notifications
-                </label>
-              </div>
-            </form>
-          </div>
+    <div className="settings-page">
+      <section className="settings-card">
+        <div className="flex items-center gap-2 mb-5">
+          <Hash className="w-5 h-5" style={{ color: "var(--primary)" }} />
+          <h2>Channel notifications</h2>
         </div>
-      </div>
+
+        <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
+          {CHANNEL_NOTIFICATIONS.map((channel) => (
+            <div
+              key={channel.id}
+              className="settings-row flex flex-wrap items-center justify-between gap-3 p-3"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <span
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold shrink-0"
+                  style={{ backgroundColor: "var(--primary)", color: "var(--on-primary)" }}
+                >
+                  #
+                </span>
+                <div className="min-w-0">
+                  <p className="font-medium truncate" style={{ color: "var(--text-primary)" }}>
+                    #{channel.name}
+                  </p>
+                  <p className="form-hint truncate">{channel.topic}</p>
+                </div>
+              </div>
+
+              <label className="sr-only" htmlFor={`level-${channel.id}`}>
+                Notification level for #{channel.name}
+              </label>
+              <select
+                id={`level-${channel.id}`}
+                defaultValue={channel.level}
+                className="select-theme px-3 py-2 text-sm min-h-touch-sm"
+              >
+                <option value="all">All messages</option>
+                <option value="mentions">Only mentions &amp; DMs</option>
+                <option value="none">Nothing</option>
+              </select>
+            </div>
+          ))}
+
+          <button type="submit" className="btn btn-md btn-primary w-full">
+            Save changes
+          </button>
+        </form>
+      </section>
+
+      <section className="settings-card">
+        <div className="flex items-center gap-2 mb-5">
+          <Bell className="w-5 h-5" style={{ color: "var(--primary)" }} />
+          <h2>Notification preferences</h2>
+        </div>
+
+        <div className="space-y-3">
+          {DELIVERY_PREFERENCES.map((preference) => (
+            <label
+              key={preference.id}
+              className="settings-row flex items-center gap-3 p-3 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                defaultChecked={preference.enabled}
+                className="control-theme h-4 w-4 shrink-0"
+              />
+              <span>
+                <span className="block text-sm font-medium" style={{ color: "var(--text-primary)" }}>
+                  {preference.label}
+                </span>
+                <span className="form-hint">{preference.hint}</span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

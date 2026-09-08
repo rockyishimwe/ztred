@@ -70,7 +70,7 @@ export default function SettingsLayout({
                   className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all"
                   style={{
                     backgroundColor: isActive ? "var(--primary)" : "transparent",
-                    color: isActive ? "#ffffff" : "var(--text-secondary)",
+                    color: isActive ? "var(--on-primary)" : "var(--text-secondary)",
                   }}
                 >
                   <Icon className="w-4 h-4" />

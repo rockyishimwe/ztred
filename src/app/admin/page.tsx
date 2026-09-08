@@ -15,11 +15,16 @@ import {
   ArrowLeft,
   Settings,
   Key,
+  Moon,
+  Sun,
 } from 'lucide-react';
+import { useUIStore } from '@/stores/uiStore';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 
 export default function AdminDashboardPage() {
+  const theme = useUIStore((s) => s.theme);
+  const toggleTheme = useUIStore((s) => s.toggleTheme);
   // NOTE: tab navigation (overview/organizations/security/audit) was removed —
   // only the overview content exists; tabs pointed at nothing.
   const orgs = [
@@ -46,6 +51,16 @@ export default function AdminDashboardPage() {
         </div>
 
         <div className="flex items-center gap-3">
+          {/* The admin dashboard sits outside the workspace shell — without this
+              there is no theme toggle anywhere on the page. */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="w-9 h-9 rounded-lg flex items-center justify-center border border-theme bg-theme-card text-theme-muted hover:text-theme-primary transition-colors"
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
           <Link
             href="/workspace"
             className="text-xs bg-purple-600 hover:bg-purple-500 text-white font-semibold px-4 py-2 rounded-md transition-colors"

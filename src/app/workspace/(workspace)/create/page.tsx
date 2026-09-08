@@ -154,7 +154,7 @@ export default function CreateWorkspacePage() {
                     value={workspaceName}
                     onChange={(e) => setWorkspaceName(e.target.value)}
                     placeholder="Acme Inc."
-                    className="w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-theme-primary placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-sm transition-all"
+                    className="w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-sm transition-all"
                   />
                 </div>
               </div>
@@ -234,7 +234,7 @@ export default function CreateWorkspacePage() {
                   onChange={(e) => setInviteEmailInput(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addInvitee(); } }}
                   placeholder="name@company.com"
-                  className="flex-1 bg-theme-card border border-theme rounded-xl px-4 py-3 text-theme-primary placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-sm transition-all"
+                  className="flex-1 bg-theme-card border border-theme rounded-xl px-4 py-3 text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-sm transition-all"
                 />
                 <button
                   onClick={addInvitee}

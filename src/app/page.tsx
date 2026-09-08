@@ -15,6 +15,7 @@ import {
   Send,
 } from "lucide-react";
 import { useUIStore } from "@/stores/uiStore";
+import { ZtredLogo } from "@/components/ui/ZtredLogo";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -49,7 +50,7 @@ export default function LandingPage() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <img src="/ztred-logo.svg" alt="" className="w-10 h-10" aria-hidden="true" />
+            <ZtredLogo className="w-10 h-10" />
             <span className="text-xl font-bold tracking-tight" style={{ color: "var(--text-primary)" }}>Ztred</span>
           </div>
 

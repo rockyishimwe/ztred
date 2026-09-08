@@ -12,6 +12,7 @@ import {
   Folder,
   Hash,
   Home,
+  Moon,
   MessageSquare,
   Paperclip,
   Pin,
@@ -20,11 +21,14 @@ import {
   Settings,
   Smile,
   Sparkles,
+  Sun,
   Star,
   Users,
   Video,
 } from "lucide-react";
 import { format } from "date-fns";
+import { useUIStore } from "@/stores/uiStore";
+import { ZtredLogo } from "@/components/ui/ZtredLogo";
 
 interface Channel {
   id: string;
@@ -108,6 +112,8 @@ const navItems = [
 
 export default function GeneralChannelPage() {
   const pathname = usePathname();
+  const theme = useUIStore((s) => s.theme);
+  const toggleTheme = useUIStore((s) => s.toggleTheme);
   const [message, setMessage] = useState("");
   const [activeChannelId, setActiveChannelId] = useState("general");
   // Local optimistic messages — replace with a store/API call when the
@@ -142,26 +148,26 @@ export default function GeneralChannelPage() {
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-white font-sans text-[#171719] selection:bg-[#7a5cff] selection:text-white dark:bg-[#06070b] dark:text-[#f6f4fb]">
+    <div className="flex h-screen w-screen overflow-hidden bg-theme-primary font-sans text-theme-primary selection:bg-purple-500 selection:text-white">
       <aside
-        className="hidden w-[72px] shrink-0 flex-col items-center justify-between border-r border-[#ececf0] bg-[#fbfbfc] px-3 py-4 md:flex dark:border-[#242434] dark:bg-[#0d0e14]"
+        className="hidden w-[72px] shrink-0 flex-col items-center justify-between border-r border-theme bg-theme-sidebar px-3 py-4 md:flex"
         aria-label="Main navigation"
       >
         <div className="flex flex-col items-center gap-4">
           <Link
             href="/workspace/control"
             aria-label="Workspace control"
-            className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#7657ff] shadow-[0_10px_22px_rgba(118,87,255,0.35)]"
+            className="flex h-11 w-11 items-center justify-center rounded-xl bg-theme-brand shadow-[0_10px_22px_rgba(95,61,255,0.35)]"
             title="Workspace control"
           >
-            <img src="/ztred-logo.svg" alt="Ztred" className="h-11 w-11" />
+            <ZtredLogo className="h-11 w-11" title="Ztred" />
           </Link>
 
           <button
             type="button"
             aria-label="Create new"
             title="Create new"
-            className="flex h-9 min-h-0 w-11 min-w-0 items-center justify-center rounded-xl border border-[#e7e7ec] bg-white text-[#6f6f7d] dark:border-[#262637] dark:bg-[#0b0c12] dark:text-[#aaa8bb]"
+            className="flex h-9 min-h-0 w-11 min-w-0 items-center justify-center rounded-xl border border-theme bg-theme-card text-theme-secondary"
           >
             <Plus className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -180,8 +186,8 @@ export default function GeneralChannelPage() {
                   title={item.label}
                   className={`flex h-10 w-11 items-center justify-center rounded-xl transition ${
                     isActive
-                      ? "bg-[#7657ff] text-white shadow-[0_10px_22px_rgba(118,87,255,0.35)]"
-                      : "text-[#70707f] hover:bg-[#f0eefc] hover:text-[#7657ff] dark:text-[#a2a0b3] dark:hover:bg-[#171426] dark:hover:text-[#8c6cff]"
+                      ? "bg-theme-brand text-white shadow-[0_10px_22px_rgba(95,61,255,0.35)]"
+                      : "text-theme-secondary hover-theme-primary-subtle hover:text-theme-on-primary"
                   }`}
                 >
                   <Icon className="h-5 w-5" aria-hidden="true" />
@@ -191,9 +197,26 @@ export default function GeneralChannelPage() {
           </nav>
         </div>
 
-        <Link
-          href="/settings/profile"
-          className="relative block h-11 w-11 rounded-full"
+        <div className="flex flex-col items-center gap-3">
+          {/* This route renders outside the workspace shell (see the early
+              return in (workspace)/layout.tsx), so it needs its own toggle. */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="flex h-9 min-h-0 w-11 min-w-0 items-center justify-center rounded-xl border border-theme bg-theme-card text-theme-secondary transition-colors hover:text-theme-primary"
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <Moon className="h-5 w-5" aria-hidden="true" />
+            )}
+          </button>
+
+          <Link
+            href="/settings/profile"
+            className="relative block h-11 w-11 rounded-full"
           aria-label="Jordan Lee profile"
           title="Jordan Lee"
         >
@@ -202,19 +225,23 @@ export default function GeneralChannelPage() {
             alt="Jordan Lee"
             className="h-11 w-11 rounded-full object-cover"
           />
-          <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-[#fbfbfc] bg-[#21b26f] dark:border-[#0d0e14]" />
-        </Link>
+            <span
+              className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 bg-theme-success"
+              style={{ borderColor: "var(--sidebar-bg)" }}
+            />
+          </Link>
+        </div>
       </aside>
 
-      <aside className="hidden w-[280px] shrink-0 border-r border-[#ececf0] bg-white px-5 py-5 md:flex md:flex-col dark:border-[#242434] dark:bg-[#11111b]">
+      <aside className="hidden w-[280px] shrink-0 border-r border-theme bg-theme-card px-5 py-5 md:flex md:flex-col">
         <div className="mb-5 flex items-center justify-between">
-          <h1 className="text-[26px] font-bold leading-none tracking-normal text-[#111113] dark:text-white">
+          <h1 className="text-[26px] font-bold leading-none tracking-normal text-theme-primary">
             Channels
           </h1>
           <button
             type="button"
             aria-label="Add channel"
-            className="flex h-9 min-h-0 w-9 min-w-0 items-center justify-center rounded-xl border border-[#c8b8ff] bg-[#eee8ff] text-[#7657ff] dark:border-[#463277] dark:bg-[#211735] dark:text-[#7f5cff]"
+            className="flex h-9 min-h-0 w-9 min-w-0 items-center justify-center rounded-xl border border-theme-accent bg-theme-brand-subtle text-theme-on-primary"
           >
             <Plus className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -227,10 +254,10 @@ export default function GeneralChannelPage() {
           id="channel-search"
           type="search"
           placeholder="Search channels..."
-          className="mb-5 h-[42px] w-full rounded-xl border border-transparent bg-[#f0f0f3] px-9 text-sm font-medium tracking-normal text-[#151518] placeholder:text-[#747482] focus:border-[#7657ff]/40 focus:outline-none dark:border-[#272737] dark:bg-[#181923] dark:text-white dark:placeholder:text-[#8e8c9f]"
+          className="mb-5 h-[42px] w-full rounded-xl border border-theme bg-theme-input px-9 text-sm font-medium tracking-normal text-theme-primary placeholder-theme focus:border-theme-accent focus:outline-none"
         />
 
-        <div className="mb-3 text-[12px] font-medium tracking-normal text-[#8a8a97] dark:text-[#8d8b9f]">
+        <div className="mb-3 text-[12px] font-medium tracking-normal text-theme-muted">
           Your channels
         </div>
 
@@ -245,20 +272,20 @@ export default function GeneralChannelPage() {
                 onClick={() => setActiveChannelId(channel.id)}
                 className={`flex h-10 min-h-0 w-full min-w-0 items-center gap-3 rounded-xl px-3 py-2 text-left text-[15px] font-medium tracking-normal transition ${
                   isActive
-                    ? "bg-[#ede7ff] text-[#7657ff] dark:bg-[#211b36] dark:text-[#7463ff]"
-                    : "text-[#666774] hover:bg-[#f4f3f8] hover:text-[#171719] dark:text-[#aaa7b8] dark:hover:bg-[#191a25] dark:hover:text-white"
+                    ? "bg-theme-brand-subtle text-theme-on-primary"
+                    : "text-theme-secondary hover:bg-theme-secondary hover:text-theme-primary"
                 }`}
                 aria-current={isActive ? "page" : undefined}
               >
                 <Hash
                   className={`h-4 w-4 shrink-0 ${
-                    isActive ? "text-[#7657ff]" : "text-[#71727e] dark:text-[#9c99aa]"
+                    isActive ? "text-theme-on-primary" : "text-theme-muted"
                   }`}
                   aria-hidden="true"
                 />
                 <span className="min-w-0 flex-1 truncate">{channel.name}</span>
                 {channel.unread ? (
-                  <span className="flex h-5 min-w-[20px] shrink-0 items-center justify-center rounded-full bg-[#7657ff] px-1.5 text-[11px] font-bold leading-none text-white">
+                  <span className="flex h-5 min-w-[20px] shrink-0 items-center justify-center rounded-full bg-theme-brand px-1.5 text-[11px] font-bold leading-none text-white">
                     {channel.unread}
                   </span>
                 ) : null}
@@ -268,23 +295,23 @@ export default function GeneralChannelPage() {
         </nav>
       </aside>
 
-      <main className="flex min-w-0 flex-1 flex-col bg-white dark:bg-[#06070b]">
-        <header className="flex h-[69px] shrink-0 items-center justify-between border-b border-[#ececf0] px-6 dark:border-[#242434]">
+      <main className="flex min-w-0 flex-1 flex-col bg-theme-primary">
+        <header className="flex h-[69px] shrink-0 items-center justify-between border-b border-theme px-6">
           <div className="flex min-w-0 items-center gap-3">
-            <Hash className="h-6 w-6 shrink-0 text-[#6e6f7c] dark:text-[#aaa8bb]" aria-hidden="true" />
+            <Hash className="h-6 w-6 shrink-0 text-theme-secondary" aria-hidden="true" />
             <div className="flex min-w-0 items-center gap-2">
-              <h2 className="truncate text-[18px] font-bold leading-none tracking-normal text-[#111113] dark:text-white">
+              <h2 className="truncate text-[18px] font-bold leading-none tracking-normal text-theme-primary">
                 {activeChannel.name}
               </h2>
-              <Star className="h-4 w-4 shrink-0 text-[#686977] dark:text-[#aaa8bb]" aria-hidden="true" />
+              <Star className="h-4 w-4 shrink-0 text-theme-secondary" aria-hidden="true" />
             </div>
-            <div className="hidden h-6 w-px bg-[#e3e3e8] sm:block dark:bg-[#292939]" />
-            <p className="hidden truncate text-sm font-normal tracking-normal text-[#747482] sm:block dark:text-[#8d8b9f]">
+            <div className="hidden h-6 w-px bg-theme-surface sm:block" />
+            <p className="hidden truncate text-sm font-normal tracking-normal text-theme-muted sm:block">
               {activeChannel.topic}
             </p>
           </div>
 
-          <div className="flex items-center gap-5 text-[#666774] dark:text-[#aaa8bb]">
+          <div className="flex items-center gap-5 text-theme-secondary">
             <div className="hidden items-center gap-1.5 text-sm font-medium md:flex">
               <Users className="h-4 w-4" aria-hidden="true" />
               <span>24</span>
@@ -301,13 +328,13 @@ export default function GeneralChannelPage() {
         <section className="flex min-h-0 flex-1 flex-col">
           <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-6">
             <div className="mb-7 flex flex-col items-center text-center">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e8defd] text-[#7657ff] dark:bg-[#20183a] dark:text-[#805cff]">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-theme-brand-subtle text-theme-on-primary">
                 <Hash className="h-8 w-8" aria-hidden="true" />
               </div>
-              <h3 className="text-[20px] font-bold leading-tight tracking-normal text-[#171719] dark:text-white">
+              <h3 className="text-[20px] font-bold leading-tight tracking-normal text-theme-primary">
                 Welcome to #{activeChannel.name}
               </h3>
-              <p className="text-sm font-normal leading-normal tracking-normal text-[#737381] dark:text-[#8d8b9f]">
+              <p className="text-sm font-normal leading-normal tracking-normal text-theme-muted">
                 {activeChannel.topic}
               </p>
             </div>
@@ -322,14 +349,14 @@ export default function GeneralChannelPage() {
                   />
                   <div className="min-w-0 pt-0.5">
                     <div className="mb-1 flex items-baseline gap-2">
-                      <h4 className="text-[15px] font-semibold leading-none tracking-normal text-[#171719] dark:text-white">
+                      <h4 className="text-[15px] font-semibold leading-none tracking-normal text-theme-primary">
                         {messageItem.author}
                       </h4>
-                      <time className="text-[12px] font-normal leading-none tracking-normal text-[#7e7e8b] dark:text-[#8d8b9f]">
+                      <time className="text-[12px] font-normal leading-none tracking-normal text-theme-muted">
                         {messageItem.time}
                       </time>
                     </div>
-                    <p className="max-w-[820px] text-[15px] font-normal leading-[1.45] tracking-normal text-[#171719] dark:text-[#f6f4fb]">
+                    <p className="max-w-[820px] text-[15px] font-normal leading-[1.45] tracking-normal text-theme-primary">
                       {messageItem.body}
                     </p>
                   </div>
@@ -341,13 +368,13 @@ export default function GeneralChannelPage() {
 
           <div className="shrink-0 px-6 pb-6">
             <form
-              className="flex h-[62px] items-center gap-2 rounded-2xl border border-[#e6e6eb] bg-white px-3 shadow-[0_1px_0_rgba(20,20,30,0.02)] dark:border-[#252535] dark:bg-[#171720]"
+              className="flex h-[62px] items-center gap-2 rounded-2xl border border-theme bg-theme-card px-3 shadow-[0_1px_0_rgba(20,20,30,0.02)]"
               onSubmit={handleSend}
             >
               <button
                 type="button"
                 aria-label="Add attachment"
-                className="flex h-9 min-h-0 w-9 min-w-0 shrink-0 items-center justify-center rounded-lg bg-[#7657ff] text-white"
+                className="flex h-9 min-h-0 w-9 min-w-0 shrink-0 items-center justify-center rounded-lg bg-theme-brand text-white"
               >
                 <Plus className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -360,17 +387,17 @@ export default function GeneralChannelPage() {
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
                 placeholder={`Message #${activeChannel.name}`}
-                className="min-w-0 flex-1 bg-transparent px-1 text-[15px] font-normal tracking-normal text-[#171719] outline-none placeholder:text-[#737381] dark:text-white dark:placeholder:text-[#8d8b9f]"
+                className="min-w-0 flex-1 bg-transparent px-1 text-[15px] font-normal tracking-normal text-theme-primary outline-none placeholder-theme"
               />
 
-              <div className="flex shrink-0 items-center gap-2 text-[#686977] dark:text-[#aaa8bb]">
+              <div className="flex shrink-0 items-center gap-2 text-theme-secondary">
                 <button type="button" aria-label="Add emoji" className="flex h-8 min-h-0 w-8 min-w-0 items-center justify-center rounded-lg">
                   <Smile className="h-4 w-4" aria-hidden="true" />
                 </button>
                 <button type="button" aria-label="Attach file" className="flex h-8 min-h-0 w-8 min-w-0 items-center justify-center rounded-lg">
                   <Paperclip className="h-4 w-4" aria-hidden="true" />
                 </button>
-                <button type="submit" aria-label="Send message" className="flex h-9 min-h-0 w-9 min-w-0 items-center justify-center rounded-lg bg-[#7657ff] text-white">
+                <button type="submit" aria-label="Send message" className="flex h-9 min-h-0 w-9 min-w-0 items-center justify-center rounded-lg bg-theme-brand text-white">
                   <Send className="h-4 w-4" aria-hidden="true" />
                 </button>
               </div>

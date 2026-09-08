@@ -296,7 +296,7 @@ export default function DocsListingPage() {
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => toggleStar(doc.id)}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-zinc-600 hover:text-amber-400 transition-colors"
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-amber-400 transition-colors"
                   >
                     <Star
                       className={`w-4 h-4 ${

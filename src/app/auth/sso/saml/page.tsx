@@ -7,7 +7,7 @@ export default function SAMLPage() {
         <h1 className="text-3xl font-bold text-center text-white">
           Sign in with Company SSO
         </h1>
-        <div className="bg-zinc-900 rounded-lg p-6">
+        <div className="bg-theme-card rounded-lg p-6">
           <p className="mb-4 text-center">
             Redirecting to your organization&apos;s SSO portal...
           </p>

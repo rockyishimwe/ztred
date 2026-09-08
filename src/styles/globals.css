@@ -18,18 +18,33 @@
     --border-hover: #cbd5e1;
     --sidebar-bg: #ffffff;
     --sidebar-hover: #f1f5f9;
-    --sidebar-active: #5F3DFF;
+    --sidebar-active: rgb(var(--accent-600));
     --sidebar-text: #334155;
     --sidebar-muted: #94a3b8;
-    --primary: #5F3DFF;
-    --primary-hover: #4A2DE6;
+    /* Accent scale — channel triplets so Tailwind's <alpha-value> works.
+       Overwritten at runtime by applyAccent() in src/lib/accent.ts. */
+    --accent-50: 247 245 255;
+    --accent-100: 237 234 255;
+    --accent-200: 218 210 255;
+    --accent-300: 191 177 255;
+    --accent-400: 153 131 255;
+    --accent-500: 95 61 255;
+    --accent-600: 95 61 255;
+    --accent-700: 86 55 230;
+    --accent-800: 66 43 178;
+    --accent-900: 48 30 128;
+    --accent-950: 28 18 76;
+    --primary: rgb(var(--accent-600));
+    --primary-hover: rgb(var(--accent-700));
+    /* Readable foreground on an accent-filled surface; recomputed per accent. */
+    --on-primary: #ffffff;
     --accent-blue: #1264A3;
     --success: #16a34a;
     --warning: #d97706;
     --danger: #dc2626;
     --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --ring: #5F3DFF;
+    --ring: rgb(var(--accent-600));
     /* Tinted neutral from primary hue for cohesion */
     --bg-tinted: color-mix(in srgb, var(--primary) 3%, #f8fafc);
     --surface-elevated: #ffffff;
@@ -106,18 +121,20 @@
     --border-hover: #334155;
     --sidebar-bg: #0b0f19;
     --sidebar-hover: #141824;
-    --sidebar-active: #5F3DFF;
+    --sidebar-active: rgb(var(--accent-600));
     --sidebar-text: #e2e8f0;
     --sidebar-muted: #64748b;
-    --primary: #5F3DFF;
-    --primary-hover: #4A2DE6;
+    --primary: rgb(var(--accent-600));
+    --primary-hover: rgb(var(--accent-700));
+    /* Readable foreground on an accent-filled surface; recomputed per accent. */
+    --on-primary: #ffffff;
     --accent-blue: #1264A3;
     --success: #22c55e;
     --warning: #eab308;
     --danger: #ef4444;
     --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
-    --ring: #5F3DFF;
+    --ring: rgb(var(--accent-600));
     --bg-tinted: color-mix(in srgb, var(--primary) 5%, #0b0f19);
     --surface-elevated: #1a1f2e;
   }
@@ -280,7 +297,7 @@
 /* Selection Color (themed) */
 ::selection {
   background-color: var(--primary);
-  color: #ffffff;
+  color: var(--on-primary, #ffffff);
 }
 
 /* Caret Color */
@@ -411,20 +428,20 @@ input, textarea, [contenteditable] {
 /* --- Variant support for property-dependent names ---
    (bg-theme-primary, bg-theme-secondary, text-theme-primary and
    text-theme-secondary are property-dependent; see comment above.) */
-.hover\\:bg-theme-secondary:hover { background-color: var(--bg-secondary); }
-.hover\\:bg-theme-card:hover { background-color: var(--bg-card); }
-.hover\\:bg-theme-input:hover { background-color: var(--bg-input); }
-.hover\\:bg-theme-primary:hover { background-color: var(--primary); }
-.hover\\:bg-theme-primary-hover:hover { background-color: var(--primary-hover); }
-.hover\\:bg-theme-secondary-hover:hover { background-color: var(--bg-secondary); }
-.hover\\:border-theme:hover { border-color: var(--border-hover); }
-.hover\\:border-theme-hover:hover { border-color: var(--border-hover); }
-.hover\\:text-theme-primary:hover { color: var(--text-primary); }
-.hover\\:text-theme-secondary:hover { color: var(--text-secondary); }
-.hover\\:text-theme-sidebar:hover { color: var(--sidebar-text); }
-.hover\\:text-theme-on-primary:hover { color: var(--primary); }
-.hover\\:text-theme-danger:hover { color: var(--danger); }
-.focus\\:border-theme-accent:focus { border-color: var(--primary); }
+.hover\:bg-theme-secondary:hover { background-color: var(--bg-secondary); }
+.hover\:bg-theme-card:hover { background-color: var(--bg-card); }
+.hover\:bg-theme-input:hover { background-color: var(--bg-input); }
+.hover\:bg-theme-primary:hover { background-color: var(--primary); }
+.hover\:bg-theme-primary-hover:hover { background-color: var(--primary-hover); }
+.hover\:bg-theme-secondary-hover:hover { background-color: var(--bg-secondary); }
+.hover\:border-theme:hover { border-color: var(--border-hover); }
+.hover\:border-theme-hover:hover { border-color: var(--border-hover); }
+.hover\:text-theme-primary:hover { color: var(--text-primary); }
+.hover\:text-theme-secondary:hover { color: var(--text-secondary); }
+.hover\:text-theme-sidebar:hover { color: var(--sidebar-text); }
+.hover\:text-theme-on-primary:hover { color: var(--primary); }
+.hover\:text-theme-danger:hover { color: var(--danger); }
+.focus\:border-theme-accent:focus { border-color: var(--primary); }
 
 /* --- Sidebar-specific --- */
 .bg-theme-sidebar { background-color: var(--sidebar-bg); }
@@ -490,7 +507,7 @@ input, textarea, [contenteditable] {
 /* Primary button */
 .btn-primary {
   background-color: var(--primary);
-  color: #ffffff;
+  color: var(--on-primary, #ffffff);
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.1);
 }
 
@@ -993,18 +1010,20 @@ textarea:focus-visible {
     --border-hover: #334155;
     --sidebar-bg: #0b0f19;
     --sidebar-hover: #141824;
-    --sidebar-active: #5F3DFF;
+    --sidebar-active: rgb(var(--accent-600));
     --sidebar-text: #e2e8f0;
     --sidebar-muted: #64748b;
-    --primary: #5F3DFF;
-    --primary-hover: #4A2DE6;
+    --primary: rgb(var(--accent-600));
+    --primary-hover: rgb(var(--accent-700));
+    /* Readable foreground on an accent-filled surface; recomputed per accent. */
+    --on-primary: #ffffff;
     --accent-blue: #1264A3;
     --success: #22c55e;
     --warning: #eab308;
     --danger: #ef4444;
     --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
-    --ring: #5F3DFF;
+    --ring: rgb(var(--accent-600));
     --bg-tinted: color-mix(in srgb, var(--primary) 5%, #0b0f19);
     --surface-elevated: #1a1f2e;
   }
@@ -1172,4 +1191,106 @@ html {
   .safe-area-top {
     padding-top: env(safe-area-inset-top) !important;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FORM CONTROL THEMING
+   Native controls (checkbox, radio, range, select) do not inherit the
+   CSS-variable palette on their own — these classes make them follow the
+   theme instead of falling back to the browser's light-mode chrome.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Checkboxes, radios and ranges pick up the brand color in both themes. */
+.control-theme {
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.control-theme:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.control-theme:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Selects need the same treatment as .input-theme plus an explicit
+   color-scheme so the native dropdown list is dark in dark mode. */
+.select-theme {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  color-scheme: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+.select-theme:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 15%, transparent);
+}
+
+.select-theme option {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* Form label / helper text pairing used across the settings screens. */
+.form-label {
+  color: var(--text-secondary);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+}
+
+.form-hint {
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+}
+
+/* Settings page scaffolding — one consistent card + heading rhythm. */
+.settings-page {
+  max-width: 56rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.settings-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.settings-card h2 {
+  color: var(--text-primary);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-semibold);
+}
+
+/* A bordered row inside a settings card (toggle rows, channel rows). */
+.settings-row {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-input);
+}
+
+/* Muted surface fill — the background counterpart to .text-theme-muted. */
+.bg-theme-muted { background-color: var(--text-muted); }
+
+/* Variants referenced by the app that had no rule at all — without these the
+   class name is inert (Tailwind cannot generate variants of a hand-authored
+   class, and these names are not palette entries). */
+.bg-theme-secondary-hover { background-color: var(--bg-secondary); }
+.hover\:bg-theme-secondary-subtle:hover {
+  background-color: color-mix(in srgb, var(--bg-secondary) 60%, transparent);
+}
+.focus\:ring-theme-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 35%, transparent);
 }

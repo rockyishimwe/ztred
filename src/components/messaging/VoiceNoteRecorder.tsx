@@ -106,9 +106,9 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
       {!isRecording && (
         <button
           onClick={startRecording}
-          className="p-2 rounded hover:bg-zinc-100"
+          className="p-2 rounded hover:bg-theme-secondary"
         >
-          <Mic className="h-4 w-4 text-zinc-500 hover:text-zinc-600"/>
+          <Mic className="h-4 w-4 text-theme-secondary hover:text-theme-primary"/>
         </button>
       )}
       {isRecording && (
@@ -116,22 +116,22 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
           <div className="flex items-center space-x-2">
             <button
               onClick={isPaused ? resumeRecording : pauseRecording}
-              className="p-2 rounded hover:bg-zinc-100"
+              className="p-2 rounded hover:bg-theme-secondary"
             >
               {isPaused ? (
-                <Play className="h-4 w-4 text-zinc-500 hover:text-zinc-600"/>
+                <Play className="h-4 w-4 text-theme-secondary hover:text-theme-primary"/>
               ) : (
-                <Pause className="h-4 w-4 text-zinc-500 hover:text-zinc-600"/>
+                <Pause className="h-4 w-4 text-theme-secondary hover:text-theme-primary"/>
               )}
             </button>
             <button
               onClick={stopRecording}
-              className="p-2 rounded hover:bg-zinc-100"
+              className="p-2 rounded hover:bg-theme-secondary"
             >
-              <Square className="h-4 w-4 text-zinc-500 hover:text-zinc-600"/>
+              <Square className="h-4 w-4 text-theme-secondary hover:text-theme-primary"/>
             </button>
           </div>
-          <div className="text-xs font-mono text-zinc-600">
+          <div className="text-xs font-mono text-theme-secondary">
             {formatTime(timeElapsed)} / 05:00
           </div>
         </div>

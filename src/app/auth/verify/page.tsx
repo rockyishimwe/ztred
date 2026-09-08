@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Mail, RefreshCw, ArrowRight, Check } from 'lucide-react';
+import { ZtredLogo } from "@/components/ui/ZtredLogo";
 
 export default function VerifyPage() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function VerifyPage() {
           {/* Logo */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <img src="/ztred-logo.svg" alt="Ztred" className="w-10 h-10" />
+              <ZtredLogo className="w-10 h-10" title="Ztred" />
               <span className="text-xl font-bold tracking-tight text-theme-primary">
                 Ztred
               </span>
@@ -62,7 +63,7 @@ export default function VerifyPage() {
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-theme-primary">
               Check your inbox
             </h1>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-theme-muted">
               We sent a six-digit verification code to <span className="text-theme-primary font-medium">you@company.com</span>.
             </p>
           </div>
@@ -95,7 +96,7 @@ export default function VerifyPage() {
 
           {/* Resend box card */}
           <div className="bg-theme-card border border-theme rounded-2xl p-5 text-center space-y-2">
-            <p className="text-xs text-zinc-400">Didn&apos;t receive the email?</p>
+            <p className="text-xs text-theme-muted">Didn&apos;t receive the email?</p>
             <button
               type="button"
               onClick={() => alert('Verification code resent!')}
@@ -137,12 +138,12 @@ export default function VerifyPage() {
             </div>
             <div>
               <div className="font-semibold text-sm text-theme-primary">Maya Chen</div>
-              <div className="text-xs text-zinc-400">Growth Lead, Northstar</div>
+              <div className="text-xs text-theme-muted">Growth Lead, Northstar</div>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center space-x-6 text-xs text-zinc-400 z-10">
+        <div className="flex items-center space-x-6 text-xs text-theme-muted z-10">
           <span className="flex items-center"><Check className="w-3.5 h-3.5 text-green-500 mr-1.5" /> SOC 2 ready</span>
           <span className="flex items-center"><Check className="w-3.5 h-3.5 text-green-500 mr-1.5" /> Private by default</span>
         </div>

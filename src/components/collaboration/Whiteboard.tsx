@@ -22,12 +22,12 @@ export const Whiteboard: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      <div className="flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700">
+      <div className="flex items-center justify-between p-4 border-b border-theme">
         <div className="flex items-center space-x-4">
-          <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+          <h2 className="text-xl font-bold text-theme-primary">
             Sprint Planning Whiteboard
           </h2>
-          <div className="flex items-center space-x-2 text-xs text-zinc-500">
+          <div className="flex items-center space-x-2 text-xs text-theme-muted">
             <div className="flex items-center space-x-1">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
               <span>2 collaborators</span>
@@ -38,30 +38,30 @@ export const Whiteboard: React.FC = () => {
           <button
             type="button"
             aria-label="Upload file"
-            className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-theme-secondary transition-colors"
           >
-            <Upload className="w-5 h-5 text-zinc-600 dark:text-zinc-300" aria-hidden="true" />
+            <Upload className="w-5 h-5 text-theme-secondary" aria-hidden="true" />
           </button>
           <button
             type="button"
             aria-label="Insert image"
-            className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-theme-secondary transition-colors"
           >
-            <ImageIcon className="w-5 h-5 text-zinc-600 dark:text-zinc-300" aria-hidden="true" />
+            <ImageIcon className="w-5 h-5 text-theme-secondary" aria-hidden="true" />
           </button>
           <button
             type="button"
             aria-label="Edit note"
-            className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-theme-secondary transition-colors"
           >
-            <PencilLine className="w-5 h-5 text-zinc-600 dark:text-zinc-300" aria-hidden="true" />
+            <PencilLine className="w-5 h-5 text-theme-secondary" aria-hidden="true" />
           </button>
           <button
             type="button"
             aria-label="Save"
-            className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-theme-secondary transition-colors"
           >
-            <Save className="w-5 h-5 text-zinc-600 dark:text-zinc-300" aria-hidden="true" />
+            <Save className="w-5 h-5 text-theme-secondary" aria-hidden="true" />
           </button>
         </div>
       </div>
