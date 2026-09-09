@@ -30,7 +30,11 @@ const config: Config = {
         'theme-tinted': 'var(--bg-tinted)',
         'theme-brand': 'rgb(var(--accent-600) / <alpha-value>)',
         'theme-brand-hover': 'rgb(var(--accent-700) / <alpha-value>)',
-        'theme-on-primary': 'rgb(var(--accent-600) / <alpha-value>)',
+        /* Readable foreground for text sitting ON an accent-filled surface.
+           Flips to dark for light accents (amber, lime) — see isLightColor()
+           in src/lib/accent.ts. Distinct from `theme-brand`, which IS the
+           accent; the two were previously conflated under one name. */
+        'theme-on-brand': 'var(--on-primary)',
         'theme-primary-hover': 'rgb(var(--accent-700) / <alpha-value>)',
         'theme-success': 'var(--success)',
         'theme-warning': 'var(--warning)',

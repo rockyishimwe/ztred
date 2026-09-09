@@ -23,19 +23,23 @@ After any non-trivial edit run `npm run typecheck && npm run lint`. There is no 
 ## Architecture
 
 ### Route groups
-`src/app/` uses three separate shells, each with its own duplicated nav chrome:
+`src/app/` uses three separate shells, each with its own duplicated nav chrome. All three list the same main nav hrefs, so a nav change usually has to be made in more than one place — grep for the href before assuming one edit is enough:
 
 - `workspace/(workspace)/layout.tsx` — the main product shell: icon rail + mobile top bar / slide-out menu / bottom tab bar.
 - `workspace/(control)/layout.tsx` — the admin "control panel" shell. It re-declares the same `mainNavItems` list plus `controlNavItems`.
-- `app/settings/layout.tsx` and `workspace/(workspace)/settings/layout.tsx` — two independent settings shells with different nav item sets.
+- `workspace/(workspace)/settings/layout.tsx` — the single settings shell. `/settings/*` used to be a second, drifted copy; it is now a catch-all at `app/settings/[[...slug]]/page.tsx` that redirects into this tree.
 
-Consequence: a nav change usually has to be made in more than one place. Grep for the href before assuming one edit is enough.
+**Special case:** `workspace/(workspace)/layout.tsx` short-circuits (`return <>{children}</>`) for any path starting with `/workspace/channels` — that page renders its own full chrome (including its own theme toggle, since it inherits no header).
 
-**Special case:** `workspace/(workspace)/layout.tsx` short-circuits (`return <>{children}</>`) for any path starting with `/workspace/channels` — that page renders its own full chrome and also bypasses the CSS-variable theme system with hardcoded hexes.
+Every dynamic segment (`dm/[userId]`, `meetings/[meetingId]`, `docs/[docId]`, `whiteboard/[wbId]`, `tasks/[projectId]/{board,gantt}`, `projects/[projectId]`) reads its param via `useParams()` and resolves it through a `get*()` helper that falls back to a default when the id is unknown. Keep that pattern.
 
-Dynamic segments (`dm/[userId]`, `meetings/[meetingId]`, `docs/[docId]`, `whiteboard/[wbId]`, `tasks/[projectId]`, `projects/[projectId]`) mostly ignore their param. Only `dm/[userId]` reads it, via `useParams()` with a fallback to a default id when the id isn't in the mock data — copy that pattern when making the others param-aware.
+Shared mock data lives in `src/lib/mock/` (`projects.ts`, `docs.ts`, `meetings.ts`) so list and detail routes agree. Other pages still hold their own module-level `const` arrays; move data there when a second route needs it.
 
-Nearly every file is `"use client"` (62 of 77). Server components are not used.
+`/workspace/{dm,tasks,whiteboard,channels}` are `redirect()`-only index routes that exist so the nav can prefix-match for the active state instead of pointing at a hardcoded id. `/workspace/meetings` is a real list page.
+
+Nearly every page is `"use client"`. The only server components are the `redirect()` index routes and the thin per-section `layout.tsx` files that carry `metadata.title` — a client page cannot export `metadata`, so a new section needs one of those to get its own browser-tab title.
+
+Nav active state comes from `isRouteActive(pathname, href, exact?)` in `src/lib/utils.ts` (prefix match; pass `exact` for index routes like `/workspace`). All four shells use it — do not reintroduce a bare `pathname === href`.
 
 ### Theming — the important part
 Two coordinated systems; getting this wrong produces classes that silently generate no CSS.
@@ -55,16 +59,17 @@ Rules that follow from this:
 
 - The mark is `<ZtredLogo />` (`src/components/ui/ZtredLogo.tsx`), not `/ztred-logo.svg` — the static file paints the Z as a clipped raster image that CSS cannot recolor. The static files remain only as the pre-JS favicon.
 - The favicon is re-tinted at runtime by `applyFavicon()`, which replaces the `link[rel="icon"]` tags Next renders from `metadata`.
-- Text on an accent-filled surface should use `var(--on-primary)`, which flips to dark for light accents (amber, lime). Bare `text-white` on a brand background still exists in places and will be low-contrast under a light accent.
-- The pre-paint script in `app/layout.tsx` duplicates the shade math so the accent lands before first paint; it must stay in sync with `accentShades()`.
+- Text on an accent-filled surface should use `var(--on-primary)` or the `text-theme-on-brand` class, which flips to dark for light accents (amber, lime). `text-theme-brand` is the accent *as* a text colour — the two are easy to confuse, and were once conflated under a single misnamed class.
+- Bare `text-white` on a brand background still exists in places and will be low-contrast under a light accent.
+- The pre-paint script in `app/layout.tsx` duplicates both the shade math (`accentShades()`) and the luminance test (`isLightColor()`) so the accent *and* `--on-primary` land before first paint. All three must stay in sync, as must the `--accent-*` fallbacks in `:root`.
 
 **Theme state** lives in `uiStore`: `themePreference` is what the user chose (`'dark' | 'light' | 'system'`) and `theme` is the resolved mode — always render from `theme`, drive settings UI from `themePreference`. The pre-paint inline script in `app/layout.tsx` resolves and applies the stored preference before first paint; `ThemeProvider` then calls `hydrateTheme()` (which must not re-persist, or `'system'` would collapse to a fixed mode) and subscribes to OS and cross-tab changes.
 
-Routes rendered outside the workspace shell — `/settings/*`, `/admin`, `/workspace/channels/*` — need to carry their own theme toggle; there is no shared header to inherit one from.
+Routes rendered outside the workspace shell — `/admin`, `/workspace/channels/*`, `/auth/*` — need to carry their own theme toggle; there is no shared header to inherit one from.
 - The design tokens (HIG-derived type scale `text-display`…`text-micro`, `min-h-touch` 44px targets, `shadow-elevated/floating/overlay`, `--radius-*`) exist in both the Tailwind config and as CSS vars. Prefer the existing tokens over ad-hoc values.
 
 ### State
-`src/stores/uiStore.ts` (Zustand) is the only store: sidebar collapse, right-panel selection, theme. Everything else is component-local `useState`. `src/types/api.ts` describes a fuller domain model (User, Workspace, Stream, Message, …) but is only imported by four messaging/AI components — page mock data is shaped ad hoc and does not conform to it.
+`src/stores/uiStore.ts` (Zustand) is the only store: sidebar collapse, right-panel selection, theme, accent, and accessibility preferences. Everything else is component-local `useState`. `src/types/api.ts` describes a fuller domain model (User, Workspace, Stream, Message, …) but is only imported by four messaging/AI components — page mock data is shaped ad hoc and does not conform to it.
 
 ### Components
 `src/components/` holds the few genuinely shared pieces: `ui/` primitives (Button, Badge, Avatar, dropdown-menu, emoji-picker, skeleton), `messaging/`, `collaboration/` (DocEditor, Whiteboard), `automate/AIAssistantPanel`, `tasks/GanttChart`, `projects/CreateProjectModal`. Most screens are single large page files (`projects/[projectId]/page.tsx` is ~1500 lines) with their UI inlined — that is the prevailing style; don't extract components unless asked.
@@ -73,6 +78,10 @@ Routes rendered outside the workspace shell — `/settings/*`, `/admin`, `/works
 
 ## Known state
 
-`CODE_AUDIT_REPORT.md` is a full audit of `src/` (dead handlers, never-generated CSS classes, unused deps, ignored route params) with a phased fix plan. Recent commits have worked through much of it, so **verify a finding still applies before acting on it** — it is a snapshot, not current truth.
+Modals go through `src/components/ui/Modal.tsx` — it supplies `role="dialog"`, `aria-modal`, Escape, a focus trap, focus restore, backdrop dismissal and scroll lock. Do not hand-roll another `fixed inset-0` overlay; pass `contained` when the dialog must sit inside its own pane rather than the viewport.
+
+Accessibility preferences (`reduceMotion`, `highContrast`) live in `uiStore` and are reflected onto `<html>` as `data-reduce-motion` / `data-high-contrast`; the rules that act on them are at the bottom of globals.css.
+
+**Known gaps.** ~134 buttons still have no click handler (mostly secondary icon chrome); `src/components/messaging/*`, `automate/AIAssistantPanel`, `ui/Avatar` and `ui/skeleton` are not imported by anything, and `@tanstack/react-virtual` is only reachable through that dead `MessageList`. About 20 `<label>` elements caption groups of buttons (colour swatches, priority pills) rather than a form control and still need `role="group"`/`aria-label` instead.
 
 `README.md`'s "Project Structure" section is stale: it lists `components/layout/`, `components/sidebar/`, and `hooks/` (useWebSocket), none of which exist, and a tech stack (TipTap, Radix beyond `react-slot`, socket.io, yjs) that is no longer in `package.json`.

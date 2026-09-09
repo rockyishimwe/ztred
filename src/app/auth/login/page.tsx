@@ -22,7 +22,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-dvh bg-[#0b0f19] text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
+    <div className="min-h-dvh bg-theme-primary text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
       {/* Left Column - Form */}
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-12 max-w-xl mx-auto lg:mx-0 w-full">
         <div className="space-y-8">
@@ -46,10 +46,8 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-theme-secondary">
-                Work email
-              </label>
-              <input
+              <label htmlFor="login-work-email" className="block text-xs font-semibold text-theme-secondary">Work email</label>
+              <input id="login-work-email"
                 type="email"
                 required
                 value={email}
@@ -61,15 +59,16 @@ export default function LoginPage() {
 
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="block text-xs font-semibold text-theme-secondary">
+                <label htmlFor="auth-password" className="block text-xs font-semibold text-theme-secondary">
                   Password
                 </label>
-                <a href="#" className="text-xs text-purple-400 hover:underline">
+                <NavLink href="/auth/verify" className="text-xs text-purple-400 hover:underline">
                   Forgot password?
-                </a>
+                </NavLink>
               </div>
               <div className="relative">
                 <input
+                  id="auth-password"
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
@@ -91,7 +90,7 @@ export default function LoginPage() {
               type="submit"
               disabled={pending !== null}
               aria-busy={pending === 'submit' || undefined}
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-theme-primary font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group mt-2 disabled:opacity-70 disabled:cursor-progress"
+              className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-theme-on-brand font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group mt-2 disabled:opacity-70 disabled:cursor-progress"
             >
               <span>{pending === 'submit' ? 'Signing in…' : 'Sign in'}</span>
               {pending === 'submit' ? (
@@ -109,7 +108,7 @@ export default function LoginPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <button
+            <button type="button"
               onClick={() => { setPending('Google'); navigate('/workspace'); }}
               disabled={pending !== null}
               aria-busy={pending === 'Google' || undefined}
@@ -118,7 +117,7 @@ export default function LoginPage() {
               {pending === 'Google' ? <Spinner size="small" className="size-3.5" /> : null}
               Google
             </button>
-            <button
+            <button type="button"
               onClick={() => { setPending('GitHub'); navigate('/workspace'); }}
               disabled={pending !== null}
               aria-busy={pending === 'GitHub' || undefined}
@@ -128,6 +127,18 @@ export default function LoginPage() {
               GitHub
             </button>
           </div>
+
+          {/* SSO. /auth/sso/saml existed but nothing linked to it. */}
+          <button
+            type="button"
+            onClick={() => { setPending('SSO'); navigate('/auth/sso/saml'); }}
+            disabled={pending !== null}
+            aria-busy={pending === 'SSO' || undefined}
+            className="w-full bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-theme-secondary flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-progress"
+          >
+            {pending === 'SSO' ? <Spinner size="small" className="size-3.5" /> : null}
+            Single sign-on (SAML)
+          </button>
 
           <div className="text-center text-xs text-theme-muted pt-2">
             New to Ztred?{' '}
@@ -142,7 +153,7 @@ export default function LoginPage() {
       <div className="hidden lg:flex flex-1 bg-theme-surface border-l border-theme/80 p-16 flex-col justify-between relative overflow-hidden">
         {/* Background Geometric Circles */}
         <div className="absolute top-12 right-12 w-96 h-96 rounded-full border border-purple-900/30 pointer-events-none"></div>
-        <div className="absolute top-24 right-24 w-64 h-64 rounded-full border border-indigo-900/40 pointer-events-none"></div>
+        <div className="absolute top-24 right-24 w-64 h-64 rounded-full border border-purple-950/40 pointer-events-none"></div>
 
         <div className="flex items-center space-x-2 text-xs font-medium text-purple-400">
           <span>✦</span>

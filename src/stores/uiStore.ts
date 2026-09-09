@@ -14,6 +14,44 @@ export type ThemeMode = 'dark' | 'light';
 export type ThemePreference = ThemeMode | 'system';
 
 export const THEME_STORAGE_KEY = 'ztred-theme';
+export const A11Y_STORAGE_KEY = 'ztred-a11y';
+
+/** Accessibility preferences that actually change how the app renders. */
+export interface A11yPreferences {
+  /** Suppress transitions and animations app-wide. */
+  reduceMotion: boolean;
+  /** Strengthen borders and text contrast. */
+  highContrast: boolean;
+}
+
+const DEFAULT_A11Y: A11yPreferences = {
+  reduceMotion: false,
+  highContrast: false,
+};
+
+const readStoredA11y = (): A11yPreferences => {
+  if (typeof window === 'undefined') return DEFAULT_A11Y;
+  try {
+    const raw = localStorage.getItem(A11Y_STORAGE_KEY);
+    if (!raw) return DEFAULT_A11Y;
+    const parsed = JSON.parse(raw) as Partial<A11yPreferences>;
+    return {
+      reduceMotion: parsed.reduceMotion === true,
+      highContrast: parsed.highContrast === true,
+    };
+  } catch {
+    return DEFAULT_A11Y;
+  }
+};
+
+/** Reflect the preferences onto <html> so plain CSS in globals.css can act on
+ *  them — these used to be `defaultChecked` inputs that changed nothing. */
+const paintA11y = (prefs: A11yPreferences) => {
+  if (typeof document === 'undefined') return;
+  const root = document.documentElement;
+  root.toggleAttribute('data-reduce-motion', prefs.reduceMotion);
+  root.toggleAttribute('data-high-contrast', prefs.highContrast);
+};
 
 /** Resolve the OS preference. Defaults to dark when unknown (SSR, no matchMedia). */
 export const getSystemTheme = (): ThemeMode => {
@@ -67,6 +105,11 @@ interface UIState {
   syncSystemTheme: () => void;
   /** Adopt the stored accent without re-persisting it. Called once on mount. */
   hydrateAccent: () => void;
+  /** Accessibility preferences; applied to <html> and read by globals.css. */
+  a11y: A11yPreferences;
+  setA11yPreference: (key: keyof A11yPreferences, value: boolean) => void;
+  /** Adopt the stored preferences without re-persisting them. */
+  hydrateA11y: () => void;
 }
 
 export const useUIStore = create<UIState>((set, get) => ({
@@ -76,6 +119,7 @@ export const useUIStore = create<UIState>((set, get) => ({
   theme: 'dark',
   themePreference: 'dark',
   accentColor: DEFAULT_ACCENT,
+  a11y: DEFAULT_A11Y,
 
   setIsSidebarCollapsed: (collapsed) => set({ isSidebarCollapsed: collapsed }),
   setActiveRightPanel: (panel) => set({ activeRightPanel: panel }),
@@ -113,6 +157,23 @@ export const useUIStore = create<UIState>((set, get) => ({
     set({ accentColor: accent });
     applyAccent(accent);
     applyFavicon(accent);
+  },
+
+  setA11yPreference: (key, value) => {
+    const next = { ...get().a11y, [key]: value };
+    set({ a11y: next });
+    paintA11y(next);
+    try {
+      localStorage.setItem(A11Y_STORAGE_KEY, JSON.stringify(next));
+    } catch {
+      /* storage unavailable — the preference still applies for this session */
+    }
+  },
+
+  hydrateA11y: () => {
+    const prefs = readStoredA11y();
+    set({ a11y: prefs });
+    paintA11y(prefs);
   },
 
   // Toggling always lands on an explicit theme, never back on 'system'.

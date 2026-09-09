@@ -16,6 +16,7 @@ import {
   BarChart2,
   Sparkles,
   Bell,
+  Search,
   Settings,
   Crown,
   Plus,
@@ -25,6 +26,7 @@ import {
   X,
 } from "lucide-react";
 import { useUIStore } from "@/stores/uiStore";
+import { isRouteActive } from "@/lib/utils";
 import { ZtredLogo } from "@/components/ui/ZtredLogo";
 import { Spinner } from "@/components/ui/spinner";
 
@@ -57,9 +59,9 @@ export default function WorkspaceLayout({
 
   const navItems = [
     { icon: Home, href: "/workspace", label: "Home" },
-    { icon: MessageSquare, href: "/workspace/dm/user_1", label: "DMs" },
-    { icon: Hash, href: "/workspace/channels/general", label: "Channels" },
-    { icon: Video, href: "/workspace/meetings/meet_1", label: "Meetings" },
+    { icon: MessageSquare, href: "/workspace/dm", label: "DMs" },
+    { icon: Hash, href: "/workspace/channels", label: "Channels" },
+    { icon: Video, href: "/workspace/meetings", label: "Meetings" },
     { icon: Calendar, href: "/workspace/calendar", label: "Calendar" },
     { icon: CheckSquare, href: "/workspace/projects", label: "Projects" },
     { icon: Folder, href: "/workspace/files", label: "Files" },
@@ -67,16 +69,17 @@ export default function WorkspaceLayout({
     { icon: Users, href: "/workspace/people", label: "Members" },
     { icon: BarChart2, href: "/workspace/analytics", label: "Analytics" },
     { icon: Sparkles, href: "/workspace/ai", label: "AI" },
+    { icon: Search, href: "/workspace/search", label: "Search" },
     { icon: Bell, href: "/workspace/notifications", label: "Alerts" },
-    { icon: Settings, href: "/workspace/settings/profile", label: "Settings" },
+    { icon: Settings, href: "/workspace/settings", label: "Settings" },
     { icon: Crown, href: "/admin", label: "Admin" },
   ];
 
   // Bottom nav items (5 most important for mobile)
   const bottomNavItems = [
     { icon: Home, href: "/workspace", label: "Home" },
-    { icon: MessageSquare, href: "/workspace/dm/user_1", label: "DMs" },
-    { icon: Hash, href: "/workspace/channels/general", label: "Channels" },
+    { icon: MessageSquare, href: "/workspace/dm", label: "DMs" },
+    { icon: Hash, href: "/workspace/channels", label: "Channels" },
     { icon: CheckSquare, href: "/workspace/projects", label: "Projects" },
     { icon: Users, href: "/workspace/people", label: "Members" },
   ];
@@ -98,17 +101,17 @@ export default function WorkspaceLayout({
           <span className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Ztred</span>
         </div>
         <div className="flex items-center gap-2">
-          <button
+          <button type="button"
             onClick={toggleTheme}
-            className="w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
+            className="hit-area-touch w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
             style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-muted)" }}
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           >
             {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
-          <button
+          <button type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
+            className="hit-area-touch w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
             style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-muted)" }}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
@@ -131,12 +134,12 @@ export default function WorkspaceLayout({
             style={{ backgroundColor: "var(--bg-card)", borderRight: "1px solid var(--border-color)" }}
           >
             <nav className="flex flex-col gap-1 p-3" aria-label="Mobile navigation">
-              {navItems.map((item, idx) => {
+              {navItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = pathname === item.href || (idx === 0 && pathname === "/workspace");
+                const isActive = isRouteActive(pathname, item.href, item.href === "/workspace");
                 return (
                   <NavLink
-                    key={idx}
+                    key={item.href}
                     href={item.href}
                     className="mobile-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all"
                     style={{
@@ -147,7 +150,7 @@ export default function WorkspaceLayout({
                     {(pending) =>
                       pending ? (
                         <>
-                          <Spinner size="small" className="size-5 shrink-0" />
+                          <Spinner size="small" className="size-5 shrink-0" label={null} />
                           <span>{item.label}</span>
                         </>
                       ) : (
@@ -187,8 +190,8 @@ export default function WorkspaceLayout({
           </NavLink>
 
           {/* Plus Add Button */}
-          <button
-            className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
+          <button type="button"
+            className="hit-area-touch w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
             style={{
               backgroundColor: "var(--bg-card)",
               border: "1px solid var(--border-color)",
@@ -204,12 +207,12 @@ export default function WorkspaceLayout({
 
           {/* Nav Icons */}
           <div className="flex flex-col space-y-1.5 items-center">
-            {navItems.map((item, idx) => {
+            {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = pathname === item.href || (idx === 0 && pathname === "/workspace");
+              const isActive = isRouteActive(pathname, item.href, item.href === "/workspace");
               return (
                 <NavLink
-                  key={idx}
+                  key={item.href}
                   href={item.href}
                   title={item.label}
                   aria-label={item.label}
@@ -223,7 +226,7 @@ export default function WorkspaceLayout({
                 >
                   {(pending) =>
                     pending ? (
-                      <Spinner size="small" className="size-5" />
+                      <Spinner size="small" className="size-5" label={null} />
                     ) : (
                       <Icon className="w-5 h-5" aria-hidden="true" />
                     )
@@ -236,9 +239,9 @@ export default function WorkspaceLayout({
 
         {/* Bottom Section */}
         <div className="flex flex-col items-center space-y-3">
-          <button
+          <button type="button"
             onClick={toggleTheme}
-            className="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:scale-105"
+            className="hit-area-touch w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:scale-105"
             style={{
               backgroundColor: "var(--bg-card)",
               border: "1px solid var(--border-color)",
@@ -254,7 +257,7 @@ export default function WorkspaceLayout({
             )}
           </button>
 
-          <NavLink href="/settings/profile" className="relative group cursor-pointer" aria-label="Jordan Lee's profile">
+          <NavLink href="/workspace/settings/profile" className="relative group cursor-pointer" aria-label="Jordan Lee's profile">
             <div
               className="w-10 h-10 rounded-full overflow-hidden"
               style={{ border: "1px solid var(--border-color)" }}
@@ -290,7 +293,7 @@ export default function WorkspaceLayout({
       >
         {bottomNavItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.href;
+          const isActive = isRouteActive(pathname, item.href, item.href === "/workspace");
           return (
             <NavLink
               key={item.href}
@@ -305,7 +308,7 @@ export default function WorkspaceLayout({
               {(pending) => (
                 <>
                   {pending ? (
-                    <Spinner size="small" className="size-5" />
+                    <Spinner size="small" className="size-5" label={null} />
                   ) : (
                     <Icon className="w-5 h-5" aria-hidden="true" />
                   )}

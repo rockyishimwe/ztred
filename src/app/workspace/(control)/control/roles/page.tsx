@@ -93,20 +93,20 @@ export default function RolesPage() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
             >
               Platform console
             </button>
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors"
               style={{ backgroundColor: "var(--primary)" }}
             >
               <Plus className="w-4 h-4" aria-hidden="true" />
               Invite member
             </button>
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
             >
@@ -176,7 +176,7 @@ export default function RolesPage() {
               <h2 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>
                 Workspace roles
               </h2>
-              <button
+              <button type="button"
                 className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-colors"
                 style={{ backgroundColor: "transparent", border: "1px solid var(--primary)", color: "var(--primary)" }}
               >
@@ -208,7 +208,7 @@ export default function RolesPage() {
                       {role.description}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button
+                      <button type="button"
                         className="p-1.5 rounded-lg transition-colors hover:opacity-70"
                         style={{ color: "var(--text-muted)" }}
                         aria-label={`Actions for ${role.name}`}

@@ -192,7 +192,7 @@ export default function ChannelsPage() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{
                 backgroundColor: "var(--bg-card)",
@@ -202,14 +202,14 @@ export default function ChannelsPage() {
             >
               Platform console
             </button>
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors"
               style={{ backgroundColor: "var(--primary)" }}
             >
               <Plus className="w-4 h-4" aria-hidden="true" />
               Invite member
             </button>
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{
                 backgroundColor: "var(--bg-card)",
@@ -259,7 +259,7 @@ export default function ChannelsPage() {
             <option>Public</option>
             <option>Private</option>
           </select>
-          <button
+          <button type="button"
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors shrink-0"
             style={{ backgroundColor: "var(--primary)" }}
           >
@@ -274,7 +274,7 @@ export default function ChannelsPage() {
           aria-label="Channel tabs"
         >
           {tabs.map((tab) => (
-            <button
+            <button type="button"
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               role="tab"
@@ -514,7 +514,7 @@ export default function ChannelsPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button
+                      <button type="button"
                         className="p-1.5 rounded-lg transition-colors hover:opacity-70"
                         style={{ color: "var(--text-muted)" }}
                         aria-label={`Actions for ${ch.name}`}

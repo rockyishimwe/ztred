@@ -2,6 +2,14 @@
 
 import React, { useState } from "react";
 import { addDays, format } from "date-fns";
+import { NavLink } from "@/components/ui/NavLink";
+import { Modal } from "@/components/ui/Modal";
+import { useParams } from "next/navigation";
+import {
+  STATUS_COLORS,
+  getProject,
+  type ProjectPriority,
+} from "@/lib/mock/projects";
 
 // Relative dates keep the demo task list evergreen.
 const daysFromNow = (n: number) => format(addDays(new Date(), n), "MMM d");
@@ -30,92 +38,26 @@ import {
   Check,
 } from "lucide-react";
 
-interface ProjectData {
-  id: string;
-  name: string;
-  description: string;
-  status: "On Track" | "At Risk" | "Off Track";
-  progress: number;
-  startDate: string;
-  deadline: string;
-  priority: string;
-  category: string;
-  createdBy: string;
-  tasks: {
-    total: number;
-    todo: number;
-    inProgress: number;
-    inReview: number;
-    done: number;
-  };
-  members: {
-    name: string;
-    role: string;
-    avatar: string;
-  }[];
-  activity: {
-    name: string;
-    action: string;
-    target: string;
-    time: string;
-    avatar: string;
-  }[];
-}
 
-const PROJECT_DATA: ProjectData = {
-  id: "1",
-  name: "Website Redesign",
-  description: "Complete brand overhaul and assets update",
-  status: "On Track",
-  progress: 72,
-  startDate: startOptions[0],
-  deadline: deadlineOptions[2],
-  priority: "High",
-  category: "Design",
-  createdBy: "Sam Rivera",
-  tasks: {
-    total: 12,
-    todo: 4,
-    inProgress: 5,
-    inReview: 1,
-    done: 2,
+/** Views that live on their own routes rather than in the tab strip. */
+const EXTERNAL_VIEWS = [
+  {
+    label: "Timeline",
+    icon: BarChart,
+    href: (id: string) => `/workspace/tasks/${id}/gantt`,
   },
-  members: [
-    { name: "Sam Rivera", role: "Admin", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80" },
-    { name: "Lisa Park", role: "Editor", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=80" },
-    { name: "Jordan Lee", role: "Editor", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80" },
-    { name: "Daniel Kim", role: "Viewer", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80" },
-  ],
-  activity: [
-    {
-      name: "Sam Rivera",
-      action: 'moved "Design header" to',
-      target: "In Progress",
-      time: "10m ago",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
-    },
-    {
-      name: "Lisa Park",
-      action: 'completed "User flow wireframes"',
-      target: "",
-      time: "1h ago",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=80",
-    },
-    {
-      name: "Jordan Lee",
-      action: 'commented on "Content mapping review"',
-      target: "",
-      time: "4h ago",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
-    },
-  ],
-};
+  {
+    label: "Task board",
+    icon: ListTodo,
+    href: (id: string) => `/workspace/tasks/${id}/board`,
+  },
+  {
+    label: "Whiteboard",
+    icon: Pencil,
+    href: (id: string) => `/workspace/whiteboard/${id}`,
+  },
+];
 
-const STATUS_COLORS: Record<string, string> = {
-  "On Track": "bg-emerald-500",
-  "At Risk": "bg-orange-500",
-  "Off Track": "bg-red-500",
-};
 
 // ─── Board Data ─────────────────────────────────────────────────
 
@@ -383,10 +325,44 @@ const ACTIVITY_FEED: ActivityItem[] = [
 
 // ─── Board Task Card ────────────────────────────────────────────
 
-function BoardTaskCard({ task }: { task: BoardTask }) {
+function BoardTaskCard({
+  task,
+  columnId,
+  onDragStart,
+  onMove,
+}: {
+  task: BoardTask;
+  columnId: string;
+  onDragStart: (taskId: string, fromColumn: string) => void;
+  onMove: (taskId: string, fromColumn: string, toColumn: string) => void;
+}) {
+  const index = BOARD_COLUMNS.findIndex((c) => c.id === columnId);
+
+  // Keyboard equivalent of the drag, so the board is not pointer-only.
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!e.altKey) return;
+    const target =
+      e.key === "ArrowRight" ? BOARD_COLUMNS[index + 1]
+      : e.key === "ArrowLeft" ? BOARD_COLUMNS[index - 1]
+      : undefined;
+    if (!target) return;
+    e.preventDefault();
+    onMove(task.id, columnId, target.id);
+  };
+
   return (
     <div
-      className="rounded-xl p-4 cursor-pointer transition-all hover:scale-[1.01]"
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", task.id);
+        onDragStart(task.id, columnId);
+      }}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-label={`${task.title}, in ${BOARD_COLUMNS[index]?.label ?? columnId}. Hold Alt and press the left or right arrow key to move it between columns.`}
+      className="rounded-xl p-4 cursor-grab active:cursor-grabbing transition-all hover:scale-[1.01] focus:outline-none focus-visible:ring-2"
       style={{
         backgroundColor: "var(--bg-card)",
         border: "1px solid var(--border-color)",
@@ -483,32 +459,18 @@ function NewTaskModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div
-        className="w-full max-w-lg rounded-2xl p-6"
-        style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)" }}
-      >
-        <div className="flex items-center justify-between mb-1">
-          <h2 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>
-            Create new task
-          </h2>
-          <button aria-label="Close" title="Close"
-            onClick={onClose}
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-            style={{ color: "var(--text-muted)" }}
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-        <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>
-          Add a clear owner, priority, and next step.
-        </p>
+    <Modal
+      open
+      onClose={onClose}
+      title="Create new task"
+      description="Add a clear owner, priority, and next step."
+      size="md"
+    >
+      <div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-            Task Title
-          </label>
-          <input
+          <label htmlFor="projectid-task-title" className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Task Title</label>
+          <input id="projectid-task-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -520,10 +482,8 @@ function NewTaskModal({
 
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-              Status
-            </label>
-            <select
+            <label htmlFor="projectid-status" className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Status</label>
+            <select id="projectid-status"
               value={column}
               onChange={(e) => setColumn(e.target.value)}
               className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
@@ -535,10 +495,8 @@ function NewTaskModal({
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-              Priority
-            </label>
-            <select
+            <label htmlFor="projectid-priority" className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Priority</label>
+            <select id="projectid-priority"
               value={priority}
               onChange={(e) => setPriority(e.target.value as BoardTask["priority"])}
               className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
@@ -553,10 +511,8 @@ function NewTaskModal({
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-              Due Date
-            </label>
-            <input
+            <label htmlFor="projectid-due-date" className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Due Date</label>
+            <input id="projectid-due-date"
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
@@ -565,10 +521,8 @@ function NewTaskModal({
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-              Category
-            </label>
-            <input
+            <label htmlFor="projectid-category" className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Category</label>
+            <input id="projectid-category"
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -580,14 +534,14 @@ function NewTaskModal({
         </div>
 
         <div className="flex items-center justify-end gap-3">
-          <button
+          <button type="button"
             onClick={onClose}
             className="px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
             style={{ color: "var(--text-secondary)" }}
           >
             Cancel
           </button>
-          <button
+          <button type="button"
             onClick={handleAdd}
             disabled={!title.trim()}
             className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
@@ -597,7 +551,7 @@ function NewTaskModal({
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
 
@@ -615,33 +569,21 @@ function FilterTasksModal({
   const [priority, setPriority] = useState(currentFilters.priority);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div
-        className="w-full max-w-md rounded-2xl p-6"
-        style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)" }}
-      >
-        <div className="flex items-center justify-between mb-1">
-          <h2 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>
-            Filter tasks
-          </h2>
-          <button aria-label="Close" title="Close"
-            onClick={onClose}
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-            style={{ color: "var(--text-muted)" }}
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-        <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>
-          Narrow the board without changing the underlying work.
-        </p>
+    <Modal
+      open
+      onClose={onClose}
+      title="Filter tasks"
+      description="Narrow the board without changing the underlying work."
+      size="sm"
+    >
+      <div>
 
         <label className="block text-sm font-medium mb-3" style={{ color: "var(--text-secondary)" }}>
           Priority
         </label>
         <div className="flex items-center gap-2 mb-8">
           {["All", "High", "Medium", "Low"].map((p) => (
-            <button
+            <button type="button"
               key={p}
               onClick={() => setPriority(p)}
               className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
@@ -660,7 +602,7 @@ function FilterTasksModal({
         </div>
 
         <div className="flex items-center justify-between">
-          <button
+          <button type="button"
             onClick={() => setPriority("All")}
             className="flex items-center gap-1.5 text-sm font-medium transition-colors"
             style={{ color: "var(--text-muted)" }}
@@ -668,7 +610,7 @@ function FilterTasksModal({
             <X className="w-3.5 h-3.5" />
             Clear filters
           </button>
-          <button
+          <button type="button"
             onClick={() => {
               onApply({ priority });
               onClose();
@@ -680,7 +622,7 @@ function FilterTasksModal({
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
 
@@ -694,7 +636,12 @@ const TASK_STATUSES = [
 
 export default function ProjectOverviewPage() {
   const [activeTab, setActiveTab] = useState("overview");
-  const project = PROJECT_DATA;
+  // Resolve the [projectId] segment. Every project used to render as
+  // "Website Redesign" because this page ignored its param entirely.
+  const params = useParams<{ projectId: string }>();
+  const project = getProject(
+    typeof params?.projectId === "string" ? params.projectId : undefined
+  );
   const [board, setBoard] = useState(INITIAL_BOARD);
   const [showNewTask, setShowNewTask] = useState(false);
   const [newTaskColumn, setNewTaskColumn] = useState("todo");
@@ -712,7 +659,7 @@ export default function ProjectOverviewPage() {
   const [settingsStartDate, setSettingsStartDate] = useState(project.startDate);
   const [settingsDeadline, setSettingsDeadline] = useState(project.deadline);
   const [settingsStatus, setSettingsStatus] = useState(project.status);
-  const [themeColor, setThemeColor] = useState("purple");
+  const [themeColor, setThemeColor] = useState("accent");
   const [workspaceIcon, setWorkspaceIcon] = useState("folder");
 
   const addBoardTask = (task: BoardTask, columnId: string) => {
@@ -720,6 +667,30 @@ export default function ProjectOverviewPage() {
       ...prev,
       [columnId]: [...(prev[columnId] || []), task],
     }));
+  };
+
+  // Drag-and-drop between columns; the board was previously static.
+  const [dragged, setDragged] = useState<{ taskId: string; from: string } | null>(null);
+  const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
+
+  const moveBoardTask = (taskId: string, from: string, to: string) => {
+    if (from === to) return;
+    setBoard((prev) => {
+      const task = (prev[from] ?? []).find((t) => t.id === taskId);
+      if (!task) return prev;
+      return {
+        ...prev,
+        [from]: (prev[from] ?? []).filter((t) => t.id !== taskId),
+        [to]: [...(prev[to] ?? []), task],
+      };
+    });
+  };
+
+  const handleBoardDrop = (toColumn: string) => {
+    setDragOverColumn(null);
+    if (!dragged) return;
+    moveBoardTask(dragged.taskId, dragged.from, toColumn);
+    setDragged(null);
   };
 
   const getBoardTasks = (colId: string) => {
@@ -770,7 +741,7 @@ export default function ProjectOverviewPage() {
           <div className="flex items-center gap-2">
             {activeTab === "board" ? (
               <>
-                <button
+                <button type="button"
                   onClick={() => setShowFilter(true)}
                   className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all"
                   style={{
@@ -783,7 +754,7 @@ export default function ProjectOverviewPage() {
                   Filter
                   {hasActiveFilters && <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--primary)" }} />}
                 </button>
-                <button
+                <button type="button"
                   onClick={() => {
                     setNewTaskColumn("todo");
                     setShowNewTask(true);
@@ -797,7 +768,7 @@ export default function ProjectOverviewPage() {
               </>
             ) : (
               <>
-                <button
+                <button type="button"
                   className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all"
                   style={{
                     backgroundColor: "var(--bg-card)",
@@ -808,7 +779,7 @@ export default function ProjectOverviewPage() {
                   <Pencil className="w-4 h-4" />
                   Edit
                 </button>
-                <button
+                <button type="button"
                   className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all"
                   style={{
                     backgroundColor: "var(--bg-card)",
@@ -819,8 +790,8 @@ export default function ProjectOverviewPage() {
                   <Share2 className="w-4 h-4" />
                   Share
                 </button>
-                <button
-                  className="w-9 h-9 rounded-xl flex items-center justify-center transition-all"
+                <button type="button"
+                  className="hit-area-touch w-9 h-9 rounded-xl flex items-center justify-center transition-all"
                   style={{
                     backgroundColor: "var(--bg-card)",
                     border: "1px solid var(--border-color)",
@@ -838,7 +809,7 @@ export default function ProjectOverviewPage() {
         {/* Tabs */}
         <div className="flex items-center gap-6" role="tablist" aria-label="Project sections">
           {tabs.map((tab) => (
-            <button
+            <button type="button"
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               role="tab"
@@ -860,6 +831,25 @@ export default function ProjectOverviewPage() {
               )}
             </button>
           ))}
+
+          {/* Standalone views. These routes existed but nothing linked to
+              them, so the Gantt chart and whiteboard were unreachable. */}
+          <span
+            className="mx-1 h-4 w-px self-center"
+            style={{ backgroundColor: "var(--border-color)" }}
+            aria-hidden="true"
+          />
+          {EXTERNAL_VIEWS.map((view) => (
+            <NavLink
+              key={view.label}
+              href={view.href(project.id)}
+              className="text-sm font-medium pb-3 transition-colors flex items-center gap-1.5"
+              style={{ color: "var(--text-muted)" }}
+            >
+              <view.icon className="w-3.5 h-3.5" aria-hidden="true" />
+              {view.label}
+            </NavLink>
+          ))}
         </div>
       </div>
 
@@ -873,10 +863,30 @@ export default function ProjectOverviewPage() {
               return (
                 <div
                   key={col.id}
-                  className="w-[280px] flex flex-col shrink-0 rounded-2xl p-4"
+                  onDragOver={(e) => {
+                    // Without preventDefault the browser refuses the drop.
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = "move";
+                    if (dragOverColumn !== col.id) setDragOverColumn(col.id);
+                  }}
+                  onDragLeave={(e) => {
+                    if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+                    setDragOverColumn((current) =>
+                      current === col.id ? null : current
+                    );
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    handleBoardDrop(col.id);
+                  }}
+                  className="w-[280px] flex flex-col shrink-0 rounded-2xl p-4 transition-colors"
                   style={{
                     backgroundColor: "var(--bg-card)",
-                    border: "1px solid var(--border-color)",
+                    border: `1px solid ${
+                      dragOverColumn === col.id
+                        ? "var(--primary)"
+                        : "var(--border-color)"
+                    }`,
                   }}
                 >
                   {/* Column Header */}
@@ -892,12 +902,12 @@ export default function ProjectOverviewPage() {
                         {totalCount}
                       </span>
                     </div>
-                    <button
+                    <button type="button"
                       onClick={() => {
                         setNewTaskColumn(col.id);
                         setShowNewTask(true);
                       }}
-                      className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors"
+                      className="hit-area-touch w-7 h-7 rounded-lg flex items-center justify-center transition-colors"
                       style={{ color: "var(--text-muted)" }}
                       aria-label={`Add task to ${col.label}`}
                     >
@@ -915,7 +925,17 @@ export default function ProjectOverviewPage() {
                         {hasActiveFilters ? "No matching tasks" : "No tasks yet"}
                       </p>
                     ) : (
-                      colTasks.map((task) => <BoardTaskCard key={task.id} task={task} />)
+                      colTasks.map((task) => (
+                        <BoardTaskCard
+                          key={task.id}
+                          task={task}
+                          columnId={col.id}
+                          onDragStart={(taskId, from) =>
+                            setDragged({ taskId, from })
+                          }
+                          onMove={moveBoardTask}
+                        />
+                      ))
                     )}
                   </div>
                 </div>
@@ -931,7 +951,7 @@ export default function ProjectOverviewPage() {
               {ACTIVITY_FILTERS.map((f) => {
                 const isActive = activityFilter === f.key;
                 return (
-                  <button
+                  <button type="button"
                     key={f.key}
                     onClick={() => setActivityFilter(f.key)}
                     className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
@@ -1044,10 +1064,8 @@ export default function ProjectOverviewPage() {
               <div className="space-y-5">
                 {/* Project Name */}
                 <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
-                    Project Name
-                  </label>
-                  <input
+                  <label htmlFor="projectid-project-name" className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Project Name</label>
+                  <input id="projectid-project-name"
                     type="text"
                     value={settingsName}
                     onChange={(e) => setSettingsName(e.target.value)}
@@ -1062,10 +1080,8 @@ export default function ProjectOverviewPage() {
 
                 {/* Description */}
                 <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
-                    Description
-                  </label>
-                  <textarea
+                  <label htmlFor="projectid-description" className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Description</label>
+                  <textarea id="projectid-description"
                     value={settingsDescription}
                     onChange={(e) => setSettingsDescription(e.target.value)}
                     rows={4}
@@ -1081,10 +1097,8 @@ export default function ProjectOverviewPage() {
                 {/* Category & Priority */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
-                      Category
-                    </label>
-                    <select
+                    <label htmlFor="projectid-category-2" className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Category</label>
+                    <select id="projectid-category-2"
                       value={settingsCategory}
                       onChange={(e) => setSettingsCategory(e.target.value)}
                       className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
@@ -1102,12 +1116,10 @@ export default function ProjectOverviewPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
-                      Priority
-                    </label>
-                    <select
+                    <label htmlFor="projectid-priority-2" className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Priority</label>
+                    <select id="projectid-priority-2"
                       value={settingsPriority}
-                      onChange={(e) => setSettingsPriority(e.target.value)}
+                      onChange={(e) => setSettingsPriority(e.target.value as ProjectPriority)}
                       className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
                       style={{
                         backgroundColor: "var(--bg-input)",
@@ -1137,10 +1149,8 @@ export default function ProjectOverviewPage() {
                 {/* Start Date & Deadline */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
-                      Start Date
-                    </label>
-                    <select
+                    <label htmlFor="projectid-start-date" className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Start Date</label>
+                    <select id="projectid-start-date"
                       value={settingsStartDate}
                       onChange={(e) => setSettingsStartDate(e.target.value)}
                       className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
@@ -1156,10 +1166,8 @@ export default function ProjectOverviewPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
-                      Deadline
-                    </label>
-                    <select
+                    <label htmlFor="projectid-deadline" className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Deadline</label>
+                    <select id="projectid-deadline"
                       value={settingsDeadline}
                       onChange={(e) => setSettingsDeadline(e.target.value)}
                       className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
@@ -1223,16 +1231,16 @@ export default function ProjectOverviewPage() {
                 </label>
                 <div className="flex items-center gap-3">
                   {[
-                    { id: "purple", color: "#5F3DFF" },
+                    { id: "accent", color: "var(--primary)" },
                     { id: "green", color: "#22c55e" },
                     { id: "orange", color: "#f97316" },
                     { id: "pink", color: "#ec4899" },
                     { id: "blue", color: "#3b82f6" },
                   ].map((c) => (
-                    <button
+                    <button type="button"
                       key={c.id}
                       onClick={() => setThemeColor(c.id)}
-                      className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
+                      className="hit-area-touch w-9 h-9 rounded-full flex items-center justify-center transition-all"
                       style={{ backgroundColor: c.color }}
                     >
                       {themeColor === c.id && (
@@ -1258,10 +1266,10 @@ export default function ProjectOverviewPage() {
                     const Icon = ic.icon;
                     const isActive = workspaceIcon === ic.id;
                     return (
-                      <button
+                      <button type="button"
                         key={ic.id}
                         onClick={() => setWorkspaceIcon(ic.id)}
-                        className="w-10 h-10 rounded-xl flex items-center justify-center transition-all"
+                        className="hit-area-touch w-10 h-10 rounded-xl flex items-center justify-center transition-all"
                         style={{
                           backgroundColor: isActive ? "var(--bg-input)" : "var(--bg-surface)",
                           border: `1px solid ${isActive ? "var(--primary)" : "var(--border-color)"}`,
@@ -1276,7 +1284,7 @@ export default function ProjectOverviewPage() {
               </div>
 
               {/* Save Changes Button */}
-              <button
+              <button type="button"
                 className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"
                 style={{ backgroundColor: "var(--primary)" }}
               >
@@ -1297,7 +1305,7 @@ export default function ProjectOverviewPage() {
               </p>
 
               <div className="space-y-3">
-                <button
+                <button type="button"
                   className="w-full py-3 rounded-xl text-sm font-medium transition-all"
                   style={{
                     backgroundColor: "var(--bg-input)",
@@ -1307,7 +1315,7 @@ export default function ProjectOverviewPage() {
                 >
                   Archive Project
                 </button>
-                <button
+                <button type="button"
                   className="w-full py-3 rounded-xl text-sm font-medium transition-all"
                   style={{
                     backgroundColor: "var(--bg-input)",
@@ -1492,7 +1500,7 @@ export default function ProjectOverviewPage() {
                 <h3 className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>
                   Members ({project.members.length})
                 </h3>
-                <button
+                <button type="button"
                   className="text-xs font-semibold transition-colors"
                   style={{ color: "var(--primary)" }}
                 >

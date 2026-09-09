@@ -94,20 +94,20 @@ export default function AIManagementPage() {
             </p>
           </div>
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
             >
               Platform console
             </button>
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors"
               style={{ backgroundColor: "var(--primary)" }}
             >
               <Plus className="w-4 h-4" aria-hidden="true" />
               Invite member
             </button>
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
             >
@@ -120,7 +120,7 @@ export default function AIManagementPage() {
         {/* Tabs */}
         <div className="flex items-center gap-4 sm:gap-6 mb-6 overflow-x-auto" role="tablist" aria-label="AI management sections">
           {tabs.map((tab) => (
-            <button
+            <button type="button"
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               role="tab"
@@ -192,7 +192,7 @@ export default function AIManagementPage() {
                         {row.modelAccess}
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <button
+                        <button type="button"
                           className="p-1.5 rounded-lg transition-colors hover:opacity-70"
                           style={{ color: "var(--text-muted)" }}
                           aria-label={`Actions for ${row.role}`}
@@ -268,8 +268,8 @@ export default function AIManagementPage() {
 
               {/* Overage Policy */}
               <div className="mb-5">
-                <label className="text-sm font-medium block mb-2" style={{ color: "var(--text-secondary)" }}>Overage policy</label>
-                <select
+                <label htmlFor="ai-overage-policy" className="text-sm font-medium block mb-2" style={{ color: "var(--text-secondary)" }}>Overage policy</label>
+                <select id="ai-overage-policy"
                   className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors appearance-none cursor-pointer"
                   style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
                   aria-label="Overage policy"
@@ -282,8 +282,8 @@ export default function AIManagementPage() {
 
               {/* Rate Limiting */}
               <div>
-                <label className="text-sm font-medium block mb-2" style={{ color: "var(--text-secondary)" }}>Rate limiting</label>
-                <select
+                <label htmlFor="ai-rate-limiting" className="text-sm font-medium block mb-2" style={{ color: "var(--text-secondary)" }}>Rate limiting</label>
+                <select id="ai-rate-limiting"
                   className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors appearance-none cursor-pointer"
                   style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
                   aria-label="Rate limiting"

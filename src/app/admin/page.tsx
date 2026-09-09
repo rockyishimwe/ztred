@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from "@/components/ui/NavLink";
 import {
   ShieldAlert,
@@ -27,12 +27,20 @@ export default function AdminDashboardPage() {
   const toggleTheme = useUIStore((s) => s.toggleTheme);
   // NOTE: tab navigation (overview/organizations/security/audit) was removed —
   // only the overview content exists; tabs pointed at nothing.
-  const orgs = [
+  const [orgSearch, setOrgSearch] = useState("");
+
+  const allOrgs = [
     { id: '1', name: 'Skyline Ventures', slug: 'skyline', members: 1240, plan: 'Enterprise Pro', status: 'Active', storage: '1.2 TB', anomalies: false },
     { id: '2', name: 'Redwood Labs', slug: 'redwood', members: 350, plan: 'Enterprise', status: 'Active', storage: '480 GB', anomalies: false },
     { id: '3', name: 'UX/UI Guild', slug: 'ux-guild', members: 85, plan: 'Team', status: 'Warning', storage: '120 GB', anomalies: true },
     { id: '4', name: 'Acme Innovation', slug: 'acme', members: 380, plan: 'Enterprise', status: 'Active', storage: '650 GB', anomalies: false },
   ];
+
+  const orgs = allOrgs.filter(
+    (o) =>
+      o.name.toLowerCase().includes(orgSearch.toLowerCase()) ||
+      o.plan.toLowerCase().includes(orgSearch.toLowerCase())
+  );
 
   return (
     <div className="min-h-dvh bg-theme-primary text-theme-primary flex flex-col font-sans">
@@ -46,7 +54,7 @@ export default function AdminDashboardPage() {
             <div className="w-7 h-7 rounded bg-purple-600 flex items-center justify-center font-bold text-sm">
               Z
             </div>
-            <span className="font-bold text-base text-theme-primary">ZTRED Super Admin Dashboard</span>
+            <h1 className="font-bold text-base text-theme-primary">ZTRED Super Admin Dashboard</h1>
           </div>
         </div>
 
@@ -56,7 +64,7 @@ export default function AdminDashboardPage() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="w-9 h-9 rounded-lg flex items-center justify-center border border-theme bg-theme-card text-theme-muted hover:text-theme-primary transition-colors"
+            className="hit-area-touch w-9 h-9 rounded-lg flex items-center justify-center border border-theme bg-theme-card text-theme-muted hover:text-theme-primary transition-colors"
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -116,12 +124,21 @@ export default function AdminDashboardPage() {
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-theme-primary">Organization Management</h3>
             <div className="relative">
+              <label htmlFor="admin-org-search" className="sr-only">
+                Search organizations
+              </label>
               <input
-                type="text"
+                id="admin-org-search"
+                type="search"
+                value={orgSearch}
+                onChange={(e) => setOrgSearch(e.target.value)}
                 placeholder="Search organizations..."
                 className="pl-8 pr-3 py-1.5 bg-theme-input border border-theme rounded-md text-xs text-theme-primary focus:outline-none focus:border-purple-500"
               />
-              <Search className="w-3.5 h-3.5 text-theme-muted absolute left-2.5 top-2.5" />
+              <Search
+                className="w-3.5 h-3.5 text-theme-muted absolute left-2.5 top-2.5"
+                aria-hidden="true"
+              />
             </div>
           </div>
 

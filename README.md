@@ -12,10 +12,10 @@ A modern team collaboration workspace — messaging, video calls, file sharing, 
 | Language | TypeScript (Strict Mode) |
 | UI Library | React 18 |
 | Styling | Tailwind CSS v3 |
-| Component Primitives | Radix UI |
+| Component Primitives | Hand-rolled (`components/ui`) + `@radix-ui/react-slot` |
 | State Management | Zustand |
-| Rich Text Editor | TipTap |
-| Virtualization | @tanstack/react-real |
+| Rich Text Editor | None — `DocEditor` is a local `contenteditable` stand-in |
+| Virtualization | `@tanstack/react-virtual` (dependency present; only `MessageList` imports it, and nothing renders that yet) |
 | Icons | Lucide React |
 | Font | Bricolage Grotesque |
 
@@ -130,16 +130,17 @@ src/
 │   │           ├── audit/                # Audit logs
 │   │           └── settings/             # Workspace settings
 ├── components/
-│   ├── layout/                           # HeaderBar, WorkspaceSwitcher
-│   ├── sidebar/                          # Sidebar, ChannelList, DMList
+│   ├── navigation/                       # NavigationProvider
 │   ├── messaging/                        # MessageList, MessageBubble, ThreadView
 │   ├── collaboration/                    # DocEditor, Whiteboard
 │   ├── automate/                         # AIAssistantPanel
 │   ├── tasks/                            # GanttChart
 │   ├── projects/                         # CreateProjectModal
-│   └── ui/                               # Avatar, Button, Badge, ToggleSwitch
-├── stores/                               # Zustand stores (ui, workspace, presence)
-├── hooks/                                # Custom hooks (useWebSocket)
+│   └── ui/                               # Button, Badge, Modal, NavLink, Spinner,
+│                                         #   ZtredLogo, LoadingScreen, NotFoundScreen,
+│                                         #   dropdown-menu, emoji-picker, skeleton, Avatar
+├── stores/                               # Zustand store (uiStore: sidebar, theme, accent, a11y)
+├── lib/                                  # accent.ts, utils.ts, mock/ (projects, docs, meetings)
 ├── types/                                # TypeScript interfaces
 └── styles/                               # globals.css, design tokens
 ```
@@ -148,7 +149,8 @@ src/
 
 ## Design System
 
-**Primary:** `#5F3DFF` (consistent in light and dark mode)  
+**Primary:** user-chosen accent, default `#5F3DFF`. One hex drives an 11-stop scale via
+`src/lib/accent.ts`; the literal should not appear anywhere else in `src/`.  
 **Typography:** Bricolage Grotesque  
 **Theme:** CSS variables via `data-theme` attribute on `<html>`
 

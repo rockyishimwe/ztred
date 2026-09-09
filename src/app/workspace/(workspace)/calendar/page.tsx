@@ -9,6 +9,7 @@ import {
   Users,
   Clock,
 } from "lucide-react";
+import { Modal } from "@/components/ui/Modal";
 
 // ─── Event Data ─────────────────────────────────────────────────
 
@@ -139,28 +140,18 @@ function AddEventModal({
   };
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="rounded-2xl p-8 w-full max-w-lg shadow-2xl" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-        {/* Header */}
-        <div className="flex items-center justify-between mb-1">
-          <h2 className="text-lg font-bold text-theme-primary">Add event</h2>
-          <button aria-label="Close" title="Close"
-            onClick={onClose}
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-        <p className="text-sm text-theme-muted mb-6">
-          Schedule time and invite your teammates.
-        </p>
-
+    <Modal
+      open
+      onClose={onClose}
+      title="Add event"
+      description="Schedule time and invite your teammates."
+      contained
+    >
+      <div>
         {/* Event Title */}
         <div className="mb-5">
-          <label className="text-sm font-medium text-theme-secondary mb-2 block">
-            Event title
-          </label>
-          <input
+          <label htmlFor="calendar-event-title" className="text-sm font-medium text-theme-secondary mb-2 block">Event title</label>
+          <input id="calendar-event-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -172,10 +163,8 @@ function AddEventModal({
         {/* Day + Time */}
         <div className="grid grid-cols-2 gap-4 mb-5">
           <div>
-            <label className="text-sm font-medium text-theme-secondary mb-2 block">
-              Day
-            </label>
-            <input
+            <label htmlFor="calendar-day" className="text-sm font-medium text-theme-secondary mb-2 block">Day</label>
+            <input id="calendar-day"
               type="text"
               value={day}
               onChange={(e) => setDay(e.target.value)}
@@ -184,10 +173,8 @@ function AddEventModal({
             />
           </div>
           <div>
-            <label className="text-sm font-medium text-theme-secondary mb-2 block">
-              Time
-            </label>
-            <input
+            <label htmlFor="calendar-time" className="text-sm font-medium text-theme-secondary mb-2 block">Time</label>
+            <input id="calendar-time"
               type="text"
               value={time}
               onChange={(e) => setTime(e.target.value)}
@@ -219,7 +206,7 @@ function AddEventModal({
           </label>
           <div className="flex items-center gap-3">
             {EVENT_COLORS.map((c, idx) => (
-              <button
+              <button type="button"
                 key={c.name}
                 onClick={() => setSelectedColor(idx)}
                 className={`w-9 h-9 rounded-full transition-all ${
@@ -238,21 +225,23 @@ function AddEventModal({
         {/* Buttons */}
         <div className="flex items-center justify-end gap-3">
           <button
+            type="button"
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl text-sm font-medium text-theme-muted hover:text-theme-primary hover-theme-card transition-colors"
+            className="px-5 py-2.5 min-h-touch rounded-xl text-sm font-medium text-theme-muted hover:text-theme-primary hover-theme-card transition-colors"
           >
             Cancel
           </button>
           <button
+            type="button"
             onClick={handleAdd}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold shadow-lg shadow-purple-600/25 transition-all spring-bounce"
+            className="flex items-center gap-2 px-5 py-2.5 min-h-touch rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-on-brand text-sm font-semibold shadow-lg shadow-purple-600/25 transition-all spring-bounce"
           >
-            <Clock className="w-4 h-4" />
+            <Clock className="w-4 h-4" aria-hidden="true" />
             Add event
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
 
@@ -328,7 +317,7 @@ export default function CalendarPage() {
             </p>
           </div>
         </div>
-        <button
+        <button type="button"
           onClick={() => setShowAddModal(true)}
           className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all spring-bounce"
         >
@@ -343,15 +332,15 @@ export default function CalendarPage() {
             {monthName} {currentYear}
           </h2>
           <div className="flex items-center gap-1">
-            <button aria-label="Previous month" title="Previous month"
+            <button type="button" aria-label="Previous month" title="Previous month"
               onClick={prevMonth}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors"
+              className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <button aria-label="Next month" title="Next month"
+            <button type="button" aria-label="Next month" title="Next month"
               onClick={nextMonth}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors"
+              className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -359,7 +348,7 @@ export default function CalendarPage() {
         </div>
         <div className="flex items-center card rounded-xl p-1">
           {(["Month", "Week", "Day"] as const).map((v) => (
-            <button
+            <button type="button"
               key={v}
               onClick={() => setView(v)}
               className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${

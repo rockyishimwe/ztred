@@ -253,7 +253,7 @@ export default function AIAssistantPage() {
               {SUGGESTIONS.map((suggestion, idx) => {
                 const Icon = suggestion.icon;
                 return (
-                  <button
+                  <button type="button"
                     key={idx}
                     onClick={() => handleSuggestionClick(suggestion.text)}
                     className="flex items-center gap-3 p-4 rounded-xl text-left transition-all hover:scale-[1.02]"
@@ -387,8 +387,8 @@ export default function AIAssistantPage() {
             border: "1px solid var(--border-color)",
           }}
         >
-          <button aria-label="Add attachment" title="Add attachment"
-            className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-0.5 transition-colors"
+          <button type="button" aria-label="Add attachment" title="Add attachment"
+            className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-0.5 transition-colors"
             style={{ color: "var(--text-muted)" }}
           >
             <Plus className="w-5 h-5" />
@@ -411,10 +411,10 @@ export default function AIAssistantPage() {
               target.style.height = Math.min(target.scrollHeight, 128) + "px";
             }}
           />
-          <button
+          <button type="button"
             onClick={() => handleSend()}
             disabled={!input.trim() || isTyping}
-            className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all mb-0.5"
+            className="hit-area-touch w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all mb-0.5"
             style={{
               backgroundColor: input.trim() ? "var(--primary)" : "var(--bg-secondary)",
               color: input.trim() ? "#ffffff" : "var(--text-muted)",

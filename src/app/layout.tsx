@@ -4,7 +4,10 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { NavigationProvider } from '@/components/navigation/NavigationProvider';
 
 export const metadata: Metadata = {
-  title: 'Ztred — Team chat, calls, files, and AI in one workspace',
+  title: {
+    default: "Ztred — Team chat, calls, files, and AI in one workspace",
+    template: "%s",
+  },
   description: 'Bring your team together, stay organized, and get more done — all in one secure workspace.',
   icons: {
     icon: [
@@ -57,7 +60,7 @@ export default function RootLayout({
                   var n = parseInt(hex, 16);
                   var rgb = [(n >> 16) & 255, (n >> 8) & 255, n & 255];
                   var mix = { '50': 0.95, '100': 0.89, '200': 0.77, '300': 0.6, '400': 0.36,
-                              '500': 0, '600': 0, '700': -0.1, '800': -0.3, '900': -0.5, '950': -0.7 };
+                              '500': 0.12, '600': 0, '700': -0.18, '800': -0.3, '900': -0.5, '950': -0.7 };
                   var shades = {};
                   for (var stop in mix) {
                     var m = mix[stop], target = m >= 0 ? 255 : 0, amount = Math.abs(m);
@@ -70,6 +73,17 @@ export default function RootLayout({
                   root.style.setProperty('--primary-hover', 'rgb(' + shades['700'] + ')');
                   root.style.setProperty('--ring', 'rgb(' + shades['600'] + ')');
                   root.style.setProperty('--sidebar-active', 'rgb(' + shades['600'] + ')');
+                  // Mirrors isLightColor() in src/lib/accent.ts. Without this a
+                  // light accent (amber, lime) paints white-on-yellow until the
+                  // bundle loads and applyAccent() corrects it.
+                  var lum = rgb.map(function(c) {
+                    var s = c / 255;
+                    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+                  });
+                  root.style.setProperty(
+                    '--on-primary',
+                    0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2] > 0.42 ? '#0f172a' : '#ffffff'
+                  );
                 } catch(e) {}
               })();
             `,
@@ -86,7 +100,7 @@ export default function RootLayout({
             <a
               href="#main-content"
               className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold"
-              style={{ backgroundColor: 'var(--primary)', color: '#ffffff' }}
+              style={{ backgroundColor: 'var(--primary)', color: 'var(--on-primary)' }}
             >
               Skip to main content
             </a>

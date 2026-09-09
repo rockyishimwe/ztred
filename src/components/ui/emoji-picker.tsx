@@ -44,7 +44,7 @@ export const EmojiPicker: React.FC<EmojiPickerProps> = ({ onSelect, className = 
             onClick={() => setActiveCategory(idx)}
             className={`px-2 py-1 text-xs rounded-md transition-colors ${
               activeCategory === idx
-                ? "bg-theme-primary-subtle text-theme-on-primary"
+                ? "bg-theme-primary-subtle text-theme-brand"
                 : "text-theme-muted hover:bg-theme-secondary"
             }`}
           >
@@ -60,7 +60,7 @@ export const EmojiPicker: React.FC<EmojiPickerProps> = ({ onSelect, className = 
             key={emoji}
             type="button"
             onClick={() => onSelect(emoji)}
-            className="w-8 h-8 flex items-center justify-center text-lg hover:bg-theme-secondary rounded-md transition-colors"
+            className="hit-area-touch w-8 h-8 flex items-center justify-center text-lg hover:bg-theme-secondary rounded-md transition-colors"
           >
             {emoji}
           </button>

@@ -90,10 +90,10 @@ export const AIAssistantPanel: React.FC = () => {
           ZTRED-AI
         </h2>
         <div className="flex items-center space-x-2">
-          <button aria-label="Restart conversation" title="Restart conversation" className="p-1 rounded-lg hover:bg-theme-secondary transition-colors">
+          <button type="button" aria-label="Restart conversation" title="Restart conversation" className="p-1 rounded-lg hover:bg-theme-secondary transition-colors">
             <RefreshCw className="h-4 w-4 text-theme-muted hover:text-theme-primary"/>
           </button>
-          <button aria-label="Collapse assistant" title="Collapse assistant" className="p-1 rounded-lg hover:bg-theme-secondary transition-colors">
+          <button type="button" aria-label="Collapse assistant" title="Collapse assistant" className="p-1 rounded-lg hover:bg-theme-secondary transition-colors">
             <ChevronDown className="h-4 w-4 text-theme-muted hover:text-theme-primary"/>
           </button>
         </div>
@@ -126,7 +126,7 @@ export const AIAssistantPanel: React.FC = () => {
                 {message.actions && message.actions.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-2">
                     {message.actions.map((action: AIAction, index: number) => (
-                      <button
+                      <button type="button"
                         key={index}
                         onClick={action.onClick}
                         className="text-[10px] bg-theme-secondary-subtle hover:bg-theme-secondary text-theme-primary px-2 py-1 rounded transition-colors border border-theme"
@@ -150,7 +150,7 @@ export const AIAssistantPanel: React.FC = () => {
               placeholder="Ask ZTRED-AI..."
               className="w-full px-4 py-2 border border-theme rounded-xl text-theme-primary placeholder-theme focus:outline-none focus:border-theme-accent focus:ring-2 focus:ring-theme-primary/20 transition-all bg-theme-input"
             />
-            <button aria-label="Send message" title="Send message"
+            <button type="button" aria-label="Send message" title="Send message"
               onClick={sendMessage}
               className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-lg hover:bg-theme-secondary transition-colors"
               disabled={!input.trim()}

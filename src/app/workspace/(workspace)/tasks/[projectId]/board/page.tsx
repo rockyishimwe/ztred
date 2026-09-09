@@ -1,6 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import { useParams } from "next/navigation";
+import { NavLink } from "@/components/ui/NavLink";
+import { Modal } from "@/components/ui/Modal";
+import { STATUS_COLORS, getProject } from "@/lib/mock/projects";
 import {
   LayoutGrid,
   Plus,
@@ -148,28 +152,20 @@ function CreateTaskModal({
   const selectClasses = "w-full bg-theme-card border border-theme rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all appearance-none cursor-pointer";
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="rounded-2xl p-8 w-full max-w-lg shadow-2xl" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-        {/* Header */}
-        <div className="flex items-center justify-between mb-1">
-          <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Create task</h2>
-          <button aria-label="Close" title="Close"
-            onClick={onClose}
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-        <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-          Add a clear owner, priority, and next step.
-        </p>
+    <Modal
+      open
+      onClose={onClose}
+      title="Create task"
+      description="Add a clear owner, priority, and next step."
+      size="md"
+      contained
+    >
+      <div>
 
         {/* Task Title */}
         <div className="mb-5">
-          <label className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>
-            Task title
-          </label>
-          <input
+          <label htmlFor="board-task-title" className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>Task title</label>
+          <input id="board-task-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -181,10 +177,8 @@ function CreateTaskModal({
         {/* Status + Priority */}
         <div className="grid grid-cols-2 gap-4 mb-5">
           <div>
-            <label className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>
-              Status
-            </label>
-            <select
+            <label htmlFor="board-status" className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>Status</label>
+            <select id="board-status"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
               className={selectClasses}
@@ -196,10 +190,8 @@ function CreateTaskModal({
             </select>
           </div>
           <div>
-            <label className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>
-              Priority
-            </label>
-            <select
+            <label htmlFor="board-priority" className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>Priority</label>
+            <select id="board-priority"
               value={priority}
               onChange={(e) => setPriority(e.target.value as "high" | "medium" | "low")}
               className={selectClasses}
@@ -214,10 +206,8 @@ function CreateTaskModal({
         {/* Due Date + Tag */}
         <div className="grid grid-cols-2 gap-4 mb-8">
           <div>
-            <label className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>
-              Due date
-            </label>
-            <input
+            <label htmlFor="board-due-date" className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>Due date</label>
+            <input id="board-due-date"
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
@@ -225,10 +215,8 @@ function CreateTaskModal({
             />
           </div>
           <div>
-            <label className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>
-              Tag
-            </label>
-            <input
+            <label htmlFor="board-tag" className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>Tag</label>
+            <input id="board-tag"
               type="text"
               value={tag}
               onChange={(e) => setTag(e.target.value)}
@@ -240,13 +228,13 @@ function CreateTaskModal({
 
         {/* Buttons */}
         <div className="flex items-center justify-end gap-3">
-          <button
+          <button type="button"
             onClick={onClose}
             className="px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
           >
             Cancel
           </button>
-          <button
+          <button type="button"
             onClick={handleAdd}
             className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={!title.trim()}
@@ -255,7 +243,7 @@ function CreateTaskModal({
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
 
@@ -272,21 +260,15 @@ function FilterTasksModal({
   const [assignee, setAssignee] = useState(currentFilters.assignee);
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="rounded-2xl p-8 w-full max-w-lg shadow-2xl" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-        {/* Header */}
-        <div className="flex items-center justify-between mb-1">
-          <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Filter tasks</h2>
-          <button aria-label="Close" title="Close"
-            onClick={onClose}
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-        <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-          Narrow the board without changing the underlying work.
-        </p>
+    <Modal
+      open
+      onClose={onClose}
+      title="Filter tasks"
+      description="Narrow the board without changing the underlying work."
+      size="md"
+      contained
+    >
+      <div>
 
         {/* Priority */}
         <div className="mb-6">
@@ -295,7 +277,7 @@ function FilterTasksModal({
           </label>
           <div className="flex items-center gap-2">
             {["all", "high", "medium", "low"].map((p) => (
-              <button
+              <button type="button"
                 key={p}
                 onClick={() => setPriority(p)}
                 className={`px-4 py-2 rounded-xl text-sm font-semibold capitalize transition-all ${
@@ -317,7 +299,7 @@ function FilterTasksModal({
           </label>
           <div className="flex items-center gap-2">
             {["Everyone", "Assigned to me"].map((a) => (
-              <button
+              <button type="button"
                 key={a}
                 onClick={() => setAssignee(a === "Everyone" ? "everyone" : "me")}
                 className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
@@ -335,7 +317,7 @@ function FilterTasksModal({
 
         {/* Footer */}
         <div className="flex items-center justify-between">
-          <button
+          <button type="button"
             onClick={() => {
               setPriority("all");
               setAssignee("everyone");
@@ -345,7 +327,7 @@ function FilterTasksModal({
             <X className="w-3.5 h-3.5" />
             Clear filters
           </button>
-          <button
+          <button type="button"
             onClick={() => {
               onApply({ priority, assignee });
               onClose();
@@ -356,21 +338,60 @@ function FilterTasksModal({
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
 
 // ─── Task Card Component ────────────────────────────────────────
 
-function TaskCardView({ task }: { task: TaskCard }) {
+function TaskCardView({
+  task,
+  columnId,
+  onDragStart,
+  onMove,
+  columns,
+}: {
+  task: TaskCard;
+  columnId: string;
+  onDragStart: (taskId: string, fromColumn: string) => void;
+  onMove: (taskId: string, fromColumn: string, toColumn: string) => void;
+  columns: { id: string; label: string }[];
+}) {
   const priorityStyles = {
     high: "bg-red-500/20 text-red-400",
     medium: "bg-amber-500/20 text-amber-400",
     low: "bg-green-500/20 text-green-400",
   };
 
+  const index = columns.findIndex((c) => c.id === columnId);
+
+  // Keyboard equivalent of the drag: dragging alone would leave the board
+  // unusable without a pointer.
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!e.altKey) return;
+    const target =
+      e.key === "ArrowRight" ? columns[index + 1]
+      : e.key === "ArrowLeft" ? columns[index - 1]
+      : undefined;
+    if (!target) return;
+    e.preventDefault();
+    onMove(task.id, columnId, target.id);
+  };
+
   return (
-    <div className="bg-theme-card border border-theme rounded-xl p-4 hover:border-theme-hover transition-colors cursor-pointer">
+    <div
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.effectAllowed = "move";
+        // Firefox ignores a drag that sets no data.
+        e.dataTransfer.setData("text/plain", task.id);
+        onDragStart(task.id, columnId);
+      }}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-label={`${task.title}, in ${columns[index]?.label ?? columnId}. Hold Alt and press the left or right arrow key to move it between columns.`}
+      className="bg-theme-card border border-theme rounded-xl p-4 hover:border-theme-hover focus:outline-none focus-visible:border-theme-accent transition-colors cursor-grab active:cursor-grabbing">
       {/* Tags */}
       <div className="flex items-center gap-2 mb-3">
         <span
@@ -384,7 +405,10 @@ function TaskCardView({ task }: { task: TaskCard }) {
       </div>
 
       {/* Title */}
-      <h3 className="text-sm font-semibold text-white mb-4 leading-snug">
+      <h3
+        className="text-sm font-semibold mb-4 leading-snug"
+        style={{ color: "var(--text-primary)" }}
+      >
         {task.title}
       </h3>
 
@@ -407,10 +431,46 @@ function TaskCardView({ task }: { task: TaskCard }) {
 // ─── Main Page ──────────────────────────────────────────────────
 
 export default function TaskBoardPage() {
+  // Resolve the [projectId] segment so the board header names the project the
+  // URL actually points at instead of always "Website Redesign".
+  const params = useParams<{ projectId: string }>();
+  const project = getProject(
+    typeof params?.projectId === "string" ? params.projectId : undefined
+  );
+
   const [tasks, setTasks] = useState(initialTasks);
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
   const [filters, setFilters] = useState({ priority: "all", assignee: "everyone" });
+
+  // Drag-and-drop between columns. The board rendered static columns before;
+  // there was no way to move a card at all.
+  const [dragged, setDragged] = useState<{ taskId: string; from: string } | null>(null);
+  const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
+
+  const handleDragStart = (taskId: string, fromColumn: string) => {
+    setDragged({ taskId, from: fromColumn });
+  };
+
+  const moveTask = (taskId: string, from: string, to: string) => {
+    if (from === to) return;
+    setTasks((prev) => {
+      const task = (prev[from] ?? []).find((t) => t.id === taskId);
+      if (!task) return prev;
+      return {
+        ...prev,
+        [from]: (prev[from] ?? []).filter((t) => t.id !== taskId),
+        [to]: [...(prev[to] ?? []), task],
+      };
+    });
+  };
+
+  const handleDrop = (toColumn: string) => {
+    setDragOverColumn(null);
+    if (!dragged) return;
+    moveTask(dragged.taskId, dragged.from, toColumn);
+    setDragged(null);
+  };
 
   const addTask = (task: TaskCard, columnId: string) => {
     setTasks({
@@ -442,23 +502,35 @@ export default function TaskBoardPage() {
           </div>
           <div>
             <div className="flex items-center gap-2.5">
-              <h1 className="text-xl font-bold text-white">
-                Website Redesign
+              <h1
+                className="text-xl font-bold"
+                style={{ color: "var(--text-primary)" }}
+              >
+                {project.name}
               </h1>
-              <div className="flex items-center gap-1.5 bg-green-500/10 px-2.5 py-0.5 rounded-full">
-                <div className="w-2 h-2 rounded-full bg-green-500" />
-                <span className="text-[11px] font-semibold text-green-400">
-                  On Track
+              <div className="flex items-center gap-1.5 bg-theme-secondary-subtle px-2.5 py-0.5 rounded-full">
+                <div
+                  className={`w-2 h-2 rounded-full ${STATUS_COLORS[project.status]}`}
+                />
+                <span
+                  className="text-[11px] font-semibold"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  {project.status}
                 </span>
               </div>
             </div>
-            <p className="text-xs text-theme-muted">
-              Complete brand overhaul and assets update
-            </p>
+            <p className="text-xs text-theme-muted">{project.description}</p>
+            <NavLink
+              href={`/workspace/projects/${project.id}`}
+              className="text-xs font-medium text-purple-400 hover:underline"
+            >
+              ← Back to project
+            </NavLink>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button
+          <button type="button"
             onClick={() => setShowFilter(true)}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all ${
               hasActiveFilters
@@ -472,7 +544,7 @@ export default function TaskBoardPage() {
               <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
             )}
           </button>
-          <button
+          <button type="button"
             onClick={() => setShowCreateTask(true)}
             className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
           >
@@ -486,31 +558,59 @@ export default function TaskBoardPage() {
       <div className="flex-1 px-6 pb-6 overflow-x-auto">
         <div className="flex gap-4 h-full min-w-max">
           {columns.map((col) => {
+            const isDropTarget = dragOverColumn === col.id;
             return (
               <div
                 key={col.id}
-                className="w-[280px] flex flex-col shrink-0"
+                onDragOver={(e) => {
+                  // Without preventDefault the browser refuses the drop.
+                  e.preventDefault();
+                  e.dataTransfer.dropEffect = "move";
+                  if (dragOverColumn !== col.id) setDragOverColumn(col.id);
+                }}
+                onDragLeave={(e) => {
+                  // Ignore bubbling leaves from child cards.
+                  if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+                  setDragOverColumn((current) => (current === col.id ? null : current));
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  handleDrop(col.id);
+                }}
+                className={`w-[280px] flex flex-col shrink-0 rounded-xl transition-colors ${
+                  isDropTarget ? "bg-theme-brand-subtle" : ""
+                }`}
               >
                 {/* Column Header */}
                 <div className="flex items-center justify-between mb-4 px-1">
                   <div className="flex items-center gap-2.5">
                     <div className={`w-2.5 h-2.5 rounded-full ${col.dotColor}`} />
-                    <span className="text-sm font-bold text-white">
+                    <span
+                      className="text-sm font-bold"
+                      style={{ color: "var(--text-primary)" }}
+                    >
                       {col.label}
                     </span>
                     <span className="text-xs font-semibold text-theme-muted bg-theme-surface px-2 py-0.5 rounded-full">
                       {getFilteredTasks(col.id).length}
                     </span>
                   </div>
-                  <button aria-label="Add task to this column" title="Add task to this column" className="w-7 h-7 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors">
+                  <button type="button" aria-label="Add task to this column" title="Add task to this column" className="hit-area-touch w-7 h-7 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors">
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
 
                 {/* Column Cards */}
-                <div className="flex-1 space-y-3 overflow-y-auto">
+                <div className="flex-1 space-y-3 overflow-y-auto px-1 pb-1">
                   {getFilteredTasks(col.id).map((task) => (
-                    <TaskCardView key={task.id} task={task} />
+                    <TaskCardView
+                      key={task.id}
+                      task={task}
+                      columnId={col.id}
+                      columns={columns}
+                      onDragStart={handleDragStart}
+                      onMove={moveTask}
+                    />
                   ))}
                 </div>
               </div>

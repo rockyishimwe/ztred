@@ -32,14 +32,23 @@ export default function VerifyPage() {
     }
   };
 
+  const [resent, setResent] = useState(false);
+
+  const handleResend = () => {
+    setResent(true);
+    setTimeout(() => setResent(false), 3000);
+  };
+
   const handleVerify = (e: React.FormEvent) => {
     e.preventDefault();
     setVerifying(true);
-    navigate('/workspace');
+    // Verified accounts land in workspace creation rather than an empty
+    // workspace; /workspace/create finishes at /workspace.
+    navigate('/workspace/create');
   };
 
   return (
-    <div className="min-h-dvh bg-[#0b0f19] text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
+    <div className="min-h-dvh bg-theme-primary text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
       {/* Left Column - Form */}
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-12 max-w-xl mx-auto lg:mx-0 w-full">
         <div className="space-y-8">
@@ -92,7 +101,7 @@ export default function VerifyPage() {
               type="submit"
               disabled={verifying}
               aria-busy={verifying || undefined}
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-theme-primary font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group disabled:opacity-70 disabled:cursor-progress"
+              className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-theme-on-brand font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group disabled:opacity-70 disabled:cursor-progress"
             >
               <span>{verifying ? 'Verifying…' : 'Verify email'}</span>
               {verifying ? (
@@ -108,19 +117,29 @@ export default function VerifyPage() {
             <p className="text-xs text-theme-muted">Didn&apos;t receive the email?</p>
             <button
               type="button"
-              onClick={() => alert('Verification code resent!')}
-              className="inline-flex items-center space-x-2 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
+              onClick={handleResend}
+              disabled={resent}
+              className="inline-flex items-center space-x-2 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors disabled:opacity-60"
             >
-              <RefreshCw className="w-3.5 h-3.5" />
+              <RefreshCw className="w-3.5 h-3.5" aria-hidden="true" />
               <span>Resend code</span>
             </button>
+            {/* Inline confirmation rather than a blocking window.alert(). */}
+            <p
+              role="status"
+              aria-live="polite"
+              className="text-xs font-medium min-h-[1rem]"
+              style={{ color: 'var(--success)' }}
+            >
+              {resent ? 'Verification code resent' : ''}
+            </p>
           </div>
 
           <div className="text-center text-xs text-theme-muted">
             Need help?{' '}
-            <a href="#" className="text-purple-400 hover:underline">
+            <span className="text-purple-400" title="Not part of this demo">
               Contact support
-            </a>
+            </span>
           </div>
         </div>
       </div>
@@ -129,7 +148,7 @@ export default function VerifyPage() {
       <div className="hidden lg:flex flex-1 bg-theme-surface border-l border-theme/80 p-16 flex-col justify-between relative overflow-hidden">
         {/* Background Geometric Circles */}
         <div className="absolute top-12 right-12 w-96 h-96 rounded-full border border-purple-900/30 pointer-events-none"></div>
-        <div className="absolute top-24 right-24 w-64 h-64 rounded-full border border-indigo-900/40 pointer-events-none"></div>
+        <div className="absolute top-24 right-24 w-64 h-64 rounded-full border border-purple-950/40 pointer-events-none"></div>
 
         <div className="flex items-center space-x-2 text-xs font-medium text-purple-400">
           <span>✦</span>

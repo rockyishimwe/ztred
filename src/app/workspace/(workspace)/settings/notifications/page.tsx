@@ -60,7 +60,7 @@ export default function NotificationSettingsPage() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <button
+                <button type="button"
                   onClick={() => toggleChannel(idx)}
                   className="relative w-10 h-5 rounded-full transition-colors"
                   style={{
@@ -117,7 +117,7 @@ export default function NotificationSettingsPage() {
               <label className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>
                 {item.label}
               </label>
-              <button
+              <button type="button"
                 onClick={() => item.setter(!item.value)}
                 className="relative w-10 h-5 rounded-full transition-colors"
                 style={{
@@ -138,7 +138,7 @@ export default function NotificationSettingsPage() {
 
       {/* Save Button */}
       <div className="flex justify-end">
-        <button
+        <button type="button"
           className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"
           style={{ backgroundColor: "var(--primary)" }}
         >

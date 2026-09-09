@@ -410,7 +410,7 @@ function AudioCallOverlay({
 
         {/* Controls */}
         <div className="flex items-center gap-4 mb-8">
-          <button
+          <button type="button"
             onClick={() => setIsMuted(!isMuted)}
             className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
               isMuted
@@ -420,7 +420,7 @@ function AudioCallOverlay({
           >
             <Mic className="w-5 h-5" />
           </button>
-          <button
+          <button type="button"
             onClick={() => setIsSpeaker(!isSpeaker)}
             className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
               isSpeaker
@@ -430,13 +430,13 @@ function AudioCallOverlay({
           >
             <Volume2 className="w-5 h-5" />
           </button>
-          <button aria-label="More call options" title="More call options" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary flex items-center justify-center transition-colors">
+          <button type="button" aria-label="More call options" title="More call options" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary flex items-center justify-center transition-colors">
             <MoreHorizontal className="w-5 h-5" />
           </button>
         </div>
 
         {/* End Call Button */}
-        <button aria-label="End call" title="End call"
+        <button type="button" aria-label="End call" title="End call"
           onClick={onEnd}
           className="w-14 h-14 rounded-full bg-theme-danger hover:bg-red-600 flex items-center justify-center transition-colors shadow-lg shadow-red-500/30"
         >
@@ -481,12 +481,29 @@ export default function MessagingPage() {
     conversations.find((c) => c.id === activeConvId) ?? conversations[0];
   const activeMessages = messagesByConv[activeConvId] || [];
 
-  const filteredConversations = conversations.filter((c) => {
-    if (activeFilter === "Unread" && c.unread === 0) return false;
-    return searchQuery
-      ? c.name.toLowerCase().includes(searchQuery.toLowerCase())
-      : true;
-  });
+  // Pinned conversations sort to the top of the list.
+  const [pinnedIds, setPinnedIds] = useState<string[]>([]);
+  const [showThreadSearch, setShowThreadSearch] = useState(false);
+  const [threadSearch, setThreadSearch] = useState("");
+
+  const togglePinned = useCallback((id: string) => {
+    setPinnedIds((prev) =>
+      prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]
+    );
+  }, []);
+
+  const filteredConversations = conversations
+    .filter((c) => {
+      if (activeFilter === "Unread" && c.unread === 0) return false;
+      return searchQuery
+        ? c.name.toLowerCase().includes(searchQuery.toLowerCase())
+        : true;
+    })
+    .sort((a, b) => {
+      const aPinned = pinnedIds.includes(a.id) ? 1 : 0;
+      const bPinned = pinnedIds.includes(b.id) ? 1 : 0;
+      return bPinned - aPinned;
+    });
 
   const handleCall = useCallback(() => {
     if (activeConv && !activeConv.isGroup) {
@@ -548,8 +565,8 @@ export default function MessagingPage() {
         <div className="px-5 pt-5 pb-3">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-xl font-bold text-theme-primary">Messages</h1>
-            <button aria-label="New message" title="New message"
-              className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
+            <button type="button" aria-label="New message" title="New message"
+              className="hit-area-touch w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
               style={{
                 backgroundColor: "var(--bg-card)",
                 border: "1px solid var(--border-color)",
@@ -580,7 +597,7 @@ export default function MessagingPage() {
           {/* Filter Tabs */}
           <div className="flex gap-1">
             {(["All", "Unread"] as const).map((tab) => (
-              <button
+              <button type="button"
                 key={tab}
                 onClick={() => setActiveFilter(tab)}
                 className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
@@ -598,7 +615,7 @@ export default function MessagingPage() {
         {/* Conversation List */}
         <div className="flex-1 overflow-y-auto px-2 pb-4">
           {filteredConversations.map((conv) => (
-            <button
+            <button type="button"
               key={conv.id}
               onClick={() => handleSwitchConv(conv.id)}
               className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all ${
@@ -708,15 +725,45 @@ export default function MessagingPage() {
           </div>
 
           <div className="flex items-center gap-1">
-            <button aria-label="Pin conversation" title="Pin conversation" className="w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
-              <Pin className="w-4 h-4" />
-            </button>
-            <button aria-label="Search in conversation" title="Search in conversation" className="w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
-              <Search className="w-4 h-4" />
+            <button
+              type="button"
+              onClick={() => togglePinned(activeConv.id)}
+              aria-label={
+                pinnedIds.includes(activeConv.id)
+                  ? "Unpin conversation"
+                  : "Pin conversation"
+              }
+              aria-pressed={pinnedIds.includes(activeConv.id)}
+              title={
+                pinnedIds.includes(activeConv.id)
+                  ? "Unpin conversation"
+                  : "Pin conversation"
+              }
+              className="hit-area-touch w-9 h-9 rounded-xl flex items-center justify-center hover:text-theme-primary hover-theme-card transition-colors"
+              style={{
+                color: pinnedIds.includes(activeConv.id)
+                  ? "var(--primary)"
+                  : "var(--text-muted)",
+              }}
+            >
+              <Pin
+                className={`w-4 h-4 ${pinnedIds.includes(activeConv.id) ? "fill-current" : ""}`}
+                aria-hidden="true"
+              />
             </button>
             <button
+              type="button"
+              onClick={() => setShowThreadSearch((v) => !v)}
+              aria-label="Search in conversation"
+              aria-expanded={showThreadSearch}
+              title="Search in conversation"
+              className="hit-area-touch w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors"
+            >
+              <Search className="w-4 h-4" aria-hidden="true" />
+            </button>
+            <button type="button"
               onClick={handleCall}
-              className="w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors"
+              className="hit-area-touch w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors"
               title={
                 activeConv.isGroup ? "Group call" : `Call ${activeConv.name}`
               }
@@ -729,11 +776,32 @@ export default function MessagingPage() {
             >
               <Video className="w-4 h-4" />
             </NavLink>
-            <button aria-label="More conversation options" title="More conversation options" className="w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+            <button type="button" aria-label="More conversation options" title="More conversation options" className="hit-area-touch w-9 h-9 rounded-xl flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
               <MoreHorizontal className="w-4 h-4" />
             </button>
           </div>
         </div>
+
+        {/* In-thread search, revealed by the header's search toggle. */}
+        {showThreadSearch && (
+          <div
+            className="px-5 py-3 shrink-0"
+            style={{ borderBottom: "1px solid var(--border-color)" }}
+          >
+            <label htmlFor="thread-search" className="sr-only">
+              Search in this conversation
+            </label>
+            <input
+              id="thread-search"
+              type="search"
+              autoFocus
+              value={threadSearch}
+              onChange={(e) => setThreadSearch(e.target.value)}
+              placeholder={`Search in ${activeConv.name}...`}
+              className="input-theme w-full px-4 py-2 min-h-touch-sm"
+            />
+          </div>
+        )}
 
         {/* Messages Area */}
         <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
@@ -842,7 +910,7 @@ export default function MessagingPage() {
                           border: "1px solid var(--border-color)",
                         }}
                       >
-                        <button aria-label="Play voice note" title="Play voice note" className="w-8 h-8 rounded-full bg-theme-brand flex items-center justify-center shrink-0">
+                        <button type="button" aria-label="Play voice note" title="Play voice note" className="hit-area-touch w-8 h-8 rounded-full bg-theme-brand flex items-center justify-center shrink-0">
                           <Play className="w-3.5 h-3.5 text-white ml-0.5" />
                         </button>
                         <div className="flex items-center gap-[2px] h-6">
@@ -896,13 +964,13 @@ export default function MessagingPage() {
                           </div>
                         </div>
                         <div className="flex items-center gap-1">
-                          <button aria-label="Download file" title="Download file" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                          <button type="button" aria-label="Download file" title="Download file" className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                             <Download className="w-4 h-4" />
                           </button>
-                          <button aria-label="Open file in a new tab" title="Open file in a new tab" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                          <button type="button" aria-label="Open file in a new tab" title="Open file in a new tab" className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                             <ExternalLink className="w-4 h-4" />
                           </button>
-                          <button aria-label="More file options" title="More file options" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                          <button type="button" aria-label="More file options" title="More file options" className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                             <MoreHorizontal className="w-4 h-4" />
                           </button>
                         </div>
@@ -938,25 +1006,25 @@ export default function MessagingPage() {
             />
             <div className="flex items-center justify-between mt-3">
               <div className="flex items-center gap-0.5">
-                <button aria-label="Add attachment" title="Add attachment" className="w-8 h-8 rounded-lg bg-theme-brand flex items-center justify-center text-white hover:bg-purple-700 transition-colors">
+                <button type="button" aria-label="Add attachment" title="Add attachment" className="hit-area-touch w-8 h-8 rounded-lg bg-theme-brand flex items-center justify-center text-white hover:bg-purple-700 transition-colors">
                   <Plus className="w-4 h-4" />
                 </button>
-                <button aria-label="Add emoji" title="Add emoji" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button type="button" aria-label="Add emoji" title="Add emoji" className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <Smile className="w-4 h-4" />
                 </button>
-                <button aria-label="Insert code block" title="Insert code block" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button type="button" aria-label="Insert code block" title="Insert code block" className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <Code className="w-4 h-4" />
                 </button>
-                <button aria-label="Attach file" title="Attach file" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button type="button" aria-label="Attach file" title="Attach file" className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <Paperclip className="w-4 h-4" />
                 </button>
-                <button aria-label="Record voice note" title="Record voice note" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button type="button" aria-label="Record voice note" title="Record voice note" className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <Mic className="w-4 h-4" />
                 </button>
-                <button aria-label="Mention someone" title="Mention someone" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button type="button" aria-label="Mention someone" title="Mention someone" className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <AtSign className="w-4 h-4" />
                 </button>
-                <button aria-label="Quick actions" title="Quick actions" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
+                <button type="button" aria-label="Quick actions" title="Quick actions" className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover-theme-card transition-colors">
                   <Zap className="w-4 h-4" />
                 </button>
               </div>
@@ -964,7 +1032,7 @@ export default function MessagingPage() {
                 type="submit"
                 aria-label="Send message"
                 disabled={!messageInput.trim()}
-                className="w-9 h-9 rounded-xl bg-theme-brand flex items-center justify-center text-white hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="hit-area-touch w-9 h-9 rounded-xl bg-theme-brand flex items-center justify-center text-white hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Send className="w-4 h-4" />
               </button>

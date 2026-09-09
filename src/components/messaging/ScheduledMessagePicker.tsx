@@ -23,7 +23,7 @@ export const ScheduledMessagePicker: React.FC<ScheduledMessagePickerProps> = ({
         <h3 className="text-sm font-bold text-theme-primary">
           Schedule message
         </h3>
-        <button aria-label="Close" title="Close"
+        <button type="button" aria-label="Close" title="Close"
           onClick={onClose}
           className="p-1 text-theme-muted hover:text-theme-primary hover:bg-theme-secondary rounded-lg transition-colors"
         >
@@ -46,10 +46,8 @@ export const ScheduledMessagePicker: React.FC<ScheduledMessagePickerProps> = ({
       </div>
 
       <div className="mt-3 pt-3 border-t border-theme">
-        <label className="block text-xs font-medium text-theme-muted mb-1">
-          Custom date & time
-        </label>
-        <input
+        <label htmlFor="messaging-custom-date-time" className="block text-xs font-medium text-theme-muted mb-1">Custom date & time</label>
+        <input id="messaging-custom-date-time"
           type="datetime-local"
           className="w-full bg-theme-input border border-theme rounded-lg px-3 py-2 text-sm text-theme-primary focus:outline-none focus:border-theme-accent focus:ring-2 focus:ring-theme-primary/20 transition-all"
           onChange={(e) => {

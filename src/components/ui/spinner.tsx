@@ -33,6 +33,12 @@ interface SpinnerContentProps
     VariantProps<typeof loaderVariants> {
   className?: string;
   children?: React.ReactNode;
+  /**
+   * Announced to screen readers. Pass `null` when the spinner sits inside a
+   * control that already announces its own busy state (an `aria-busy` button,
+   * a `NavLink` swapping its icon) — a second announcement is just noise.
+   */
+  label?: string | null;
 }
 
 export function Spinner({
@@ -40,10 +46,21 @@ export function Spinner({
   show,
   children,
   className,
+  label = "Loading",
 }: SpinnerContentProps) {
   return (
-    <span className={spinnerVariants({ show })}>
-      <Loader2 className={cn(loaderVariants({ size }), className)} />
+    <span
+      className={spinnerVariants({ show })}
+      // The spinner is the app's only loading affordance; without a live
+      // region its appearance was silent for screen reader users.
+      role={label ? "status" : undefined}
+      aria-live={label ? "polite" : undefined}
+    >
+      <Loader2
+        className={cn(loaderVariants({ size }), className)}
+        aria-hidden="true"
+      />
+      {label && <span className="sr-only">{label}</span>}
       {children}
     </span>
   );

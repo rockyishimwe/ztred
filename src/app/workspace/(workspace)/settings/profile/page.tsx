@@ -33,8 +33,12 @@ export default function ProfileSettingsPage() {
     input.click();
   };
 
+  // Inline confirmation rather than a blocking window.alert().
+  const [saved, setSaved] = useState(false);
+
   const handleSave = () => {
-    alert("Profile saved successfully!");
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2500);
   };
 
   return (
@@ -85,10 +89,8 @@ export default function ProfileSettingsPage() {
         <div className="space-y-5">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-                Full Name
-              </label>
-              <input
+              <label htmlFor="profile-full-name" className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Full Name</label>
+              <input id="profile-full-name"
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
@@ -101,10 +103,8 @@ export default function ProfileSettingsPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-                Role
-              </label>
-              <input
+              <label htmlFor="profile-role" className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Role</label>
+              <input id="profile-role"
                 type="text"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
@@ -120,10 +120,8 @@ export default function ProfileSettingsPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-                Email
-              </label>
-              <input
+              <label htmlFor="profile-email" className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Email</label>
+              <input id="profile-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -136,10 +134,8 @@ export default function ProfileSettingsPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-                Location
-              </label>
-              <input
+              <label htmlFor="profile-location" className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Location</label>
+              <input id="profile-location"
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
@@ -154,10 +150,8 @@ export default function ProfileSettingsPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-              Bio
-            </label>
-            <textarea
+            <label htmlFor="profile-bio" className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Bio</label>
+            <textarea id="profile-bio"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               rows={4}
@@ -184,12 +178,21 @@ export default function ProfileSettingsPage() {
             Cancel
           </NavLink>
           <button
+            type="button"
             onClick={handleSave}
-            className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"
+            className="px-5 py-2.5 min-h-touch rounded-xl text-sm font-semibold text-theme-on-brand transition-all hover:scale-[1.02]"
             style={{ backgroundColor: "var(--primary)" }}
           >
             Save Changes
           </button>
+          <span
+            role="status"
+            aria-live="polite"
+            className={`text-sm font-medium transition-opacity `}
+            style={{ color: "var(--success)" }}
+          >
+            {saved ? "Profile saved" : ""}
+          </span>
         </div>
       </div>
     </div>

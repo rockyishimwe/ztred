@@ -18,13 +18,11 @@ export default function SecuritySettingsPage() {
         <div className="space-y-5">
           {/* Current Password */}
           <div>
-            <label
+            <label htmlFor="security-current-password"
               className="block text-xs font-medium mb-1.5"
               style={{ color: "var(--text-secondary)" }}
-            >
-              Current password
-            </label>
-            <input
+            >Current password</label>
+            <input id="security-current-password"
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
@@ -39,13 +37,11 @@ export default function SecuritySettingsPage() {
 
           {/* New Password */}
           <div>
-            <label
+            <label htmlFor="security-new-password"
               className="block text-xs font-medium mb-1.5"
               style={{ color: "var(--text-secondary)" }}
-            >
-              New password
-            </label>
-            <input
+            >New password</label>
+            <input id="security-new-password"
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
@@ -68,7 +64,7 @@ export default function SecuritySettingsPage() {
                 Add an extra layer of protection
               </p>
             </div>
-            <button
+            <button type="button"
               onClick={() => setTwoFactor(!twoFactor)}
               className="relative w-12 h-6 rounded-full transition-colors"
               style={{
@@ -86,7 +82,7 @@ export default function SecuritySettingsPage() {
 
           {/* Update Password Button */}
           <div className="pt-2">
-            <button
+            <button type="button"
               className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"
               style={{ backgroundColor: "var(--primary)" }}
             >

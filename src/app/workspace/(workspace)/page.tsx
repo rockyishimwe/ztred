@@ -137,7 +137,7 @@ export default function WorkspaceHomePage() {
                 className="flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0"
               >
                 <div className="relative">
-                  <div className="w-[60px] h-[60px] rounded-full p-[2px] bg-gradient-to-tr from-purple-500 to-indigo-500 group-hover:scale-105 transition-transform">
+                  <div className="w-[60px] h-[60px] rounded-full p-[2px] bg-gradient-to-tr from-purple-500 to-purple-700 group-hover:scale-105 transition-transform">
                     <img
                       src={story.avatar}
                       alt={story.name}
@@ -190,7 +190,7 @@ export default function WorkspaceHomePage() {
                     <p className="type-caption">Senior Engineer · 2h ago</p>
                   </div>
                 </div>
-                <button aria-label="Post options" title="Post options" className="p-1 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button type="button" aria-label="Post options" title="Post options" className="p-1 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <MoreHorizontal className="w-5 h-5" />
                 </button>
               </div>
@@ -248,9 +248,9 @@ export default function WorkspaceHomePage() {
         <div className="rounded-2xl p-5" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
           <div className="flex items-center justify-between mb-4">
             <span className="type-body-sm" style={{ fontWeight: 'var(--weight-bold)' }}>Today&apos;s Meetings</span>
-            <a href="#" className="text-xs text-purple-400 hover:text-purple-300 font-medium transition-colors">
+            <NavLink href="/workspace/meetings" className="text-xs text-purple-400 hover:text-purple-300 font-medium transition-colors">
               View all
-            </a>
+            </NavLink>
           </div>
           <div className="space-y-3">
             {meetings.map((m, idx) => (
@@ -290,7 +290,7 @@ export default function WorkspaceHomePage() {
                     <div className="text-[11px]" style={{ color: 'var(--text-muted)' }}>{person.role}</div>
                   </div>
                 </div>
-                <button className="text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors">
+                <button type="button" className="text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors">
                   Follow
                 </button>
               </div>
@@ -334,9 +334,9 @@ export default function WorkspaceHomePage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
-                  <button aria-label="Pause story" title="Pause story" className="p-1 hover:bg-white/10 rounded"><Pause className="w-4 h-4" /></button>
-                  <button aria-label="Story options" title="Story options" className="p-1 hover:bg-white/10 rounded"><MoreHorizontal className="w-4 h-4" /></button>
-                  <button onClick={() => setActiveStoryIndex(null)} className="p-1 hover:bg-white/10 rounded"><X className="w-5 h-5" /></button>
+                  <button type="button" aria-label="Pause story" title="Pause story" className="p-1 hover:bg-white/10 rounded"><Pause className="w-4 h-4" /></button>
+                  <button type="button" aria-label="Story options" title="Story options" className="p-1 hover:bg-white/10 rounded"><MoreHorizontal className="w-4 h-4" /></button>
+                  <button type="button" onClick={() => setActiveStoryIndex(null)} className="p-1 hover:bg-white/10 rounded"><X className="w-5 h-5" /></button>
                 </div>
               </div>
             </div>
@@ -344,12 +344,12 @@ export default function WorkspaceHomePage() {
             {/* Navigation Arrows */}
             <div className="absolute inset-y-20 inset-x-0 z-10 flex items-center justify-between px-2 pointer-events-none">
               {activeStoryIndex !== null && activeStoryIndex > 0 ? (
-                <button aria-label="Previous story" title="Previous story" onClick={handlePrevStory} className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/60 transition-colors pointer-events-auto">
+                <button type="button" aria-label="Previous story" title="Previous story" onClick={handlePrevStory} className="hit-area-touch w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/60 transition-colors pointer-events-auto">
                   <ChevronLeft className="w-6 h-6" />
                 </button>
               ) : <div></div>}
               {activeStoryIndex !== null && activeStoryIndex < stories.length - 1 ? (
-                <button aria-label="Next story" title="Next story" onClick={handleNextStory} className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/60 transition-colors pointer-events-auto">
+                <button type="button" aria-label="Next story" title="Next story" onClick={handleNextStory} className="hit-area-touch w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/60 transition-colors pointer-events-auto">
                   <ChevronRight className="w-6 h-6" />
                 </button>
               ) : <div></div>}
@@ -365,10 +365,10 @@ export default function WorkspaceHomePage() {
                 className="flex-1 backdrop-blur-md rounded-full px-4 py-3 text-sm focus:outline-none focus:ring-2"
                 style={{ backgroundColor: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white' }}
               />
-              <button aria-label="Like story" title="Like story" className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white transition-colors">
+              <button type="button" aria-label="Like story" title="Like story" className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white transition-colors">
                 <Heart className="w-5 h-5" />
               </button>
-              <button aria-label="Share story" title="Share story" className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white transition-colors">
+              <button type="button" aria-label="Share story" title="Share story" className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white transition-colors">
                 <Send className="w-5 h-5" />
               </button>
             </div>

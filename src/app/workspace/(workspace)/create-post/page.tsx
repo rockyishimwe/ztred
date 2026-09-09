@@ -78,24 +78,24 @@ export default function CreatePostPage() {
             {/* Bottom Toolbar */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1">
-                <button aria-label="Add image" title="Add image" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button type="button" aria-label="Add image" title="Add image" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <ImageIcon className="w-5 h-5" />
                 </button>
-                <button aria-label="Add video" title="Add video" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button type="button" aria-label="Add video" title="Add video" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <Video className="w-5 h-5" />
                 </button>
-                <button aria-label="Add emoji" title="Add emoji" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button type="button" aria-label="Add emoji" title="Add emoji" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <Smile className="w-5 h-5" />
                 </button>
-                <button aria-label="Tag a channel" title="Tag a channel" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button type="button" aria-label="Tag a channel" title="Tag a channel" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <Hash className="w-5 h-5" />
                 </button>
-                <button aria-label="Add location" title="Add location" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                <button type="button" aria-label="Add location" title="Add location" className="p-2 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
                   <MapPin className="w-5 h-5" />
                 </button>
               </div>
 
-              <button
+              <button type="button"
                 onClick={handlePost}
                 disabled={!content.trim() || posting}
                 aria-busy={posting || undefined}
@@ -114,7 +114,7 @@ export default function CreatePostPage() {
           {/* Audience Selector */}
           <div className="flex items-center gap-2 mt-4">
             {AUDIENCE_OPTIONS.map((option) => (
-              <button
+              <button type="button"
                 key={option}
                 onClick={() => setAudience(option)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${

@@ -205,7 +205,7 @@ export default function MembersPage() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{
                 backgroundColor: "var(--bg-card)",
@@ -215,14 +215,14 @@ export default function MembersPage() {
             >
               Platform console
             </button>
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors"
               style={{ backgroundColor: "var(--primary)" }}
             >
               <Plus className="w-4 h-4" aria-hidden="true" />
               Invite member
             </button>
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{
                 backgroundColor: "var(--bg-card)",
@@ -307,7 +307,7 @@ export default function MembersPage() {
           </select>
 
           {/* Filters Button */}
-          <button
+          <button type="button"
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
             style={{
               backgroundColor: "var(--bg-card)",
@@ -327,7 +327,7 @@ export default function MembersPage() {
           aria-label="Member status tabs"
         >
           {tabs.map((tab) => (
-            <button
+            <button type="button"
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               role="tab"
@@ -481,7 +481,7 @@ export default function MembersPage() {
                       {member.lastActive}
                     </td>
                     <td className="px-5 py-4 text-right">
-                      <button
+                      <button type="button"
                         className="p-1.5 rounded-lg transition-colors hover:opacity-70"
                         style={{ color: "var(--text-muted)" }}
                         aria-label={`Actions for ${member.name}`}
@@ -508,7 +508,7 @@ export default function MembersPage() {
               members
             </span>
             <div className="flex items-center gap-2">
-              <button
+              <button type="button"
                 className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
                 style={{
                   backgroundColor: "var(--bg-secondary)",
@@ -520,7 +520,7 @@ export default function MembersPage() {
                 <ChevronLeft className="w-3.5 h-3.5" aria-hidden="true" />
                 Previous
               </button>
-              <button
+              <button type="button"
                 className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
                 style={{
                   backgroundColor: "var(--bg-secondary)",

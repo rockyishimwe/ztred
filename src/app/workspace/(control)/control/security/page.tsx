@@ -79,13 +79,13 @@ export default function SecurityPage() {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors" style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}>
+            <button type="button" className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors" style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}>
               Platform console
             </button>
-            <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors" style={{ backgroundColor: "var(--primary)" }}>
+            <button type="button" className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors" style={{ backgroundColor: "var(--primary)" }}>
               <Plus className="w-4 h-4" aria-hidden="true" /> Invite member
             </button>
-            <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors" style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}>
+            <button type="button" className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors" style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}>
               <Upload className="w-4 h-4" aria-hidden="true" /> Export
             </button>
           </div>
@@ -129,8 +129,8 @@ export default function SecurityPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Password Policy */}
                 <div>
-                  <label className="text-sm font-medium block mb-2" style={{ color: "var(--text-secondary)" }}>Password policy</label>
-                  <select
+                  <label htmlFor="security-password-policy" className="text-sm font-medium block mb-2" style={{ color: "var(--text-secondary)" }}>Password policy</label>
+                  <select id="security-password-policy"
                     className="w-full min-w-0 max-w-full rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors appearance-none cursor-pointer"
                     style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
                     aria-label="Password policy"
@@ -165,7 +165,7 @@ export default function SecurityPage() {
             <div className="rounded-2xl overflow-hidden min-w-0" style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)" }}>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-6 py-5" style={{ borderBottom: "1px solid var(--border-color)" }}>
                 <h2 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>Active sessions</h2>
-                <button className="text-sm font-semibold transition-colors" style={{ color: "var(--primary)" }}>View all sessions</button>
+                <button type="button" className="text-sm font-semibold transition-colors" style={{ color: "var(--primary)" }}>View all sessions</button>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[760px] text-left">
@@ -203,7 +203,7 @@ export default function SecurityPage() {
                           </span>
                         </td>
                         <td className="px-2 py-3.5 whitespace-nowrap">
-                          <button className="text-sm font-semibold transition-colors hover:opacity-70" style={{ color: "var(--danger)" }}>
+                          <button type="button" className="text-sm font-semibold transition-colors hover:opacity-70" style={{ color: "var(--danger)" }}>
                             Revoke
                           </button>
                         </td>

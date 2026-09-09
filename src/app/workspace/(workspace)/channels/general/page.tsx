@@ -29,6 +29,7 @@ import {
 import { format } from "date-fns";
 import { useUIStore } from "@/stores/uiStore";
 import { ZtredLogo } from "@/components/ui/ZtredLogo";
+import { isRouteActive } from "@/lib/utils";
 
 interface Channel {
   id: string;
@@ -96,9 +97,9 @@ const initialMessages: Message[] = [
 
 const navItems = [
   { icon: Home, href: "/workspace", label: "Home" },
-  { icon: MessageSquare, href: "/workspace/dm/user_1", label: "Messages" },
-  { icon: Hash, href: "/workspace/channels/general", label: "Channels" },
-  { icon: Video, href: "/workspace/meetings/meet_1", label: "Meetings" },
+  { icon: MessageSquare, href: "/workspace/dm", label: "Messages" },
+  { icon: Hash, href: "/workspace/channels", label: "Channels" },
+  { icon: Video, href: "/workspace/meetings", label: "Meetings" },
   { icon: Calendar, href: "/workspace/calendar", label: "Calendar" },
   { icon: CheckSquare, href: "/workspace/projects", label: "Projects" },
   { icon: Folder, href: "/workspace/files", label: "Files" },
@@ -107,7 +108,7 @@ const navItems = [
   { icon: BarChart2, href: "/workspace/analytics", label: "Analytics" },
   { icon: Sparkles, href: "/workspace/ai", label: "AI" },
   { icon: Bell, href: "/workspace/notifications", label: "Notifications" },
-  { icon: Settings, href: "/workspace/settings/profile", label: "Settings" },
+  { icon: Settings, href: "/workspace/settings", label: "Settings" },
 ];
 
 export default function GeneralChannelPage() {
@@ -116,6 +117,7 @@ export default function GeneralChannelPage() {
   const toggleTheme = useUIStore((s) => s.toggleTheme);
   const [message, setMessage] = useState("");
   const [activeChannelId, setActiveChannelId] = useState("general");
+  const [channelSearch, setChannelSearch] = useState("");
   // Local optimistic messages — replace with a store/API call when the
   // messaging backend is wired up.
   const [messages, setMessages] = useState<Message[]>(initialMessages);
@@ -128,6 +130,14 @@ export default function GeneralChannelPage() {
   const activeChannel = useMemo(
     () => channels.find((channel) => channel.id === activeChannelId) ?? channels[0],
     [activeChannelId]
+  );
+
+  const filteredChannels = useMemo(
+    () =>
+      channels.filter((channel) =>
+        channel.name.toLowerCase().includes(channelSearch.toLowerCase())
+      ),
+    [channelSearch]
   );
 
   const handleSend = (event: React.FormEvent) => {
@@ -175,7 +185,7 @@ export default function GeneralChannelPage() {
           <nav className="mt-3 flex flex-col items-center gap-1.5" aria-label="Workspace sections">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = pathname === item.href;
+              const isActive = isRouteActive(pathname, item.href, item.href === "/workspace");
 
               return (
                 <NavLink
@@ -187,7 +197,7 @@ export default function GeneralChannelPage() {
                   className={`flex h-10 w-11 items-center justify-center rounded-xl transition ${
                     isActive
                       ? "bg-theme-brand text-white shadow-[0_10px_22px_rgba(95,61,255,0.35)]"
-                      : "text-theme-secondary hover-theme-primary-subtle hover:text-theme-on-primary"
+                      : "text-theme-secondary hover-theme-primary-subtle hover:text-theme-brand"
                   }`}
                 >
                   <Icon className="h-5 w-5" aria-hidden="true" />
@@ -215,7 +225,7 @@ export default function GeneralChannelPage() {
           </button>
 
           <NavLink
-            href="/settings/profile"
+            href="/workspace/settings/profile"
             className="relative block h-11 w-11 rounded-full"
           aria-label="Jordan Lee profile"
           title="Jordan Lee"
@@ -241,7 +251,7 @@ export default function GeneralChannelPage() {
           <button
             type="button"
             aria-label="Add channel"
-            className="flex h-9 min-h-0 w-9 min-w-0 items-center justify-center rounded-xl border border-theme-accent bg-theme-brand-subtle text-theme-on-primary"
+            className="hit-area-touch flex h-9 min-h-0 w-9 min-w-0 items-center justify-center rounded-xl border border-theme-accent bg-theme-brand-subtle text-theme-brand"
           >
             <Plus className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -253,6 +263,8 @@ export default function GeneralChannelPage() {
         <input
           id="channel-search"
           type="search"
+          value={channelSearch}
+          onChange={(e) => setChannelSearch(e.target.value)}
           placeholder="Search channels..."
           className="mb-5 h-[42px] w-full rounded-xl border border-theme bg-theme-input px-9 text-sm font-medium tracking-normal text-theme-primary placeholder-theme focus:border-theme-accent focus:outline-none"
         />
@@ -262,7 +274,7 @@ export default function GeneralChannelPage() {
         </div>
 
         <nav className="space-y-1" aria-label="Channel list">
-          {channels.map((channel) => {
+          {filteredChannels.map((channel) => {
             const isActive = channel.id === activeChannel.id;
 
             return (
@@ -272,14 +284,14 @@ export default function GeneralChannelPage() {
                 onClick={() => setActiveChannelId(channel.id)}
                 className={`flex h-10 min-h-0 w-full min-w-0 items-center gap-3 rounded-xl px-3 py-2 text-left text-[15px] font-medium tracking-normal transition ${
                   isActive
-                    ? "bg-theme-brand-subtle text-theme-on-primary"
+                    ? "bg-theme-brand-subtle text-theme-brand"
                     : "text-theme-secondary hover:bg-theme-secondary hover:text-theme-primary"
                 }`}
                 aria-current={isActive ? "page" : undefined}
               >
                 <Hash
                   className={`h-4 w-4 shrink-0 ${
-                    isActive ? "text-theme-on-primary" : "text-theme-muted"
+                    isActive ? "text-theme-brand" : "text-theme-muted"
                   }`}
                   aria-hidden="true"
                 />
@@ -292,10 +304,17 @@ export default function GeneralChannelPage() {
               </button>
             );
           })}
+
+          {filteredChannels.length === 0 && (
+            <p className="px-3 py-2 text-sm text-theme-muted">
+              No channels match that search.
+            </p>
+          )}
         </nav>
       </aside>
 
-      <main className="flex min-w-0 flex-1 flex-col bg-theme-primary">
+      {/* Not a <main>: the root layout already provides the page landmark. */}
+      <section aria-label="Channel messages" className="flex min-w-0 flex-1 flex-col bg-theme-primary">
         <header className="flex h-[69px] shrink-0 items-center justify-between border-b border-theme px-6">
           <div className="flex min-w-0 items-center gap-3">
             <Hash className="h-6 w-6 shrink-0 text-theme-secondary" aria-hidden="true" />
@@ -316,10 +335,10 @@ export default function GeneralChannelPage() {
               <Users className="h-4 w-4" aria-hidden="true" />
               <span>24</span>
             </div>
-            <button type="button" className="flex h-8 min-h-0 w-8 min-w-0 items-center justify-center rounded-lg" aria-label="Pinned messages">
+            <button type="button" className="hit-area-touch flex h-8 min-h-0 w-8 min-w-0 items-center justify-center rounded-lg" aria-label="Pinned messages">
               <Pin className="h-4 w-4" aria-hidden="true" />
             </button>
-            <button type="button" className="flex h-8 min-h-0 w-8 min-w-0 items-center justify-center rounded-lg" aria-label="Notifications">
+            <button type="button" className="hit-area-touch flex h-8 min-h-0 w-8 min-w-0 items-center justify-center rounded-lg" aria-label="Notifications">
               <Bell className="h-4 w-4" aria-hidden="true" />
             </button>
           </div>
@@ -328,7 +347,7 @@ export default function GeneralChannelPage() {
         <section className="flex min-h-0 flex-1 flex-col">
           <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-6">
             <div className="mb-7 flex flex-col items-center text-center">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-theme-brand-subtle text-theme-on-primary">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-theme-brand-subtle text-theme-brand">
                 <Hash className="h-8 w-8" aria-hidden="true" />
               </div>
               <h3 className="text-[20px] font-bold leading-tight tracking-normal text-theme-primary">
@@ -374,7 +393,7 @@ export default function GeneralChannelPage() {
               <button
                 type="button"
                 aria-label="Add attachment"
-                className="flex h-9 min-h-0 w-9 min-w-0 shrink-0 items-center justify-center rounded-lg bg-theme-brand text-white"
+                className="hit-area-touch flex h-9 min-h-0 w-9 min-w-0 shrink-0 items-center justify-center rounded-lg bg-theme-brand text-white"
               >
                 <Plus className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -391,20 +410,20 @@ export default function GeneralChannelPage() {
               />
 
               <div className="flex shrink-0 items-center gap-2 text-theme-secondary">
-                <button type="button" aria-label="Add emoji" className="flex h-8 min-h-0 w-8 min-w-0 items-center justify-center rounded-lg">
+                <button type="button" aria-label="Add emoji" className="hit-area-touch flex h-8 min-h-0 w-8 min-w-0 items-center justify-center rounded-lg">
                   <Smile className="h-4 w-4" aria-hidden="true" />
                 </button>
-                <button type="button" aria-label="Attach file" className="flex h-8 min-h-0 w-8 min-w-0 items-center justify-center rounded-lg">
+                <button type="button" aria-label="Attach file" className="hit-area-touch flex h-8 min-h-0 w-8 min-w-0 items-center justify-center rounded-lg">
                   <Paperclip className="h-4 w-4" aria-hidden="true" />
                 </button>
-                <button type="submit" aria-label="Send message" className="flex h-9 min-h-0 w-9 min-w-0 items-center justify-center rounded-lg bg-theme-brand text-white">
+                <button type="submit" aria-label="Send message" className="hit-area-touch flex h-9 min-h-0 w-9 min-w-0 items-center justify-center rounded-lg bg-theme-brand text-white">
                   <Send className="h-4 w-4" aria-hidden="true" />
                 </button>
               </div>
             </form>
           </div>
         </section>
-      </main>
+      </section>
     </div>
   );
 }

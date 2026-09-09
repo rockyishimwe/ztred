@@ -1,6 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import { useParams } from "next/navigation";
+import { NavLink } from "@/components/ui/NavLink";
+import { Modal } from "@/components/ui/Modal";
+import { MEETINGS, getMeeting } from "@/lib/mock/meetings";
 import {
   Video,
   VideoOff,
@@ -19,79 +23,8 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 
-// ─── Data ───────────────────────────────────────────────────────
-
-const participants = [
-  {
-    name: "Sam Rivera",
-    avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
-    isMuted: false,
-    isSpeaking: true,
-  },
-  {
-    name: "Lisa Park",
-    avatar:
-      "https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    isMuted: true,
-    isSpeaking: false,
-  },
-  {
-    name: "Daniel Kim",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80",
-    isMuted: true,
-    isSpeaking: false,
-  },
-  {
-    name: "Alex Chen",
-    avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&auto=format&fit=crop&q=80",
-    isMuted: false,
-    isSpeaking: false,
-  },
-];
-
-const scheduleItems = [
-  {
-    title: "Design Review",
-    time: "11:00 AM · 45 min",
-    status: "live" as const,
-    avatars: [
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
-    ],
-  },
-  {
-    title: "Sprint Planning",
-    time: "1:30 PM · 1 hr",
-    status: "upcoming" as const,
-    avatars: [
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=80",
-    ],
-  },
-  {
-    title: "Client Kickoff — Phoenix",
-    time: "3:00 PM · 30 min",
-    status: "upcoming" as const,
-    avatars: [
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1634595477722-7bc68dd410fd?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
-    ],
-  },
-  {
-    title: "Marketing Standup",
-    time: "9:00 AM · 15 min",
-    status: "ended" as const,
-    avatars: [
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
-    ],
-  },
-];
+// Meeting data lives in @/lib/mock/meetings so the list route and this detail
+// route resolve the same records.
 
 // ─── Create Meeting Modal ───────────────────────────────────────
 
@@ -102,28 +35,20 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
   const meetingLink = "zenith.com/meet/new-room";
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="rounded-2xl p-8 w-full max-w-md shadow-2xl" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-        {/* Header */}
-        <div className="flex items-center justify-between mb-1">
-          <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Create meeting</h2>
-          <button aria-label="Close" title="Close"
-            onClick={onClose}
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-        <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-          Set up a room and share the invite in seconds.
-        </p>
+    <Modal
+      open
+      onClose={onClose}
+      title="Create meeting"
+      description="Set up a room and share the invite in seconds."
+      size="sm"
+      contained
+    >
+      <div>
 
         {/* Meeting Title */}
         <div className="mb-4">
-          <label className="text-xs font-medium mb-1.5 block" style={{ color: 'var(--text-muted)' }}>
-            Meeting title
-          </label>
-          <input
+          <label htmlFor="meetingid-meeting-title" className="text-xs font-medium mb-1.5 block" style={{ color: 'var(--text-muted)' }}>Meeting title</label>
+          <input id="meetingid-meeting-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -135,10 +60,8 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
         {/* Starts + Duration */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="text-xs font-medium mb-1.5 block" style={{ color: 'var(--text-muted)' }}>
-              Starts
-            </label>
-            <input
+            <label htmlFor="meetingid-starts" className="text-xs font-medium mb-1.5 block" style={{ color: 'var(--text-muted)' }}>Starts</label>
+            <input id="meetingid-starts"
               type="text"
               value={starts}
               onChange={(e) => setStarts(e.target.value)}
@@ -146,10 +69,8 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
             />
           </div>
           <div>
-            <label className="text-xs font-medium mb-1.5 block" style={{ color: 'var(--text-muted)' }}>
-              Duration
-            </label>
-            <input
+            <label htmlFor="meetingid-duration" className="text-xs font-medium mb-1.5 block" style={{ color: 'var(--text-muted)' }}>Duration</label>
+            <input id="meetingid-duration"
               type="text"
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
@@ -164,9 +85,9 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
           <span className="flex-1 text-sm truncate" style={{ color: 'var(--text-muted)' }}>
             {meetingLink}
           </span>
-          <button
+          <button type="button"
             onClick={() => navigator.clipboard?.writeText(meetingLink)}
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors shrink-0"
+            className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center transition-colors shrink-0"
           >
             <Copy className="w-4 h-4" />
           </button>
@@ -174,13 +95,13 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
 
         {/* Buttons */}
         <div className="flex items-center justify-end gap-3">
-          <button
+          <button type="button"
             onClick={onClose}
             className="px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
           >
             Cancel
           </button>
-          <button
+          <button type="button"
             onClick={onClose}
             className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
           >
@@ -188,13 +109,21 @@ function CreateMeetingModal({ onClose }: { onClose: () => void }) {
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
 
 // ─── Main Page ──────────────────────────────────────────────────
 
 export default function MeetingsPage() {
+  // Resolve the [meetingId] segment. `getMeeting` falls back to the default
+  // when the id is unknown — /workspace/meetings/current is a real link in the
+  // DM header and is not a meeting id.
+  const params = useParams<{ meetingId: string }>();
+  const meeting = getMeeting(
+    typeof params?.meetingId === "string" ? params.meetingId : undefined
+  );
+
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(true);
@@ -216,7 +145,7 @@ export default function MeetingsPage() {
               </p>
             </div>
           </div>
-          <button
+          <button type="button"
             onClick={() => setShowCreateModal(true)}
             className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
           >
@@ -230,25 +159,34 @@ export default function MeetingsPage() {
           {/* Live Banner */}
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5 bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-xs font-semibold">
-                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                LIVE
-              </div>
+              {meeting.status === "live" ? (
+                <div className="flex items-center gap-1.5 bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-xs font-semibold">
+                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                  LIVE
+                </div>
+              ) : (
+                <div
+                  className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-theme-secondary-subtle"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  {meeting.status}
+                </div>
+              )}
               <span className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
-                Design Review
+                {meeting.title}
               </span>
             </div>
             <div className="flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
               <Clock className="w-4 h-4" />
-              <span className="text-sm font-mono">12:34</span>
+              <span className="text-sm font-mono">{meeting.elapsed}</span>
             </div>
           </div>
 
           {/* Participant Grid — 2x2 */}
           <div className="flex-1 grid grid-cols-2 gap-3 mb-4">
-            {participants.map((p, idx) => (
+            {meeting.participants.map((p) => (
               <div
-                key={idx}
+                key={p.name}
                 className={`relative rounded-2xl overflow-hidden border ${
                   p.isSpeaking
                     ? "border-purple-500 ring-2 ring-purple-500/30"
@@ -284,7 +222,7 @@ export default function MeetingsPage() {
 
           {/* Bottom Controls */}
           <div className="flex items-center justify-center gap-3 py-3">
-            <button
+            <button type="button"
               onClick={() => setIsMuted(!isMuted)}
               className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
                 isMuted
@@ -298,7 +236,7 @@ export default function MeetingsPage() {
                 <Mic className="w-5 h-5" />
               )}
             </button>
-            <button
+            <button type="button"
               onClick={() => setIsVideoOn(!isVideoOn)}
               className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
                 !isVideoOn
@@ -312,16 +250,16 @@ export default function MeetingsPage() {
                 <VideoOff className="w-5 h-5" />
               )}
             </button>
-            <button aria-label="Share screen" title="Share screen" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
+            <button type="button" aria-label="Share screen" title="Share screen" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
               <MonitorUp className="w-5 h-5" />
             </button>
-            <button aria-label="Show participants" title="Show participants" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
+            <button type="button" aria-label="Show participants" title="Show participants" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
               <Users className="w-5 h-5" />
             </button>
-            <button aria-label="Open meeting chat" title="Open meeting chat" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
+            <button type="button" aria-label="Open meeting chat" title="Open meeting chat" className="w-12 h-12 rounded-full bg-theme-card text-theme-secondary hover:bg-theme-secondary-hover border border-theme flex items-center justify-center transition-colors">
               <MessageSquare className="w-5 h-5" />
             </button>
-            <button className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-lg shadow-red-500/25 transition-all ml-2">
+            <button type="button" className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-lg shadow-red-500/25 transition-all ml-2">
               <PhoneOff className="w-4 h-4" />
               Leave
             </button>
@@ -340,10 +278,17 @@ export default function MeetingsPage() {
           </div>
 
           <div className="space-y-4">
-            {scheduleItems.map((item, idx) => (
-              <div
-                key={idx}
-                className="card rounded-xl p-4"
+            {MEETINGS.map((item) => (
+              <NavLink
+                key={item.id}
+                href={`/workspace/meetings/${item.id}`}
+                aria-current={item.id === meeting.id ? "page" : undefined}
+                className="card rounded-xl p-4 block transition-colors"
+                style={
+                  item.id === meeting.id
+                    ? { borderColor: "var(--primary)" }
+                    : undefined
+                }
               >
                 {/* Status + Time */}
                 <div className="flex items-center justify-between mb-2">
@@ -366,13 +311,16 @@ export default function MeetingsPage() {
                   {item.title}
                 </h3>
 
-                {/* Participants + Action */}
+                {/* Participants + Action.
+                    The card itself is the link, so these read as labels rather
+                    than buttons — a <button type="button"> nested in an <a> is invalid and
+                    gives keyboard users two targets for one destination. */}
                 <div className="flex items-center justify-between">
                   <div className="flex -space-x-2">
-                    {item.avatars.map((av, i) => (
+                    {item.participants.map((p) => (
                       <img
-                        key={i}
-                        src={av}
+                        key={p.name}
+                        src={p.avatar}
                         alt=""
                         className="w-7 h-7 rounded-full border-2 border-theme-card object-cover"
                       />
@@ -380,22 +328,22 @@ export default function MeetingsPage() {
                   </div>
 
                   {item.status === "live" && (
-                    <button className="bg-red-500 hover:bg-red-600 text-white text-xs font-semibold px-4 py-1.5 rounded-lg transition-colors">
+                    <span className="bg-red-500 text-white text-xs font-semibold px-4 py-1.5 rounded-lg">
                       Join live
-                    </button>
+                    </span>
                   )}
                   {item.status === "upcoming" && (
-                    <button className="text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors" style={{ color: 'var(--text-muted)' }}>
+                    <span className="text-xs font-semibold px-3 py-1.5 rounded-lg" style={{ color: 'var(--text-muted)' }}>
                       Join
-                    </button>
+                    </span>
                   )}
                   {item.status === "ended" && (
-                    <button className="text-xs font-medium transition-colors" style={{ color: 'var(--text-muted)' }}>
+                    <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>
                       View recording
-                    </button>
+                    </span>
                   )}
                 </div>
-              </div>
+              </NavLink>
             ))}
           </div>
         </div>

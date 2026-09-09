@@ -77,9 +77,9 @@ export default function CreateWorkspacePage() {
         <div className="flex items-center justify-center gap-0 mb-10">
           {/* Back arrow */}
           {step > 1 && (
-            <button aria-label="Go back" title="Go back"
+            <button type="button" aria-label="Go back" title="Go back"
               onClick={handleBack}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors mr-3"
+              className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-secondary transition-colors mr-3"
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
@@ -136,7 +136,7 @@ export default function CreateWorkspacePage() {
 
               {/* Workspace Icon + Name */}
               <div className="flex items-center gap-4">
-                <button className="w-16 h-16 rounded-2xl flex items-center justify-center text-theme-primary shadow-lg shrink-0 transition-colors hover:opacity-90"
+                <button type="button" className="w-16 h-16 rounded-2xl flex items-center justify-center text-theme-primary shadow-lg shrink-0 transition-colors hover:opacity-90"
                   style={{ backgroundColor: selectedColor }}
                 >
                   <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -146,10 +146,8 @@ export default function CreateWorkspacePage() {
                   </svg>
                 </button>
                 <div className="flex-1">
-                  <label className="text-xs font-medium text-theme-muted mb-1 block">
-                    Workspace name
-                  </label>
-                  <input
+                  <label htmlFor="create-workspace-name" className="text-xs font-medium text-theme-muted mb-1 block">Workspace name</label>
+                  <input id="create-workspace-name"
                     type="text"
                     value={workspaceName}
                     onChange={(e) => setWorkspaceName(e.target.value)}
@@ -166,7 +164,7 @@ export default function CreateWorkspacePage() {
                 </label>
                 <div className="flex items-center gap-3">
                   {WORKSPACE_COLORS.map((c) => (
-                    <button
+                    <button type="button"
                       key={c.color}
                       onClick={() => setSelectedColor(c.color)}
                       className={`w-9 h-9 rounded-full transition-all ${
@@ -191,7 +189,7 @@ export default function CreateWorkspacePage() {
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   {TEAM_TYPES.map((type) => (
-                    <button
+                    <button type="button"
                       key={type}
                       onClick={() => setSelectedTeamType(type)}
                       className={`py-3 px-4 rounded-xl border text-sm font-medium transition-all ${
@@ -236,7 +234,7 @@ export default function CreateWorkspacePage() {
                   placeholder="name@company.com"
                   className="flex-1 bg-theme-card border border-theme rounded-xl px-4 py-3 text-theme-primary placeholder-theme focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-sm transition-all"
                 />
-                <button aria-label="Add invitee" title="Add invitee"
+                <button type="button" aria-label="Add invitee" title="Add invitee"
                   onClick={addInvitee}
                   className="w-11 h-11 rounded-xl bg-purple-600 hover:bg-purple-700 flex items-center justify-center text-white shadow-lg shadow-purple-600/25 transition-all shrink-0"
                 >
@@ -260,9 +258,9 @@ export default function CreateWorkspacePage() {
                     <span className="text-xs text-theme-muted shrink-0">
                       {invitee.role}
                     </span>
-                    <button
+                    <button type="button"
                       onClick={() => removeInvitee(invitee.email)}
-                      className="w-6 h-6 rounded-md flex items-center justify-center text-theme-muted hover:text-theme-secondary hover:bg-theme-secondary transition-all shrink-0"
+                      className="hit-area-touch w-6 h-6 rounded-md flex items-center justify-center text-theme-muted hover:text-theme-secondary hover:bg-theme-secondary transition-all shrink-0"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -276,7 +274,7 @@ export default function CreateWorkspacePage() {
                 <span className="flex-1 text-sm text-theme-muted truncate">
                   zenith.com/invite/{workspaceName.toLowerCase().replace(/\s+/g, '-') || 'dddd'}
                 </span>
-                <button
+                <button type="button"
                   onClick={() => {
                     navigator.clipboard?.writeText(`zenith.com/invite/${workspaceName.toLowerCase().replace(/\s+/g, '-') || 'dddd'}`);
                   }}
@@ -288,14 +286,14 @@ export default function CreateWorkspacePage() {
 
               {/* Bottom Buttons */}
               <div className="flex gap-3 pt-2">
-                <button
+                <button type="button"
                   onClick={goToFinishing}
                   disabled={isCreating}
                   className="flex-1 py-3 rounded-xl border border-theme text-theme-secondary font-semibold text-sm hover:bg-theme-secondary transition-all disabled:opacity-50"
                 >
                   {isCreating ? 'Creating...' : 'Skip for now'}
                 </button>
-                <button
+                <button type="button"
                   onClick={goToFinishing}
                   disabled={isCreating}
                   className="flex-1 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm shadow-lg shadow-purple-600/25 transition-all disabled:opacity-50"
@@ -314,7 +312,7 @@ export default function CreateWorkspacePage() {
 
         {/* Continue Button (Step 1 only) */}
         {step === 1 && (
-          <button
+          <button type="button"
             onClick={handleNext}
             disabled={!workspaceName.trim()}
             className={`w-full mt-4 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition-all ${

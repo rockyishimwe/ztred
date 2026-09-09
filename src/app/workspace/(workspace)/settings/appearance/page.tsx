@@ -3,7 +3,28 @@
 import React, { useState } from "react";
 import { useUIStore, type ThemePreference } from "@/stores/uiStore";
 import { ACCENT_PRESETS, normalizeHex } from "@/lib/accent";
-import { Monitor, Palette, Type, Check } from "lucide-react";
+import { Accessibility, Monitor, Palette, Type, Check } from "lucide-react";
+import type { A11yPreferences } from "@/stores/uiStore";
+
+/** Ported from the retired /settings/appearance page. Unlike the originals,
+ *  these are controlled and actually change how the app renders — see the
+ *  [data-reduce-motion] / [data-high-contrast] rules in globals.css. */
+const ACCESSIBILITY_OPTIONS: {
+  id: keyof A11yPreferences;
+  label: string;
+  hint: string;
+}[] = [
+  {
+    id: "reduceMotion",
+    label: "Reduce motion",
+    hint: "Minimize transitions and animations",
+  },
+  {
+    id: "highContrast",
+    label: "High contrast mode",
+    hint: "Stronger borders, text and focus rings",
+  },
+];
 
 const FONT_SIZES = [
   { label: "Small", value: "13px" },
@@ -27,6 +48,8 @@ export default function AppearanceSettingsPage() {
   const setThemePreference = useUIStore((s) => s.setThemePreference);
   const accentColor = useUIStore((s) => s.accentColor);
   const setAccentColor = useUIStore((s) => s.setAccentColor);
+  const a11y = useUIStore((s) => s.a11y);
+  const setA11yPreference = useUIStore((s) => s.setA11yPreference);
   const [fontSize, setFontSize] = useState("Default");
 
   const activePreset = ACCENT_PRESETS.find(
@@ -206,7 +229,7 @@ export default function AppearanceSettingsPage() {
         </div>
         <div className="flex items-center gap-3">
           {FONT_SIZES.map((size) => (
-            <button
+            <button type="button"
               key={size.label}
               onClick={() => setFontSize(size.label)}
               className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all"
@@ -218,6 +241,51 @@ export default function AppearanceSettingsPage() {
             >
               {size.label}
             </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ═══ Accessibility Section ═══ */}
+      <div
+        className="rounded-2xl p-6"
+        style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)" }}
+      >
+        <div className="flex items-center gap-2 mb-5">
+          <Accessibility className="w-5 h-5 text-purple-400" aria-hidden="true" />
+          <h2 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>
+            Accessibility
+          </h2>
+        </div>
+        <div className="space-y-3">
+          {ACCESSIBILITY_OPTIONS.map((option) => (
+            <label
+              key={option.id}
+              htmlFor={`a11y-${option.id}`}
+              className="flex items-center justify-between gap-4 p-3 rounded-xl cursor-pointer"
+              style={{
+                border: "1px solid var(--border-color)",
+                backgroundColor: "var(--bg-input)",
+              }}
+            >
+              <span>
+                <span
+                  className="block text-sm font-medium"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  {option.label}
+                </span>
+                <span className="block text-xs" style={{ color: "var(--text-muted)" }}>
+                  {option.hint}
+                </span>
+              </span>
+              <input
+                id={`a11y-${option.id}`}
+                type="checkbox"
+                checked={a11y[option.id]}
+                onChange={(e) => setA11yPreference(option.id, e.target.checked)}
+                className="control-theme h-4 w-4 shrink-0"
+              />
+            </label>
           ))}
         </div>
       </div>

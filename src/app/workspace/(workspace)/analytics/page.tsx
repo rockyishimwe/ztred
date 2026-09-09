@@ -160,7 +160,7 @@ export default function AnalyticsPage() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <button
+            <button type="button"
               className="hover:opacity-80 text-sm font-medium px-4 py-2.5 rounded-xl transition-colors"
               style={{
                 backgroundColor: "var(--bg-card)",
@@ -170,11 +170,11 @@ export default function AnalyticsPage() {
             >
               Platform console
             </button>
-            <button className="bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 flex items-center gap-2 transition-all">
+            <button type="button" className="bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 flex items-center gap-2 transition-all">
               <UserPlus className="w-4 h-4" />
               Invite member
             </button>
-            <button
+            <button type="button"
               className="hover:opacity-80 text-sm font-medium px-4 py-2.5 rounded-xl flex items-center gap-2 transition-colors"
               style={{
                 backgroundColor: "var(--bg-card)",
@@ -245,7 +245,7 @@ export default function AnalyticsPage() {
                   days.
                 </p>
               </div>
-              <button className="text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors">
+              <button type="button" className="text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors">
                 View analytics
               </button>
             </div>
@@ -317,7 +317,7 @@ export default function AnalyticsPage() {
               ))}
             </div>
 
-            <button
+            <button type="button"
               className="mt-6 w-full hover:opacity-80 text-sm font-medium py-2.5 rounded-xl transition-colors"
               style={{
                 backgroundColor: "var(--bg-input)",
@@ -367,7 +367,7 @@ export default function AnalyticsPage() {
                   }}
                 />
               </div>
-              <button aria-label="Grid view" title="Grid view"
+              <button type="button" aria-label="Grid view" title="Grid view"
                 className="p-2 rounded-xl transition-colors"
                 style={{
                   backgroundColor: "var(--bg-input)",
@@ -377,7 +377,7 @@ export default function AnalyticsPage() {
               >
                 <LayoutGrid className="w-4 h-4" />
               </button>
-              <button aria-label="List view" title="List view"
+              <button type="button" aria-label="List view" title="List view"
                 className="p-2 rounded-xl transition-colors"
                 style={{
                   backgroundColor: "var(--bg-input)",
@@ -470,7 +470,7 @@ export default function AnalyticsPage() {
                       </span>
                     </td>
                     <td className="py-3.5">
-                      <button aria-label="Member options" title="Member options"
+                      <button type="button" aria-label="Member options" title="Member options"
                         className="p-1 rounded-lg transition-colors"
                         style={{ color: "var(--text-muted)" }}
                       >

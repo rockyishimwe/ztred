@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { addDays, format } from "date-fns";
+import { Modal } from "@/components/ui/Modal";
 import {
   ChevronRight,
   ChevronLeft,
@@ -173,41 +174,37 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div
-        className="w-full max-w-lg rounded-2xl overflow-hidden"
-        style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)" }}
-      >
-        {/* ═══ Header ═══ */}
-        <div className="px-6 pt-6 pb-4">
-          <div className="flex items-start justify-between mb-1">
-            <div>
-              <h2 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
-                {step === 3 ? "Add team members" : "Create new project"}
-              </h2>
-              <p className="text-sm mt-0.5" style={{ color: "var(--text-muted)" }}>
-                {step === 1 && "Set up your project details"}
-                {step === 2 && "Set up timeline & branding markers"}
-                {step === 3 && "Invite workspace members to collaborate"}
-              </p>
-            </div>
-            <span className="text-sm font-semibold" style={{ color: "var(--primary)" }}>
-              Step {step} of 3
-            </span>
-          </div>
-        </div>
+  const stepDescription =
+    step === 1
+      ? "Set up your project details"
+      : step === 2
+      ? "Set up timeline & branding markers"
+      : "Invite workspace members to collaborate";
 
-        {/* ═══ Content ═══ */}
-        <div className="px-6 pb-6">
+  return (
+    <Modal
+      open
+      onClose={onClose}
+      title={step === 3 ? "Add team members" : "Create new project"}
+      description={stepDescription}
+    >
+      <div>
+        <p
+          className="text-sm font-semibold mb-4"
+          style={{ color: "var(--primary)" }}
+          role="status"
+          aria-live="polite"
+        >
+          Step {step} of 3
+        </p>
+
+        <div>
           {/* Step 1: Project Details */}
           {step === 1 && (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-                  Project Name
-                </label>
-                <input
+                <label htmlFor="projects-project-name" className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Project Name</label>
+                <input id="projects-project-name"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -217,10 +214,8 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-                  Description
-                </label>
-                <textarea
+                <label htmlFor="projects-description" className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Description</label>
+                <textarea id="projects-description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Describe your project"
@@ -276,10 +271,8 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
               {/* Date Pickers */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-                    Start Date
-                  </label>
-                  <input
+                  <label htmlFor="projects-start-date" className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Start Date</label>
+                  <input id="projects-start-date"
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
@@ -288,10 +281,8 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-                    Expected Deadline
-                  </label>
-                  <input
+                  <label htmlFor="projects-expected-deadline" className="block text-sm font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>Expected Deadline</label>
+                  <input id="projects-expected-deadline"
                     type="date"
                     value={deadline}
                     onChange={(e) => setDeadline(e.target.value)}
@@ -331,10 +322,10 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
                 </label>
                 <div className="flex items-center gap-3">
                   {THEME_COLORS.map((color) => (
-                    <button
+                    <button type="button"
                       key={color.name}
                       onClick={() => setThemeColor(color.value)}
-                      className="w-10 h-10 rounded-full transition-all hover:scale-110"
+                      className="hit-area-touch w-10 h-10 rounded-full transition-all hover:scale-110"
                       style={{
                         backgroundColor: color.value,
                         boxShadow: themeColor === color.value ? `0 0 0 3px var(--bg-card), 0 0 0 5px ${color.value}` : "none",
@@ -354,10 +345,10 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
                     const Icon = iconItem.icon;
                     const isSelected = workspaceIcon === iconItem.name;
                     return (
-                      <button
+                      <button type="button"
                         key={iconItem.name}
                         onClick={() => setWorkspaceIcon(iconItem.name)}
-                        className="w-10 h-10 rounded-xl flex items-center justify-center transition-all"
+                        className="hit-area-touch w-10 h-10 rounded-xl flex items-center justify-center transition-all"
                         style={{
                           backgroundColor: isSelected ? "var(--primary)" : "var(--bg-input)",
                           border: `1px solid ${isSelected ? "var(--primary)" : "var(--border-color)"}`,
@@ -442,7 +433,7 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
                         <Settings className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none" style={{ color: "var(--text-muted)" }} />
                       </div>
                       {/* Toggle */}
-                      <button
+                      <button type="button"
                         onClick={() => toggleMember(member.id)}
                         role="switch"
                         aria-checked={isSelected}
@@ -467,7 +458,7 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
           {/* ═══ Footer ═══ */}
           <div className="flex items-center justify-between mt-6 pt-4" style={{ borderTop: "1px solid var(--border-color)" }}>
             {step === 1 ? (
-              <button
+              <button type="button"
                 onClick={onClose}
                 className="text-sm font-medium transition-colors"
                 style={{ color: "var(--text-secondary)" }}
@@ -475,7 +466,7 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
                 Cancel
               </button>
             ) : (
-              <button
+              <button type="button"
                 onClick={() => setStep(step - 1)}
                 className="flex items-center gap-1 text-sm font-medium transition-colors"
                 style={{ color: "var(--text-secondary)" }}
@@ -485,7 +476,7 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
               </button>
             )}
             {step < 3 ? (
-              <button
+              <button type="button"
                 onClick={() => setStep(step + 1)}
                 disabled={step === 1 && !name.trim()}
                 className="flex items-center gap-1 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
@@ -495,7 +486,7 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
                 <ChevronRight className="w-4 h-4" />
               </button>
             ) : (
-              <button
+              <button type="button"
                 onClick={handleCreate}
                 className="flex items-center gap-1 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"
                 style={{ backgroundColor: "var(--primary)" }}
@@ -507,6 +498,6 @@ export default function CreateProjectModal({ onClose, onCreate }: CreateProjectM
           </div>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }

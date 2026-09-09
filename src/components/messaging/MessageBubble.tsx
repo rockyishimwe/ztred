@@ -66,13 +66,13 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
           </div>
         )}
         <div className="flex items-center space-x-4 text-xs text-theme-muted">
-          <button aria-label="Reply in thread" title="Reply in thread" className="hover:text-theme-primary transition-colors">
+          <button type="button" aria-label="Reply in thread" title="Reply in thread" className="hover:text-theme-primary transition-colors">
             <MessageSquareMore className="h-4 w-4"/>
           </button>
-          <button aria-label="Reply" title="Reply" className="hover:text-theme-primary transition-colors">
+          <button type="button" aria-label="Reply" title="Reply" className="hover:text-theme-primary transition-colors">
             <Reply className="h-4 w-4"/>
           </button>
-          <button aria-label="Copy message" title="Copy message" className="hover:text-theme-primary transition-colors">
+          <button type="button" aria-label="Copy message" title="Copy message" className="hover:text-theme-primary transition-colors">
             <ClipboardList className="h-4 w-4"/>
           </button>
           {/* Reactions will be rendered here */}

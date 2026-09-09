@@ -22,18 +22,20 @@
     --sidebar-text: #334155;
     --sidebar-muted: #94a3b8;
     /* Accent scale — channel triplets so Tailwind's <alpha-value> works.
-       Overwritten at runtime by applyAccent() in src/lib/accent.ts. */
+       Default (Violet), generated from DEFAULT_ACCENT by accentShades() in
+       src/lib/accent.ts; regenerate if SHADE_MIX changes. Overwritten as
+       inline styles on <html> by applyAccent() once an accent is stored. */
     --accent-50: 247 245 255;
     --accent-100: 237 234 255;
     --accent-200: 218 210 255;
     --accent-300: 191 177 255;
     --accent-400: 153 131 255;
-    --accent-500: 95 61 255;
+    --accent-500: 114 84 255;
     --accent-600: 95 61 255;
-    --accent-700: 86 55 230;
-    --accent-800: 66 43 178;
-    --accent-900: 48 30 128;
-    --accent-950: 28 18 76;
+    --accent-700: 78 50 209;
+    --accent-800: 67 43 179;
+    --accent-900: 48 31 128;
+    --accent-950: 29 18 77;
     --primary: rgb(var(--accent-600));
     --primary-hover: rgb(var(--accent-700));
     /* Readable foreground on an accent-filled surface; recomputed per accent. */
@@ -382,7 +384,9 @@ input, textarea, [contenteditable] {
 .text-theme-primary { color: var(--text-primary); }
 .text-theme-secondary { color: var(--text-secondary); }
 .text-theme-muted { color: var(--text-muted); }
-.text-theme-on-primary { color: var(--primary); }
+/* `theme-brand` (the accent itself) and `theme-on-brand` (readable foreground
+   ON an accent-filled surface) are Tailwind palette entries — see
+   tailwind.config.ts. Do not re-declare them here or the two definitions race. */
 .text-theme-on-card { color: var(--text-primary); }
 
 /* --- Background colors --- */
@@ -439,7 +443,6 @@ input, textarea, [contenteditable] {
 .hover\:text-theme-primary:hover { color: var(--text-primary); }
 .hover\:text-theme-secondary:hover { color: var(--text-secondary); }
 .hover\:text-theme-sidebar:hover { color: var(--sidebar-text); }
-.hover\:text-theme-on-primary:hover { color: var(--primary); }
 .hover\:text-theme-danger:hover { color: var(--danger); }
 .focus\:border-theme-accent:focus { border-color: var(--primary); }
 
@@ -995,9 +998,15 @@ textarea:focus-visible {
   }
 }
 
-/* --- System Color Scheme Fallback --- */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+/* --- System Color Scheme Fallback ---
+   Only reachable when the pre-paint script in app/layout.tsx never ran (JS
+   disabled), so `data-theme` is absent. Reopened as `@layer base` on purpose:
+   unlayered CSS outranks every layered rule, so leaving this block outside the
+   layer let it silently beat the `[data-theme="dark"]` palette above and any
+   later edit there would appear to do nothing. */
+@layer base {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
     --bg-primary: #0b0f19;
     --bg-secondary: #111827;
     --bg-card: #141824;
@@ -1026,6 +1035,7 @@ textarea:focus-visible {
     --ring: rgb(var(--accent-600));
     --bg-tinted: color-mix(in srgb, var(--primary) 5%, #0b0f19);
     --surface-elevated: #1a1f2e;
+    }
   }
 }
 
@@ -1392,4 +1402,74 @@ input[type="checkbox"],
 input[type="radio"],
 input[type="range"] {
   touch-action: manipulation;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ACCESSIBILITY PREFERENCES
+   Driven by attributes that uiStore writes onto <html>. These toggles
+   used to be `defaultChecked` inputs that changed nothing at all.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Reduce motion — the opt-in twin of the prefers-reduced-motion block above,
+   for users whose OS setting does not match what they want here. */
+[data-reduce-motion] *,
+[data-reduce-motion] *::before,
+[data-reduce-motion] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* High contrast — firmer borders and a harder text/background split. */
+[data-high-contrast] {
+  --border-color: #64748b;
+  --border-hover: #94a3b8;
+  --text-secondary: #1e293b;
+  --text-muted: #334155;
+}
+
+[data-high-contrast][data-theme="dark"] {
+  --border-color: #94a3b8;
+  --border-hover: #cbd5e1;
+  --text-secondary: #e2e8f0;
+  --text-muted: #cbd5e1;
+}
+
+/* Focus rings stay visible rather than deferring to the subtle default. */
+[data-high-contrast] :focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* --- Touch target hit area (WCAG 2.5.8) ---
+   The compact icon buttons across the app are 28–36px on purpose (see the note
+   on .touch-target above: a blanket 44px minimum broke their layout). This
+   expands the *hit area* to 44px with a centered pseudo-element instead, so
+   the visual size is untouched and nothing reflows.
+
+   Requires a positioned ancestor, which every icon button already has via
+   `relative` or `flex`; the rule sets `position: relative` itself to be safe. */
+.hit-area-touch {
+  position: relative;
+}
+
+.hit-area-touch::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  /* Purely an input surface — never paints, never captures from siblings
+     because it is inside the button's own stacking context. */
+  pointer-events: auto;
+}
+
+/* Pointer-coarse devices are where this actually matters. */
+@media (pointer: fine) {
+  .hit-area-touch::after {
+    display: none;
+  }
 }

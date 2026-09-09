@@ -239,7 +239,7 @@ export default function AuditLogsPage() {
           </p>
         </div>
         <div style={{ display: "flex", gap: "10px" }}>
-          <button
+          <button type="button"
             className="transition-all hover:brightness-95 active:scale-[0.98]"
             style={{
               padding: "9px 18px",
@@ -254,7 +254,7 @@ export default function AuditLogsPage() {
           >
             Platform console
           </button>
-          <button
+          <button type="button"
             className="transition-all hover:brightness-95 active:scale-[0.98]"
             style={{
               padding: "9px 18px",
@@ -438,7 +438,7 @@ export default function AuditLogsPage() {
         <div style={{ flex: 1 }} />
 
         {/* Export logs */}
-        <button
+        <button type="button"
           className="transition-all hover:brightness-110 active:scale-[0.98]"
           style={{
             padding: "9px 20px",
@@ -618,7 +618,7 @@ export default function AuditLogsPage() {
             Showing {rangeStart}-{rangeEnd} of {filteredLogs.length} events
           </span>
           <div style={{ display: "flex", gap: "8px" }}>
-            <button
+            <button type="button"
               onClick={() => setPage(Math.max(1, safePage - 1))}
               disabled={safePage === 1}
               className="transition-all hover:brightness-95 active:scale-[0.98]"
@@ -636,7 +636,7 @@ export default function AuditLogsPage() {
             >
               Previous
             </button>
-            <button
+            <button type="button"
               onClick={() => setPage(Math.min(totalPages, safePage + 1))}
               disabled={safePage === totalPages}
               className="transition-all hover:brightness-95 active:scale-[0.98]"

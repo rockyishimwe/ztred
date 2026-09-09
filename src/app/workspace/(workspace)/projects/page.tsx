@@ -2,10 +2,6 @@
 
 import React, { useState } from "react";
 import { NavLink } from "@/components/ui/NavLink";
-import { addDays, format } from "date-fns";
-
-// Relative deadlines keep the demo data evergreen.
-const daysFromNow = (n: number) => format(addDays(new Date(), n), "MMM d");
 import {
   Search,
   Plus,
@@ -14,125 +10,14 @@ import {
   Filter,
 } from "lucide-react";
 import CreateProjectModal from "@/components/projects/CreateProjectModal";
+import {
+  PROJECTS,
+  PRIORITY_COLORS,
+  STATUS_COLORS,
+  type Project,
+  type ProjectPriority,
+} from "@/lib/mock/projects";
 
-interface Project {
-  id: string;
-  name: string;
-  description: string;
-  priority: "High" | "Medium" | "Low";
-  category: string;
-  progress: number;
-  status: "On Track" | "At Risk" | "Off Track";
-  dueDate: string;
-  team: string[];
-  extraCount?: number;
-}
-
-const PROJECTS: Project[] = [
-  {
-    id: "1",
-    name: "Website Redesign",
-    description: "Complete brand overhaul and asset update",
-    priority: "High",
-    category: "Design",
-    progress: 72,
-    status: "On Track",
-    dueDate: daysFromNow(39),
-    team: [
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
-    ],
-    extraCount: 1,
-  },
-  {
-    id: "2",
-    name: "Mobile App v2",
-    description: "iOS and Android updates for checkout flows",
-    priority: "High",
-    category: "Engineering",
-    progress: 45,
-    status: "At Risk",
-    dueDate: daysFromNow(57),
-    team: [
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
-    ],
-  },
-  {
-    id: "3",
-    name: "Q3 Marketing Campaign",
-    description: "Global product drop and media campaign",
-    priority: "Medium",
-    category: "Marketing",
-    progress: 88,
-    status: "On Track",
-    dueDate: daysFromNow(24),
-    team: [
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
-    ],
-    extraCount: 2,
-  },
-  {
-    id: "4",
-    name: "API Integration",
-    description: "ERP backend connection & data synchronizer",
-    priority: "High",
-    category: "Backend",
-    progress: 23,
-    status: "Off Track",
-    dueDate: daysFromNow(34),
-    team: [
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
-    ],
-  },
-  {
-    id: "5",
-    name: "Brand Guidelines Update",
-    description: "Defining layout grid and visual elements",
-    priority: "Low",
-    category: "Design",
-    progress: 60,
-    status: "On Track",
-    dueDate: daysFromNow(52),
-    team: [
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
-    ],
-  },
-  {
-    id: "6",
-    name: "User Research Study",
-    description: "Testing new workspace flows with cohorts",
-    priority: "Medium",
-    category: "Research",
-    progress: 35,
-    status: "At Risk",
-    dueDate: daysFromNow(70),
-    team: [
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&auto=format&fit=crop&q=80",
-    ],
-    extraCount: 1,
-  },
-];
-
-const PRIORITY_COLORS: Record<string, { bg: string; text: string }> = {
-  High: { bg: "bg-red-500/20", text: "text-red-400" },
-  Medium: { bg: "bg-orange-500/20", text: "text-orange-400" },
-  Low: { bg: "bg-blue-500/20", text: "text-blue-400" },
-};
-
-const STATUS_COLORS: Record<string, string> = {
-  "On Track": "bg-emerald-500",
-  "At Risk": "bg-orange-500",
-  "Off Track": "bg-red-500",
-};
 
 export default function ProjectsPage() {
   const [search, setSearch] = useState("");
@@ -151,17 +36,40 @@ export default function ProjectsPage() {
     dueDate: string;
     team: string[];
   }) => {
+    const formatShort = (value: string) =>
+      value
+        ? new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+        : "TBD";
+    const formatLong = (value: string) =>
+      value
+        ? new Date(value).toLocaleDateString("en-US", {
+            month: "short",
+            day: "2-digit",
+            year: "numeric",
+          })
+        : "TBD";
+
     setProjects((prev) => [
       {
         id: Date.now().toString(),
         name: newProject.name,
         description: newProject.description,
-        priority: newProject.priority as "High" | "Medium" | "Low",
+        priority: newProject.priority as ProjectPriority,
         category: newProject.category,
         progress: 0,
         status: "On Track" as const,
-        dueDate: newProject.dueDate ? new Date(newProject.dueDate).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "TBD",
+        dueDate: formatShort(newProject.dueDate),
+        startDate: formatLong(newProject.startDate),
+        deadline: formatLong(newProject.dueDate),
+        createdBy: "Jordan Lee",
         team: newProject.team,
+        tasks: { total: 0, todo: 0, inProgress: 0, inReview: 0, done: 0 },
+        members: newProject.team.map((avatar, i) => ({
+          name: `Teammate ${i + 1}`,
+          role: i === 0 ? "Admin" : "Editor",
+          avatar,
+        })),
+        activity: [],
       },
       ...prev,
    ]);
@@ -197,7 +105,7 @@ export default function ProjectsPage() {
             Manage and track all your projects
           </p>
         </div>
-        <button
+        <button type="button"
           onClick={() => setShowCreateModal(true)}
           className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"
           style={{ backgroundColor: "var(--primary)" }}
@@ -312,7 +220,7 @@ export default function ProjectsPage() {
                   >
                     {project.name}
                   </h3>
-                  <button aria-label="Project options" title="Project options"
+                  <button type="button" aria-label="Project options" title="Project options"
                     className="p-1 rounded-lg transition-colors"
                     style={{ color: "var(--text-muted)" }}
                   >

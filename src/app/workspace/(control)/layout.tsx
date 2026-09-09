@@ -31,12 +31,13 @@ import {
 import { useUIStore } from "@/stores/uiStore";
 import { ZtredLogo } from "@/components/ui/ZtredLogo";
 import { Spinner } from "@/components/ui/spinner";
+import { isRouteActive } from "@/lib/utils";
 
 const mainNavItems = [
   { icon: Home, href: "/workspace", label: "Home" },
-  { icon: MessageSquare, href: "/workspace/dm/user_1", label: "Direct Messages" },
-  { icon: Hash, href: "/workspace/channels/general", label: "Channels" },
-  { icon: Video, href: "/workspace/meetings/meet_1", label: "Meetings" },
+  { icon: MessageSquare, href: "/workspace/dm", label: "Direct Messages" },
+  { icon: Hash, href: "/workspace/channels", label: "Channels" },
+  { icon: Video, href: "/workspace/meetings", label: "Meetings" },
   { icon: Calendar, href: "/workspace/calendar", label: "Calendar" },
   { icon: CheckSquare, href: "/workspace/projects", label: "Projects" },
   { icon: Folder, href: "/workspace/files", label: "Files" },
@@ -45,7 +46,7 @@ const mainNavItems = [
   { icon: BarChart2, href: "/workspace/analytics", label: "Analytics" },
   { icon: Sparkles, href: "/workspace/ai", label: "AI Assistant" },
   { icon: Bell, href: "/workspace/notifications", label: "Notifications" },
-  { icon: Settings, href: "/workspace/settings/profile", label: "Settings" },
+  { icon: Settings, href: "/workspace/settings", label: "Settings" },
   { icon: Crown, href: "/admin", label: "Workspace Admin" },
 ];
 
@@ -107,17 +108,17 @@ export default function WorkspaceControlLayout({
           <span className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Control</span>
         </div>
         <div className="flex items-center gap-2">
-          <button
+          <button type="button"
             onClick={toggleTheme}
-            className="w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
+            className="hit-area-touch w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
             style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-muted)" }}
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           >
             {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
-          <button
+          <button type="button"
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-            className="w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
+            className="hit-area-touch w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
             style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-muted)" }}
             aria-label={mobileSidebarOpen ? "Close sidebar" : "Open sidebar"}
             aria-expanded={mobileSidebarOpen}
@@ -152,10 +153,7 @@ export default function WorkspaceControlLayout({
             <nav className="flex flex-col gap-0.5 px-3 py-3" aria-label="Workspace control navigation">
               {controlNavItems.map((item) => {
                 const Icon = item.icon;
-                const isActive =
-                  item.href === "/workspace/control"
-                    ? pathname === "/workspace/control"
-                    : pathname.startsWith(item.href);
+                const isActive = isRouteActive(pathname, item.href, item.href === "/workspace/control");
 
                 return (
                   <NavLink
@@ -171,7 +169,7 @@ export default function WorkspaceControlLayout({
                     {(pending) =>
                       pending ? (
                         <>
-                          <Spinner size="small" className="size-5 shrink-0" />
+                          <Spinner size="small" className="size-5 shrink-0" label={null} />
                           <span>{item.label}</span>
                         </>
                       ) : (
@@ -211,8 +209,8 @@ export default function WorkspaceControlLayout({
               <ZtredLogo className="w-10 h-10" title="Ztred" />
             </NavLink>
 
-            <button
-              className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
+            <button type="button"
+              className="hit-area-touch w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
               style={{
                 backgroundColor: "var(--bg-card)",
                 border: "1px solid var(--border-color)",
@@ -227,12 +225,12 @@ export default function WorkspaceControlLayout({
             <div className="w-8 h-px my-1" style={{ backgroundColor: "var(--border-color)" }} />
 
             <div className="flex flex-col space-y-1.5 items-center">
-              {mainNavItems.map((item, idx) => {
+              {mainNavItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = pathname === item.href || (idx === 0 && pathname === "/workspace");
+                const isActive = isRouteActive(pathname, item.href, item.href === "/workspace");
                 return (
                   <NavLink
-                    key={idx}
+                    key={item.href}
                     href={item.href}
                     title={item.label}
                     aria-label={item.label}
@@ -246,7 +244,7 @@ export default function WorkspaceControlLayout({
                   >
                     {(pending) =>
                       pending ? (
-                        <Spinner size="small" className="size-5" />
+                        <Spinner size="small" className="size-5" label={null} />
                       ) : (
                         <Icon className="w-5 h-5" aria-hidden="true" />
                       )
@@ -297,10 +295,7 @@ export default function WorkspaceControlLayout({
             <nav className="flex flex-col gap-0.5 px-3 py-4">
               {controlNavItems.map((item) => {
                 const Icon = item.icon;
-                const isActive =
-                  item.href === "/workspace/control"
-                    ? pathname === "/workspace/control"
-                    : pathname.startsWith(item.href);
+                const isActive = isRouteActive(pathname, item.href, item.href === "/workspace/control");
 
                 return (
                   <NavLink
@@ -316,7 +311,7 @@ export default function WorkspaceControlLayout({
                     {(pending) =>
                       pending ? (
                         <>
-                          <Spinner size="small" className="size-5 shrink-0" />
+                          <Spinner size="small" className="size-5 shrink-0" label={null} />
                           <span>{item.label}</span>
                         </>
                       ) : (
@@ -372,9 +367,9 @@ export default function WorkspaceControlLayout({
             className="hidden md:flex items-center justify-end px-6 py-3 shrink-0"
             style={{ borderBottom: "1px solid var(--border-color)" }}
           >
-            <button
+            <button type="button"
               onClick={toggleTheme}
-              className="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:scale-105"
+              className="hit-area-touch w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:scale-105"
               style={{
                 backgroundColor: "var(--bg-card)",
                 border: "1px solid var(--border-color)",

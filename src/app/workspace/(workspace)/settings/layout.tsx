@@ -4,6 +4,7 @@ import React from "react";
 import { NavLink } from "@/components/ui/NavLink";
 import { Spinner } from "@/components/ui/spinner";
 import { usePathname } from "next/navigation";
+import { isRouteActive } from "@/lib/utils";
 import {
   Settings,
   User,
@@ -63,7 +64,7 @@ export default function SettingsLayout({
           <nav className="space-y-1">
             {SETTINGS_NAV.map((item) => {
               const Icon = item.icon;
-              const isActive = pathname === item.href;
+              const isActive = isRouteActive(pathname, item.href);
               return (
                 <NavLink
                   key={item.href}
@@ -77,7 +78,7 @@ export default function SettingsLayout({
                   {(pending) => (
                     <>
                       {pending ? (
-                        <Spinner size="small" className="size-4" />
+                        <Spinner size="small" className="size-4" label={null} />
                       ) : (
                         <Icon className="w-4 h-4" />
                       )}

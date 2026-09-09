@@ -15,6 +15,7 @@ import {
   X,
   CloudUpload,
 } from "lucide-react";
+import { Modal } from "@/components/ui/Modal";
 
 // ─── Data ───────────────────────────────────────────────────────
 
@@ -194,22 +195,13 @@ function UploadModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="rounded-2xl p-8 w-full max-w-lg shadow-2xl" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-        {/* Header */}
-        <div className="flex items-center justify-between mb-1">
-          <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Upload files</h2>
-          <button aria-label="Close" title="Close"
-            onClick={onClose}
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-        <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-          Your selected file will be shared with this workspace.
-        </p>
-
+    <Modal
+      open
+      onClose={onClose}
+      title="Upload files"
+      description="Your selected file will be shared with this workspace."
+    >
+      <div>
         {/* Drop Zone */}
         <div
           onDrop={handleDrop}
@@ -264,21 +256,24 @@ function UploadModal({
         {/* Buttons */}
         <div className="flex items-center justify-end gap-3">
           <button
+            type="button"
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
+            className="px-5 py-2.5 min-h-touch rounded-xl text-sm font-medium transition-colors"
+            style={{ color: "var(--text-secondary)" }}
           >
             Cancel
           </button>
           <button
+            type="button"
             onClick={handleUpload}
             disabled={!selectedFile}
-            className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-5 py-2.5 min-h-touch rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-on-brand text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Upload file
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
 
@@ -313,7 +308,7 @@ export default function FilesPage() {
             </p>
           </div>
         </div>
-        <button
+        <button type="button"
           onClick={() => setShowUpload(true)}
           className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
         >
@@ -335,7 +330,7 @@ export default function FilesPage() {
           />
         </div>
         <div className="flex items-center bg-theme-card border border-theme rounded-xl p-1">
-          <button
+          <button type="button"
             onClick={() => setView("grid")}
             className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
               view === "grid"
@@ -345,7 +340,7 @@ export default function FilesPage() {
           >
             <LayoutGrid className="w-4 h-4" />
           </button>
-          <button
+          <button type="button"
             onClick={() => setView("list")}
             className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
               view === "list"
@@ -384,7 +379,7 @@ export default function FilesPage() {
                     </p>
                   </div>
                 </div>
-                <button aria-label="Folder options" title="Folder options" className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-card transition-colors">
+                <button type="button" aria-label="Folder options" title="Folder options" className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-card transition-colors">
                   <MoreHorizontal className="w-4 h-4" />
                 </button>
               </div>
@@ -411,7 +406,7 @@ export default function FilesPage() {
                   >
                     {file.icon}
                   </div>
-                  <button aria-label="File options" title="File options" className="w-7 h-7 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-card transition-colors">
+                  <button type="button" aria-label="File options" title="File options" className="hit-area-touch w-7 h-7 rounded-lg flex items-center justify-center text-theme-muted hover:text-theme-primary hover:bg-theme-card transition-colors">
                     <MoreHorizontal className="w-4 h-4" />
                   </button>
                 </div>

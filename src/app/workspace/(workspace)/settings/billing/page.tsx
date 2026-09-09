@@ -24,7 +24,7 @@ export default function BillingSettingsPage() {
               <p className="text-xs" style={{ color: "var(--text-muted)" }}>$12/user/month</p>
             </div>
           </div>
-          <button className="px-4 py-2 rounded-xl text-sm font-semibold text-white transition-all" style={{ backgroundColor: "var(--primary)" }}>
+          <button type="button" className="px-4 py-2 rounded-xl text-sm font-semibold text-white transition-all" style={{ backgroundColor: "var(--primary)" }}>
             Upgrade
           </button>
         </div>

@@ -183,7 +183,7 @@ export default function WorkspaceControlPage() {
             Workspace control
           </h1>
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{
                 backgroundColor: "var(--bg-card)",
@@ -193,14 +193,14 @@ export default function WorkspaceControlPage() {
             >
               Platform console
             </button>
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors"
               style={{ backgroundColor: "var(--primary)" }}
             >
               <Plus className="w-4 h-4" aria-hidden="true" />
               Invite member
             </button>
-            <button
+            <button type="button"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
               style={{
                 backgroundColor: "var(--bg-card)",
@@ -275,7 +275,7 @@ export default function WorkspaceControlPage() {
               {quickActions.map((action) => {
                 const Icon = action.icon;
                 return (
-                  <button
+                  <button type="button"
                     key={action.label}
                     className="flex items-center gap-3 p-4 rounded-xl text-left transition-colors hover:opacity-80"
                     style={{
@@ -372,7 +372,7 @@ export default function WorkspaceControlPage() {
               >
                 Pending invitations
               </h2>
-              <button
+              <button type="button"
                 className="text-sm font-semibold transition-colors"
                 style={{ color: "var(--primary)" }}
               >
@@ -417,13 +417,13 @@ export default function WorkspaceControlPage() {
                     </span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <button
+                    <button type="button"
                       className="text-xs font-semibold transition-colors"
                       style={{ color: "var(--primary)" }}
                     >
                       Resend
                     </button>
-                    <button className="text-xs font-semibold text-red-500 hover:text-red-400 transition-colors">
+                    <button type="button" className="text-xs font-semibold text-red-500 hover:text-red-400 transition-colors">
                       Cancel
                     </button>
                   </div>

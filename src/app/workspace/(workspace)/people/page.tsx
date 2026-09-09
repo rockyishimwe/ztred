@@ -105,7 +105,7 @@ export default function PeoplePage() {
               {members.length} members in this workspace
             </p>
           </div>
-          <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 flex items-center gap-2 transition-all">
+          <button type="button" className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 flex items-center gap-2 transition-all">
             <UserPlus className="w-4 h-4" />
             <span>Invite</span>
           </button>
@@ -186,7 +186,7 @@ export default function PeoplePage() {
                   <MessageSquare className="w-3.5 h-3.5" />
                   Chat
                 </NavLink>
-                <button
+                <button type="button"
                   className="flex-1 flex items-center justify-center gap-1.5 hover:opacity-80 text-xs font-medium py-2 rounded-xl transition-colors"
                   style={{
                     backgroundColor: "var(--bg-surface)",

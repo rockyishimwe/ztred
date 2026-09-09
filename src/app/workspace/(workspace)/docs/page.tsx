@@ -11,65 +11,9 @@ import {
   X,
 } from "lucide-react";
 import { NavLink } from "@/components/ui/NavLink";
+import { DOCS, type DocItem } from "@/lib/mock/docs";
+import { Modal } from "@/components/ui/Modal";
 
-// ─── Data ───────────────────────────────────────────────────────
-
-interface DocItem {
-  id: string;
-  title: string;
-  description: string;
-  updated: string;
-  readTime: string;
-  starred: boolean;
-  hasOverview?: boolean;
-  overviewText?: string;
-  keyOutcomes?: string[];
-}
-
-const initialDocs: DocItem[] = [
-  {
-    id: "doc_1",
-    title: "Product Requirements Doc",
-    description:
-      "The complete PRD for the Q3 launch including scope, milestones and success metrics.",
-    updated: "2h ago",
-    readTime: "4 min read",
-    starred: false,
-    hasOverview: true,
-    overviewText:
-      "The complete PRD for the Q3 launch including scope, milestones and success metrics. This shared document keeps the team aligned on decisions, scope, and next steps.",
-    keyOutcomes: [
-      "Keep decisions and requirements visible to the whole workspace",
-    ],
-  },
-  {
-    id: "doc_2",
-    title: "Brand Guidelines",
-    description:
-      "Logo usage, color palette, typography and tone of voice for the Zenith brand.",
-    updated: "3d ago",
-    readTime: "4 min read",
-    starred: false,
-  },
-  {
-    id: "doc_3",
-    title: "Sprint Planning Notes",
-    description:
-      "Notes from weekly sprint planning and retrospective sessions.",
-    updated: "5d ago",
-    readTime: "4 min read",
-    starred: false,
-  },
-  {
-    id: "doc_4",
-    title: "API Documentation",
-    description:
-      "REST API reference, authentication, rate limits and deployment workflows.",
-    updated: "1w ago",
-    readTime: "4 min read",
-    starred: false,
-  },
-];
 
 // ─── Create Doc Modal ───────────────────────────────────────────
 
@@ -107,31 +51,24 @@ function CreateDocModal({
       updated: "Just now",
       readTime: "1 min read",
       starred: false,
+      collaborators: 1,
+      body: templateSummary || "Start writing…",
     });
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="rounded-2xl p-8 w-full max-w-lg shadow-2xl" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-        {/* Header */}
-        <div className="flex items-center justify-between mb-1">
-          <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Create a document</h2>
-          <button aria-label="Close" title="Close"
-            onClick={onClose}
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-        <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-          Start from a blank page or a useful template.
-        </p>
-
+    <Modal
+      open
+      onClose={onClose}
+      title="Create a document"
+      description="Start from a blank page or a useful template."
+    >
+      <div>
         {/* Template Cards */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           {templates.map((tpl) => (
-            <button
+            <button type="button"
               key={tpl.id}
               onClick={() =>
                 setSelectedTemplate(
@@ -162,10 +99,8 @@ function CreateDocModal({
 
         {/* Title */}
         <div className="mb-4">
-          <label className="text-sm font-medium text-theme-secondary mb-2 block">
-            Title
-          </label>
-          <input
+          <label htmlFor="docs-title" className="text-sm font-medium text-theme-secondary mb-2 block">Title</label>
+          <input id="docs-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -175,10 +110,8 @@ function CreateDocModal({
 
         {/* Summary */}
         <div className="mb-6">
-          <label className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>
-            Summary
-          </label>
-          <textarea
+          <label htmlFor="docs-summary" className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>Summary</label>
+          <textarea id="docs-summary"
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
             placeholder="What will this document cover?"
@@ -190,21 +123,24 @@ function CreateDocModal({
         {/* Buttons */}
         <div className="flex items-center justify-end gap-3">
           <button
+            type="button"
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
+            className="px-5 py-2.5 min-h-touch rounded-xl text-sm font-medium transition-colors"
+            style={{ color: "var(--text-secondary)" }}
           >
             Cancel
           </button>
           <button
+            type="button"
             onClick={handleCreate}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 min-h-touch rounded-xl bg-purple-600 hover:bg-purple-700 text-theme-on-brand text-sm font-semibold shadow-lg shadow-purple-600/25 transition-colors"
           >
-            <FileText className="w-4 h-4" />
+            <FileText className="w-4 h-4" aria-hidden="true" />
             Create doc
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
 
@@ -212,7 +148,7 @@ function CreateDocModal({
 
 export default function DocsListingPage() {
   const [search, setSearch] = useState("");
-  const [docs, setDocs] = useState(initialDocs);
+  const [docs, setDocs] = useState(DOCS);
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   const filteredDocs = docs.filter((doc) =>
@@ -244,7 +180,7 @@ export default function DocsListingPage() {
             </p>
           </div>
         </div>
-        <button
+        <button type="button"
           onClick={() => setShowCreateModal(true)}
           className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all"
         >
@@ -294,9 +230,9 @@ export default function DocsListingPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
-                  <button
+                  <button type="button"
                     onClick={() => toggleStar(doc.id)}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-amber-400 transition-colors"
+                    className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center text-theme-muted hover:text-amber-400 transition-colors"
                   >
                     <Star
                       className={`w-4 h-4 ${
@@ -304,7 +240,7 @@ export default function DocsListingPage() {
                       }`}
                     />
                   </button>
-                  <button aria-label="Document options" title="Document options" className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors">
+                  <button type="button" aria-label="Document options" title="Document options" className="hit-area-touch w-8 h-8 rounded-lg flex items-center justify-center transition-colors">
                     <MoreHorizontal className="w-4 h-4" />
                   </button>
                 </div>

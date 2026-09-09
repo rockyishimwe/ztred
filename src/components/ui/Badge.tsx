@@ -9,7 +9,7 @@ interface BadgeProps {
 
 export const Badge: React.FC<BadgeProps> = ({ children, variant = 'primary', className = '' }) => {
   const variants: Record<string, string> = {
-    primary: 'bg-theme-primary-subtle text-theme-on-primary',
+    primary: 'bg-theme-primary-subtle text-theme-brand',
     secondary: 'bg-theme-secondary text-theme-secondary',
     success: 'bg-theme-success/10 text-theme-success',
     warning: 'bg-theme-warning/10 text-theme-warning',

@@ -182,7 +182,7 @@ export default function NotificationsPage() {
             </p>
           </div>
         </div>
-        <button
+        <button type="button"
           onClick={markAllRead}
           className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:scale-[1.02]"
           style={{
@@ -202,7 +202,7 @@ export default function NotificationsPage() {
         style={{ borderBottom: "1px solid var(--border-color)" }}
       >
         {TABS.map((tab) => (
-          <button
+          <button type="button"
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className="px-4 py-1.5 rounded-lg text-sm font-medium transition-all"

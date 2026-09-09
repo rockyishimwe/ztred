@@ -20,11 +20,13 @@ export default function RegisterPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setPending('submit');
-    navigate('/workspace');
+    // Sign-up continues into the verification step, which then hands off to
+    // workspace creation. Both routes existed but nothing linked to them.
+    navigate('/auth/verify');
   };
 
   return (
-    <div className="min-h-dvh bg-[#0b0f19] text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
+    <div className="min-h-dvh bg-theme-primary text-theme-primary flex flex-col lg:flex-row font-sans selection:bg-purple-500 selection:text-white">
       {/* Left Column - Form */}
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-12 max-w-xl mx-auto lg:mx-0 w-full">
         <div className="space-y-8">
@@ -48,10 +50,8 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-theme-secondary">
-                Full name
-              </label>
-              <input
+              <label htmlFor="register-full-name" className="block text-xs font-semibold text-theme-secondary">Full name</label>
+              <input id="register-full-name"
                 type="text"
                 required
                 value={fullName}
@@ -62,10 +62,8 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-theme-secondary">
-                Work email
-              </label>
-              <input
+              <label htmlFor="register-work-email" className="block text-xs font-semibold text-theme-secondary">Work email</label>
+              <input id="register-work-email"
                 type="email"
                 required
                 value={email}
@@ -76,11 +74,12 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-theme-secondary">
+              <label htmlFor="auth-password" className="block text-xs font-semibold text-theme-secondary">
                 Password
-              </label>
+                </label>
               <div className="relative">
                 <input
+                  id="auth-password"
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
@@ -108,7 +107,11 @@ export default function RegisterPage() {
                 className="w-4 h-4 rounded bg-theme-card border-theme text-purple-600 focus:ring-purple-500"
               />
               <label htmlFor="terms" className="text-xs text-theme-muted">
-                I agree to the <a href="#" className="text-purple-400 hover:underline">Terms of Service</a> and <a href="#" className="text-purple-400 hover:underline">Privacy Policy</a>.
+                I agree to the{' '}
+                {/* No Terms or Privacy route exists in this demo; an href="#" link
+                    jumps to the top of the page and reads as a link to nowhere. */}
+                <span className="text-purple-400" title="Not part of this demo">Terms of Service</span> and{' '}
+                <span className="text-purple-400" title="Not part of this demo">Privacy Policy</span>.
               </label>
             </div>
 
@@ -116,7 +119,7 @@ export default function RegisterPage() {
               type="submit"
               disabled={pending !== null}
               aria-busy={pending === 'submit' || undefined}
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-theme-primary font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group disabled:opacity-70 disabled:cursor-progress"
+              className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-theme-on-brand font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-600/25 transition-all flex items-center justify-center space-x-2 group disabled:opacity-70 disabled:cursor-progress"
             >
               <span>{pending === 'submit' ? 'Creating account…' : 'Create account'}</span>
               {pending === 'submit' ? (
@@ -134,7 +137,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <button
+            <button type="button"
               onClick={() => { setPending('Google'); navigate('/workspace'); }}
               disabled={pending !== null}
               aria-busy={pending === 'Google' || undefined}
@@ -143,7 +146,7 @@ export default function RegisterPage() {
               {pending === 'Google' ? <Spinner size="small" className="size-3.5" /> : null}
               Google
             </button>
-            <button
+            <button type="button"
               onClick={() => { setPending('GitHub'); navigate('/workspace'); }}
               disabled={pending !== null}
               aria-busy={pending === 'GitHub' || undefined}
@@ -167,7 +170,7 @@ export default function RegisterPage() {
       <div className="hidden lg:flex flex-1 bg-theme-surface border-l border-theme/80 p-16 flex-col justify-between relative overflow-hidden">
         {/* Background Geometric Circles */}
         <div className="absolute top-12 right-12 w-96 h-96 rounded-full border border-purple-900/30 pointer-events-none"></div>
-        <div className="absolute top-24 right-24 w-64 h-64 rounded-full border border-indigo-900/40 pointer-events-none"></div>
+        <div className="absolute top-24 right-24 w-64 h-64 rounded-full border border-purple-950/40 pointer-events-none"></div>
 
         <div className="flex items-center space-x-2 text-xs font-medium text-purple-400">
           <span>✦</span>
