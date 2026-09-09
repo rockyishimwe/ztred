@@ -168,30 +168,41 @@ export default function WorkspaceLayout({
         </>
       )}
 
-      {/* Desktop Icon Rail */}
+      {/* Desktop Icon Rail.
+
+          Three bands: a fixed brand header, a scrolling nav list, and a pinned
+          footer. This used to be one `justify-between` stack of fixed-height
+          children — 941px of content — inside an `overflow-hidden` viewport
+          shell, so on any screen under ~940px tall the last nav icons and the
+          whole footer (theme toggle, avatar) were clipped and unreachable.
+
+          The nav band carries `min-h-0`, without which a flex child refuses to
+          shrink below its content and the overflow simply moves outward again.
+          The `short:` breakpoints compact the icons first, so scrolling only
+          kicks in once there is genuinely no room left. */}
       <aside
-        className="hidden md:flex w-16 flex-col items-center py-4 justify-between shrink-0 z-30 select-none"
+        className="hidden md:flex w-16 shorter:w-14 h-dvh flex-col items-center py-4 short:py-3 shrink-0 z-30 select-none"
         style={{
           backgroundColor: "var(--bg-primary)",
           borderRight: "1px solid var(--border-color)",
         }}
         aria-label="Main navigation"
-        role="navigation"
       >
-        <div className="flex flex-col items-center space-y-4">
+        {/* Brand header — fixed */}
+        <div className="flex flex-col items-center space-y-4 short:space-y-3 shrink-0">
           {/* Z Brand Logo */}
           <NavLink
             href="/workspace/control"
-            className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg transition-transform hover:scale-105"
+            className="w-10 h-10 shorter:w-9 shorter:h-9 rounded-xl flex items-center justify-center shadow-lg transition-transform hover:scale-105"
             aria-label="Workspace control"
             title="Workspace control"
           >
-            <ZtredLogo className="w-10 h-10" title="Ztred" />
+            <ZtredLogo className="w-full h-full" title="Ztred" />
           </NavLink>
 
           {/* Plus Add Button */}
           <button type="button"
-            className="hit-area-touch w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
+            className="hit-area-touch w-9 h-9 shorter:w-8 shorter:h-8 rounded-xl flex items-center justify-center transition-colors"
             style={{
               backgroundColor: "var(--bg-card)",
               border: "1px solid var(--border-color)",
@@ -203,10 +214,18 @@ export default function WorkspaceLayout({
             <Plus className="w-4 h-4" aria-hidden="true" />
           </button>
 
-          <div className="w-8 h-px my-1" style={{ backgroundColor: "var(--border-color)" }} />
+          <div
+            className="w-8 h-px shortest:hidden"
+            style={{ backgroundColor: "var(--border-color)" }}
+          />
+        </div>
 
-          {/* Nav Icons */}
-          <div className="flex flex-col space-y-1.5 items-center">
+        {/* Nav Icons — the band that scrolls */}
+        <nav
+          className="rail-scroll flex-1 min-h-0 w-full overflow-y-auto overflow-x-hidden my-3 short:my-2"
+          aria-label="Workspace sections"
+        >
+          <div className="flex flex-col space-y-1.5 short:space-y-1 items-center">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = isRouteActive(pathname, item.href, item.href === "/workspace");
@@ -217,7 +236,7 @@ export default function WorkspaceLayout({
                   title={item.label}
                   aria-label={item.label}
                   aria-current={isActive ? "page" : undefined}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center transition-all"
+                  className="w-10 h-10 short:w-9 short:h-9 shorter:w-8 shorter:h-8 shrink-0 rounded-xl flex items-center justify-center transition-all"
                   style={{
                     backgroundColor: isActive ? "var(--primary)" : "transparent",
                     color: isActive ? "var(--on-primary)" : "var(--text-muted)",
@@ -226,22 +245,22 @@ export default function WorkspaceLayout({
                 >
                   {(pending) =>
                     pending ? (
-                      <Spinner size="small" className="size-5" label={null} />
+                      <Spinner size="small" className="size-5 short:size-4" label={null} />
                     ) : (
-                      <Icon className="w-5 h-5" aria-hidden="true" />
+                      <Icon className="w-5 h-5 shorter:w-4 shorter:h-4" aria-hidden="true" />
                     )
                   }
                 </NavLink>
               );
             })}
           </div>
-        </div>
+        </nav>
 
-        {/* Bottom Section */}
-        <div className="flex flex-col items-center space-y-3">
+        {/* Footer — pinned, never scrolls out of reach */}
+        <div className="flex flex-col items-center space-y-3 short:space-y-2 shrink-0">
           <button type="button"
             onClick={toggleTheme}
-            className="hit-area-touch w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:scale-105"
+            className="hit-area-touch w-10 h-10 short:w-9 short:h-9 rounded-xl flex items-center justify-center transition-all hover:scale-105"
             style={{
               backgroundColor: "var(--bg-card)",
               border: "1px solid var(--border-color)",
@@ -259,7 +278,7 @@ export default function WorkspaceLayout({
 
           <NavLink href="/workspace/settings/profile" className="relative group cursor-pointer" aria-label="Jordan Lee's profile">
             <div
-              className="w-10 h-10 rounded-full overflow-hidden"
+              className="w-10 h-10 short:w-9 short:h-9 rounded-full overflow-hidden"
               style={{ border: "1px solid var(--border-color)" }}
             >
               <img

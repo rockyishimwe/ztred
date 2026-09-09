@@ -159,30 +159,38 @@ export default function GeneralChannelPage() {
 
   return (
     <div className="flex h-dvh w-full overflow-hidden bg-theme-primary font-sans text-theme-primary selection:bg-purple-500 selection:text-white">
+      {/* This route renders its own chrome (the workspace layout short-circuits
+          for /workspace/channels), so the rail is duplicated here — including
+          the same fixed-header / scrolling-nav / pinned-footer structure. */}
       <aside
-        className="hidden w-[72px] shrink-0 flex-col items-center justify-between border-r border-theme bg-theme-sidebar px-3 py-4 md:flex"
+        className="hidden h-dvh w-[72px] shorter:w-16 shrink-0 flex-col items-center border-r border-theme bg-theme-sidebar px-3 short:px-2 py-4 short:py-3 md:flex"
         aria-label="Main navigation"
       >
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex shrink-0 flex-col items-center gap-4 short:gap-3">
           <NavLink
             href="/workspace/control"
             aria-label="Workspace control"
-            className="flex h-11 w-11 items-center justify-center rounded-xl bg-theme-brand shadow-[0_10px_22px_rgba(95,61,255,0.35)]"
+            className="flex h-11 w-11 shorter:h-10 shorter:w-10 items-center justify-center rounded-xl bg-theme-brand shadow-[0_10px_22px_rgba(95,61,255,0.35)]"
             title="Workspace control"
           >
-            <ZtredLogo className="h-11 w-11" title="Ztred" />
+            <ZtredLogo className="h-full w-full" title="Ztred" />
           </NavLink>
 
           <button
             type="button"
             aria-label="Create new"
             title="Create new"
-            className="flex h-9 min-h-0 w-11 min-w-0 items-center justify-center rounded-xl border border-theme bg-theme-card text-theme-secondary"
+            className="flex h-9 min-h-0 w-11 min-w-0 shorter:h-8 shorter:w-10 items-center justify-center rounded-xl border border-theme bg-theme-card text-theme-secondary"
           >
             <Plus className="h-5 w-5" aria-hidden="true" />
           </button>
+        </div>
 
-          <nav className="mt-3 flex flex-col items-center gap-1.5" aria-label="Workspace sections">
+        <nav
+          className="rail-scroll my-3 short:my-2 w-full flex-1 min-h-0 overflow-y-auto overflow-x-hidden"
+          aria-label="Workspace sections"
+        >
+          <div className="flex flex-col items-center gap-1.5 short:gap-1">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = isRouteActive(pathname, item.href, item.href === "/workspace");
@@ -194,20 +202,20 @@ export default function GeneralChannelPage() {
                   aria-label={item.label}
                   aria-current={isActive ? "page" : undefined}
                   title={item.label}
-                  className={`flex h-10 w-11 items-center justify-center rounded-xl transition ${
+                  className={`flex h-10 w-11 short:h-9 shorter:h-8 shorter:w-10 shrink-0 items-center justify-center rounded-xl transition ${
                     isActive
                       ? "bg-theme-brand text-white shadow-[0_10px_22px_rgba(95,61,255,0.35)]"
                       : "text-theme-secondary hover-theme-primary-subtle hover:text-theme-brand"
                   }`}
                 >
-                  <Icon className="h-5 w-5" aria-hidden="true" />
+                  <Icon className="h-5 w-5 shorter:h-4 shorter:w-4" aria-hidden="true" />
                 </NavLink>
               );
             })}
-          </nav>
-        </div>
+          </div>
+        </nav>
 
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex shrink-0 flex-col items-center gap-3 short:gap-2">
           {/* This route renders outside the workspace shell (see the early
               return in (workspace)/layout.tsx), so it needs its own toggle. */}
           <button

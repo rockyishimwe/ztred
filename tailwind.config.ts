@@ -9,6 +9,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      /* Height-based breakpoints. The icon rail is a tall fixed stack in a
+         viewport-height shell, so it needs to compact on short screens before
+         it starts scrolling — width breakpoints cannot express that. */
+      screens: {
+        short: { raw: "(max-height: 900px)" },
+        shorter: { raw: "(max-height: 760px)" },
+        shortest: { raw: "(max-height: 640px)" },
+      },
       colors: {
         /* ── Theme-aware palette ────────────────────────────────────────
            Maps to the CSS variables defined in src/styles/globals.css so that

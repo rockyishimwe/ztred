@@ -1473,3 +1473,21 @@ input[type="range"] {
     display: none;
   }
 }
+
+/* --- Icon rail scroll band ---
+   The nav list between the rail's fixed header and pinned footer. It only
+   scrolls once the `short:` breakpoints have run out of room to compact.
+
+   The scrollbar is deliberately left visible (the themed 6px one above): this
+   is the sole path to the lower nav items on a desktop viewport — the mobile
+   menu and bottom tab bar are `md:hidden` — so hiding the affordance would
+   leave a mouse-only user with no way to know the list continues.
+
+   `scrollbar-gutter: stable` reserves that 6px whether or not the bar is
+   showing, so the icons do not jump sideways as the viewport crosses the
+   overflow threshold. */
+.rail-scroll {
+  scrollbar-gutter: stable;
+  /* Stop momentum scrolling from chaining out to the page behind the rail. */
+  overscroll-behavior: contain;
+}
