@@ -264,22 +264,6 @@ export default function WorkspaceControlLayout({
               })}
             </div>
           </nav>
-
-          <div className="flex flex-col items-center space-y-3 short:space-y-2 shrink-0">
-            <NavLink href={profileHref} className="relative group cursor-pointer" aria-label="Jordan Lee's profile">
-              <div className="w-10 h-10 short:w-9 short:h-9 rounded-full overflow-hidden" style={{ border: "1px solid var(--border-color)" }}>
-                <img
-                  src={profileImage}
-                  alt="Jordan Lee"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div
-                className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-500 border-2"
-                style={{ borderColor: "var(--bg-primary)" }}
-              />
-            </NavLink>
-          </div>
         </aside>
 
         {/* Workspace Control Sidebar */}
