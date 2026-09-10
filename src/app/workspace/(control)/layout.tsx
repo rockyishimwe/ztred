@@ -47,7 +47,7 @@ const mainNavItems = [
   { icon: Sparkles, href: "/workspace/ai", label: "AI Assistant" },
   { icon: Bell, href: "/workspace/notifications", label: "Notifications" },
   { icon: Settings, href: "/workspace/settings", label: "Settings" },
-  { icon: Crown, href: "/admin", label: "Workspace Admin" },
+  { icon: Crown, href: "/workspace/control", label: "Workspace Admin" },
 ];
 
 const controlNavItems = [

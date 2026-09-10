@@ -15,7 +15,7 @@ export default function SAMLPage() {
   useEffect(() => {
     // Stands in for the round trip to the IdP. Cleared on unmount so leaving
     // the page early does not yank the user into the workspace afterwards.
-    const timer = setTimeout(() => navigate("/workspace"), REDIRECT_DELAY_MS);
+    const timer = setTimeout(() => navigate("/workspace/control"), REDIRECT_DELAY_MS);
     return () => clearTimeout(timer);
   }, [navigate]);
 

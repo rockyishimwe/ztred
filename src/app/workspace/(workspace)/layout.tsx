@@ -72,7 +72,7 @@ export default function WorkspaceLayout({
     { icon: Search, href: "/workspace/search", label: "Search" },
     { icon: Bell, href: "/workspace/notifications", label: "Alerts" },
     { icon: Settings, href: "/workspace/settings", label: "Settings" },
-    { icon: Crown, href: "/admin", label: "Admin" },
+    { icon: Crown, href: "/workspace/control", label: "Admin" },
   ];
 
   // Bottom nav items (5 most important for mobile)

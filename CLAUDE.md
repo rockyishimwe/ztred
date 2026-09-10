@@ -65,7 +65,7 @@ Rules that follow from this:
 
 **Theme state** lives in `uiStore`: `themePreference` is what the user chose (`'dark' | 'light' | 'system'`) and `theme` is the resolved mode — always render from `theme`, drive settings UI from `themePreference`. The pre-paint inline script in `app/layout.tsx` resolves and applies the stored preference before first paint; `ThemeProvider` then calls `hydrateTheme()` (which must not re-persist, or `'system'` would collapse to a fixed mode) and subscribes to OS and cross-tab changes.
 
-Routes rendered outside the workspace shell — `/admin`, `/workspace/channels/*`, `/auth/*` — need to carry their own theme toggle; there is no shared header to inherit one from.
+Routes rendered outside the workspace shell — `/workspace/channels/*`, `/auth/*` — need to carry their own theme toggle; there is no shared header to inherit one from.
 - The design tokens (HIG-derived type scale `text-display`…`text-micro`, `min-h-touch` 44px targets, `shadow-elevated/floating/overlay`, `--radius-*`) exist in both the Tailwind config and as CSS vars. Prefer the existing tokens over ad-hoc values.
 
 ### State

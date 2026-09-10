@@ -18,7 +18,7 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setPending('submit');
-    navigate('/workspace');
+    navigate('/workspace/control');
   };
 
   return (
@@ -109,7 +109,7 @@ export default function LoginPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <button type="button"
-              onClick={() => { setPending('Google'); navigate('/workspace'); }}
+              onClick={() => { setPending('Google'); navigate('/workspace/control'); }}
               disabled={pending !== null}
               aria-busy={pending === 'Google' || undefined}
               className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-theme-secondary flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-progress"
@@ -118,7 +118,7 @@ export default function LoginPage() {
               Google
             </button>
             <button type="button"
-              onClick={() => { setPending('GitHub'); navigate('/workspace'); }}
+              onClick={() => { setPending('GitHub'); navigate('/workspace/control'); }}
               disabled={pending !== null}
               aria-busy={pending === 'GitHub' || undefined}
               className="bg-theme-card hover:bg-theme-secondary-hover border border-theme font-medium text-xs py-3 rounded-xl transition-colors text-center text-theme-secondary flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-progress"

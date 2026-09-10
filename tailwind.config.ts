@@ -103,7 +103,20 @@ const config: Config = {
         },
       },
       fontFamily: {
+        /* Public Sans is the body/UI face; Bricolage Grotesque is the display
+           face, applied to h1-h6 in globals.css and available as `font-display`.
+           Mirrors --font-sans / --font-display there. */
         sans: [
+          "Public Sans",
+          "Bricolage Grotesque",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "sans-serif",
+        ],
+        display: [
           "Bricolage Grotesque",
           "-apple-system",
           "BlinkMacSystemFont",
